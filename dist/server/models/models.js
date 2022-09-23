@@ -1,0 +1,138 @@
+import { INTEGER, STRING, FLOAT } from "sequelize";
+import sequelize from "../db";
+export const User = sequelize.define('users', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    userName: { type: STRING, unique: true, notNull: true },
+    email: { type: STRING, unique: true },
+    phoneNumber: { type: STRING, unique: true },
+    //@ts-ignore
+    password: { type: STRING, unique: true, notNull: true },
+    //@ts-ignore
+    role: { type: STRING, notNull: true, defaultValue: "USER" }
+}, {
+    timestamps: false
+});
+export const Album = sequelize.define('albums', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    albumName: { type: STRING, unique: true, notNull: true },
+    //@ts-ignore
+    albumRating: { type: FLOAT, notNull: true, defaultValue: 0.0 },
+}, {
+    timestamps: false
+});
+export const Genre = sequelize.define('genres', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    genreName: { type: STRING, unique: true, notNull: true },
+}, {
+    timestamps: false
+});
+export const Author = sequelize.define('authors', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    authorName: { type: STRING, unique: true, notNull: true },
+    //@ts-ignore
+    authorRating: { type: FLOAT, notNull: true, defaultValue: 0.0 },
+    //@ts-ignore
+    authorImg: { type: STRING, notNull: true, defaultValue: "author_default.jpg" }
+}, {
+    timestamps: false
+});
+export const Song = sequelize.define('songs', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    songName: { type: STRING, unique: true, notNull: true },
+    img: { type: STRING, defaultValue: "image.png" },
+    releaseYear: { type: STRING, defaultValue: "Unknown" }
+}, {
+    timestamps: false,
+});
+export const Selection = sequelize.define('selections', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    selectionName: { type: STRING, unique: true, notNull: true },
+    //@ts-ignore
+    selectionImg: { type: STRING, unique: true, notNull: true, defaultValue: "selection_default.jpg" }
+}, {
+    timestamps: false
+});
+const UserSong = sequelize.define('user_songs', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    userId: { type: INTEGER, foreignKey: true, references: { table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    songId: { type: INTEGER, foreignKey: true, references: { table: "songs", field: "id", onDelete: "cascade", onUpdate: "cascade" } }
+}, {
+    timestamps: false
+});
+const AlbumSong = sequelize.define('album_songs', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    albumId: { type: INTEGER, foreignKey: true, references: { table: "albums", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    songId: { type: INTEGER, foreignKey: true, references: { table: "songs", field: "id", onDelete: "cascade", onUpdate: "cascade" } }
+}, {
+    timestamps: false
+});
+const GenreSong = sequelize.define('genre_songs', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    genreId: { type: INTEGER, foreignKey: true, references: { table: "genres", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    songId: { type: INTEGER, foreignKey: true, references: { table: "songs", field: "id", onDelete: "cascade", onUpdate: "cascade" } }
+}, {
+    timestamps: false
+});
+const GenreAlbum = sequelize.define('genre_albums', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    genreId: { type: INTEGER, foreignKey: true, references: { table: "genres", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    albumId: { type: INTEGER, foreignKey: true, references: { table: "albums", field: "id", onDelete: "cascade", onUpdate: "cascade" } }
+}, {
+    timestamps: false,
+});
+const AuthorAlbum = sequelize.define('author_albums', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    authorId: { type: INTEGER, foreignKey: true, references: { table: "authors", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    albumId: { type: INTEGER, foreignKey: true, references: { table: "albums", field: "id", onDelete: "cascade", onUpdate: "cascade" } }
+}, {
+    timestamps: false
+});
+const SelectionSong = sequelize.define('selection_songs', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    selectionId: { type: INTEGER, foreignKey: true, references: { table: "selections", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    songId: { type: INTEGER, foreignKey: true, references: { table: "songs", field: "id", onDelete: "cascade", onUpdate: "cascade" } }
+}, {
+    timestamps: false
+});
+const AuthorSong = sequelize.define('author_songs', {
+    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    //@ts-ignore
+    authorId: { type: INTEGER, foreignKey: true, references: { table: "authors", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+    //@ts-ignore
+    songId: { type: INTEGER, foreignKey: true, references: { table: "songs", field: "id", onDelete: "cascade", onUpdate: "cascade" } },
+}, {
+    timestamps: false
+});
+User.belongsToMany(Song, { through: UserSong, as: "song" });
+Song.belongsToMany(User, { through: UserSong, as: "user" });
+Song.hasOne(AlbumSong, { foreignKey: "songId" });
+Album.belongsToMany(Song, { through: AlbumSong, as: "song" });
+Song.belongsToMany(Album, { through: AlbumSong, as: "album" });
+Genre.belongsToMany(Album, { through: GenreAlbum, as: "album" });
+Album.belongsToMany(Genre, { through: GenreAlbum, as: "genre" });
+Author.belongsToMany(Album, { through: AuthorAlbum, as: "album" });
+Album.belongsToMany(Author, { through: AuthorAlbum, as: "author" });
+Selection.belongsToMany(Song, { through: SelectionSong, as: "song" });
+Song.belongsToMany(Selection, { through: SelectionSong, as: "selection" });
+Genre.belongsToMany(Song, { through: GenreSong, as: "song" });
+Song.belongsToMany(Genre, { through: GenreSong, as: "genre" });
+Author.belongsToMany(Song, { through: AuthorSong, as: "song" });
+Song.belongsToMany(Author, { through: AuthorSong, as: "author" });

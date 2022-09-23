@@ -1,0 +1,12 @@
+import song_router from "./songRouter";
+import genre_router from "./genreRouter";
+import author_router from "./authorRouter";
+import album_router from "./albumRouter";
+import selection_router from "./selectionRouter";
+import user_router from "./userRouter";
+export const songRouter = song_router;
+export const genreRouter = genre_router;
+export const authorRouter = author_router;
+export const albumRouter = album_router;
+export const selectionRouter = selection_router;
+export const userRouter = user_router;
