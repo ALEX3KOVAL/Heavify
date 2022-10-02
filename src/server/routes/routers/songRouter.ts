@@ -1,12 +1,9 @@
 import {Router} from "express";
-import * as SongController from '../../api/controllers/songController';
-import checkRoleMiddleware from "../../middleware/checkRoleMiddleware";
-import errorHandlingMiddleware from "../../middleware/errorHandlingMiddleware";
+import SongController from '../../api/controllers/songController';
+import {checkRoleMiddleware, authMiddleware, errorHandlingMiddleware} from "../../middleware/middlewares";
 
-const router = Router();
+export const songRouter = Router();
 
-router.post('/', checkRoleMiddleware("ADMIN"), errorHandlingMiddleware, SongController.add);
-router.get('/', SongController.getAll);
-router.get('/:id', SongController.getOne);
-
-export default router;
+songRouter.post('/', authMiddleware, checkRoleMiddleware("ADMIN"), SongController.add);
+songRouter.get('/', authMiddleware, SongController.getAll);
+songRouter.get('/:id', authMiddleware, SongController.getOne);

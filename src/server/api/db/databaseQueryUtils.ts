@@ -24,6 +24,8 @@ export const getAttributesConstantsBy = (modelName: string, queryKey: string = "
             return ["authorName", "authorImg"];
         case "selection":
             return ["selectionName", "selectionImg"];
+        case "user":
+            return []
     }
 };
 

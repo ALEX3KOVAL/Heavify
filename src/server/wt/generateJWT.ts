@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
-const generateJWT = (id: any, email: any, role: any, userName?: string) => {
+const generateJWT = (data: any) => {
     return jwt.sign(
-        {id, userName, email, role},
+        data,
         process.env.SECRET_KEY!,
         {expiresIn: '12h'});
 };

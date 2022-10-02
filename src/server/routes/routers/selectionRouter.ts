@@ -1,10 +1,9 @@
 import {Router} from "express";
 import * as SelectionController from "../../api/controllers/selectionController";
 
-const router = Router();
+export const selectionRouter = Router();
 
-//router.post('/', SelectionController.add);
-router.get('/', SelectionController.getAll);
-//router.get('/:id',SelectionController.getOne);
+//selectionRouter.post('/', SelectionController.add);
+selectionRouter.get('/', SelectionController.getAll);
+//selectionRouter.get('/:id',SelectionController.getOne);
 
-export default router;

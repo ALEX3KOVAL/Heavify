@@ -6,7 +6,7 @@ import sequelize from "./db";
 import cors from "cors";
 import router from "./routes/index";
 import fileUpload from "express-fileupload";
-import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware";
+import {errorHandlingMiddleware} from "./middleware/middlewares";
 
 
 const app = express();

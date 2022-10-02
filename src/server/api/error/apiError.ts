@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 declare class ApiError extends Error {
     constructor(status: number, message: string);
     getMessage(): string;
@@ -22,12 +24,24 @@ ApiError.prototype = Object.create(Error.prototype, {
     name: { value: 'ApiError', enumerable: false },}
 );
 
-ApiError.badRequest = (message: any) => new (ApiError as any)(400, message);
+ApiError.badRequest = (message: string = "Некорректный запрос"): ApiError => new ApiError(400, message);
 
-ApiError.unauthorized = (message: any) => new (ApiError as any)(401, message);
+ApiError.unauthorized = (message: string = "Недостаточно прав"): ApiError => new ApiError(401, message);
 
-ApiError.internal = (message: any) => new (ApiError as any)(500, message);
+ApiError.internal = (message: string = "Что-то пошло не так..."): ApiError => new ApiError(500, message);
 
-ApiError.forbidden = (message: any) => new (ApiError as any)(403, message);
+ApiError.forbidden = (message: string = "Доступ к запрашиваемому ресурсу запрещён"): ApiError => new ApiError(403, message);
+
+ApiError.conflict = (message: string = "Возник конфликт с сервером"): ApiError => new ApiError(409, message);
+
+ApiError.identify = (error: Error): ApiError => {
+    if (error instanceof jwt.JsonWebTokenError) {
+        return ApiError.forbidden();
+    }
+    if (error instanceof jwt.TokenExpiredError) {
+
+    }
+    return ApiError.internal();
+}
 
 export default ApiError;

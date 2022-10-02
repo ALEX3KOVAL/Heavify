@@ -1,25 +1,25 @@
 import ApiError from "../api/error/apiError";
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (req: any, res: any, next: any) => {
-    console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=");
+export const authMiddleware = (req: any, res: any, next: any) => {
     if (req.method === "OPTIONS") {
-        console.log("vcvcvcvcvcvcvc");
         next();
+    }
+    const {email, password} = req.body;
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+        next(ApiError.badRequest("Укажите токен доступа"));
     }
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        if (!token) {
-            console.log("nmnmnmnmmnmmnmnmnmnm");
-            throw ApiError.unauthorized("Пользователь не авторизован");
-        }
-        const decoded = jwt.verify(token, process.env.SECRET_KEY!);
-        req.user = decoded;
-        console.log("xzxzxzxzxzxzxzxzxx");
-        next();
-    } catch (e) {
-        return next(e);
+        req.user = jwt.verify(token, process.env.SECRET_KEY!);
+        return next();
     }
-}
-
-export default authMiddleware;
+    catch (err) {
+        if (err instanceof jwt.TokenExpiredError) {
+            next();
+        }
+        else {
+            return next(ApiError.identify(err as Error));
+        }
+    }
+};

@@ -1,12 +1,9 @@
 import {Router} from "express";
-import * as UserController from '../../api/controllers/userController';
-import authMiddleware from "../../middleware/authMiddleware";
-import errorHandlingMiddleware from "../../middleware/errorHandlingMiddleware";
+import UserController from '../../api/controllers/userController';
+import {authMiddleware,refreshTokenMiddleware} from "../../middleware/middlewares";
 
-const router = Router();
+export const userRouter = Router();
 
-router.post('/registration', UserController.registration);
-router.post('/login', UserController.login);
-router.get('/auth', authMiddleware, errorHandlingMiddleware, UserController.check);
-
-export default router;
+userRouter.post('/registration', UserController.registration);
+userRouter.post('/login', UserController.login);
+userRouter.get('/auth', refreshTokenMiddleware, authMiddleware, UserController.check);

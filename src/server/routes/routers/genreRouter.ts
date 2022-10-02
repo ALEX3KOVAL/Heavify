@@ -1,5 +1,3 @@
 import {Router} from "express";
 
-const router = Router();
-
-export default router;
+export const genreRouter = Router();
