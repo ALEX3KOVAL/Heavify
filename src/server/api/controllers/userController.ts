@@ -24,7 +24,7 @@ const registration = async (req: any, res: any, next: any) => {
     let refreshToken = await RefreshToken.createToken(user.id);
     //@ts-ignore
     $data.refreshToken = refreshToken.token;
-    return res.json({accessToken, refreshToken});
+    return res.json({accessToken});
 }
 
 const login = async (req: any, res: any, next: any) => {
@@ -39,28 +39,26 @@ const login = async (req: any, res: any, next: any) => {
     }
     const accessToken = generateJWT({id: user.id});
     let refreshToken;
-    try {
+    refreshToken = await RefreshToken.findOne({where : {userId: user.id}});
+    if (!refreshToken) {
         //@ts-ignore
         refreshToken = await RefreshToken.createToken(user.id);
+        //@ts-ignore
+        delete $data.refreshToken;
+        //@ts-ignore
+        $data.refreshToken = refreshToken.token;
     }
-    catch(err) {
-        refreshToken = await RefreshToken.findOne({where : {userId: user.id}});
-    };
-    //@ts-ignore
-    $data.refreshToken = refreshToken.token;
-    return res.json({accessToken, refreshToken});
+    return res.json({accessToken});
 }
 
-const check = async (req: any, res: any, next: any) => {
-    const accessToken = generateJWT({id: req.userId});
+const issueNewJWT = async (req: any, res: any, next: any) => {
+    const accessToken = generateJWT({id: req.user.id});
     //@ts-ignore
-    const {token} = await RefreshToken.findOne({ where: {userId: req.userId}});
-    //@ts-ignore
-    return res.json({accessToken, "refreshToken": token});
+    return res.json({accessToken});
 }
 
 export default {
     registration,
     login,
-    check
+    issueNewJWT
 }

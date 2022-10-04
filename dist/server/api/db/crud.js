@@ -7,7 +7,6 @@ export const findAll = async (model, attributes, raw = false, nest = false, incl
         nest: nest
     });
 };
-
 export const add = async (model, fieldsValues) => {
     //вызвать modelValidateController (контроллер валидаторов полей моделей) и передать ему название модели, обработка ошибки, если валидация не пройдена
     await model.create(fieldsValues);

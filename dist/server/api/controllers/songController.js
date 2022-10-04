@@ -1,7 +1,7 @@
 import { Song } from "../../models/models";
-import "../db/apiModels";
+import "../db/models/apiModels";
 import Sound from "play-sound";
-import { getAllSongsInfoBy } from "../db/apiModels";
+import { getAllSongsInfoBy } from "../db/models/apiModels";
 import { getAttributesConstantsBy, getIncludeConstantsBy } from "../db/databaseQueryUtils";
 import { v4 } from "uuid";
 import { fileURLToPath } from "url";
@@ -56,4 +56,8 @@ const getOne = async (req, res) => {
     delete songInfo['author'];
     return res.json(songInfo);
 };
-export { add, getAll, getOne };
+export default {
+    add,
+    getAll,
+    getOne
+};

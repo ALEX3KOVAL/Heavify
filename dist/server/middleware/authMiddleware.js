@@ -1,24 +1,29 @@
 import ApiError from "../api/error/apiError";
 import jwt from "jsonwebtoken";
-const authMiddleware = (req, res, next) => {
-    console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=");
+export const authMiddleware = (req, res, next) => {
     if (req.method === "OPTIONS") {
-        console.log("vcvcvcvcvcvcvc");
-        next();
+        return next(ApiError.conflict("Данный HTTP-метод не предусмотрен"));
+    }
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+        return next(ApiError.badRequest("Укажите токен доступа"));
     }
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        if (!token) {
-            console.log("nmnmnmnmmnmmnmnmnmnm");
-            throw ApiError.unauthorized("Пользователь не авторизован");
+        req.user = jwt.verify(token, process.env.SECRET_KEY);
+        if (req.user.id === req.userId) {
+            delete req.userId;
         }
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        req.user = decoded;
-        console.log("xzxzxzxzxzxzxzxzxx");
-        next();
+        else {
+            return next(ApiError.forbidden("Возникло несоответствие между ключами, пройдите повторно авторизацию"));
+        }
+        return next();
     }
-    catch (e) {
-        return next(e);
+    catch (err) {
+        if (err instanceof jwt.TokenExpiredError) {
+            return next();
+        }
+        else {
+            return next(ApiError.identify(err));
+        }
     }
 };
-export default authMiddleware;

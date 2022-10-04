@@ -22,6 +22,8 @@ export const getAttributesConstantsBy = (modelName, queryKey = "") => {
             return ["authorName", "authorImg"];
         case "selection":
             return ["selectionName", "selectionImg"];
+        case "user":
+            return [];
     }
 };
 export const getIncludeConstantsBy = (modelName, queryKey = "") => {

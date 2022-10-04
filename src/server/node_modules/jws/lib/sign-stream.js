@@ -2,7 +2,7 @@
 var Buffer = require('safe-buffer').Buffer;
 var DataStream = require('./data-stream');
 var jwa = require('jwa');
-var Stream = require('stream');
+var Stream = require('stream-browserify');
 var toString = require('./tostring');
 var util = require('util');
 

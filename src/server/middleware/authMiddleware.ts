@@ -3,20 +3,25 @@ import jwt from "jsonwebtoken";
 
 export const authMiddleware = (req: any, res: any, next: any) => {
     if (req.method === "OPTIONS") {
-        next();
+        return next(ApiError.conflict("Данный HTTP-метод не предусмотрен"));
     }
-    const {email, password} = req.body;
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
-        next(ApiError.badRequest("Укажите токен доступа"));
+        return next(ApiError.badRequest("Укажите токен доступа"));
     }
     try {
         req.user = jwt.verify(token, process.env.SECRET_KEY!);
+        if (req.user.id === req.userId) {
+            delete req.userId;
+        }
+        else {
+            return next(ApiError.forbidden("Возникло несоответствие между ключами, пройдите повторно авторизацию"));
+        }
         return next();
     }
     catch (err) {
         if (err instanceof jwt.TokenExpiredError) {
-            next();
+            return next();
         }
         else {
             return next(ApiError.identify(err as Error));

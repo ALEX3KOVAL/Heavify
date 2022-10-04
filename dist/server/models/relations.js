@@ -1,0 +1,18 @@
+import * as models from "./models";
+models.User.belongsToMany(models.Song, { through: models.UserSong, as: "song" });
+models.Song.belongsToMany(models.User, { through: models.UserSong, as: "user" });
+models.Song.hasOne(models.AlbumSong, { foreignKey: "songId" });
+models.Album.belongsToMany(models.Song, { through: models.AlbumSong, as: "song" });
+models.Song.belongsToMany(models.Album, { through: models.AlbumSong, as: "album" });
+models.Genre.belongsToMany(models.Album, { through: models.GenreAlbum, as: "album" });
+models.Album.belongsToMany(models.Genre, { through: models.GenreAlbum, as: "genre" });
+models.Author.belongsToMany(models.Album, { through: models.AuthorAlbum, as: "album" });
+models.Album.belongsToMany(models.Author, { through: models.AuthorAlbum, as: "author" });
+models.Selection.belongsToMany(models.Song, { through: models.SelectionSong, as: "song" });
+models.Song.belongsToMany(models.Selection, { through: models.SelectionSong, as: "selection" });
+models.Genre.belongsToMany(models.Song, { through: models.GenreSong, as: "song" });
+models.Song.belongsToMany(models.Genre, { through: models.GenreSong, as: "genre" });
+models.Author.belongsToMany(models.Song, { through: models.AuthorSong, as: "song" });
+models.Song.belongsToMany(models.Author, { through: models.AuthorSong, as: "author" });
+models.RefreshToken.belongsTo(models.User, { foreignKey: "id" });
+models.User.hasOne(models.RefreshToken, { foreignKey: "userId" });

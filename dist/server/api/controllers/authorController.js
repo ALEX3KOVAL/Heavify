@@ -1,5 +1,5 @@
-import { getAllAuthorsInfoBy } from "../db/apiModels";
-import { Author } from '../../models/models';
+import { getAllAuthorsInfoBy } from "../db/models/apiModels";
+import { Author } from "../../models/models";
 export const add = async (req, res) => {
     const { name, rating } = req.body;
     await Author.create({ name, rating });

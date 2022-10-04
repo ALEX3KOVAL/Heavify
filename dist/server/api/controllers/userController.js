@@ -1,8 +1,9 @@
 import ApiError from "../error/apiError";
-import { User } from "../../models/models";
-import generateJWT from "../../jwt/generateJWT";
+import { RefreshToken, User } from "../../models/models";
+import generateJWT from "../../wt/generateJWT";
 import bcrypt from "bcrypt";
-export const registration = async (req, res, next) => {
+import $data from "../../shared_data";
+const registration = async (req, res, next) => {
     const { userName, email, password, role } = req.body;
     let message = "";
     if (!email) {
@@ -13,28 +14,47 @@ export const registration = async (req, res, next) => {
     }
     const registered = await User.findOne({ where: { email } });
     if (registered) {
-        return next(ApiError.badRequest("Пользователь с таким email/паролем уже существует"));
+        return next(ApiError.conflict("Пользователь с таким логином/паролем уже существует"));
     }
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create({ userName: userName, email: email, role: role, password: hashPassword });
-    console.log(`userRoleeeeeeee ---- ${user.role}`);
-    const token = generateJWT(user.id, user.email, user.role, user.userName);
-    return res.json({ token });
+    const accessToken = generateJWT({ id: user.id });
+    //@ts-ignore
+    let refreshToken = await RefreshToken.createToken(user.id);
+    //@ts-ignore
+    $data.refreshToken = refreshToken.token;
+    return res.json({ accessToken });
 };
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
     const { email, password } = req.body;
-    console.log(email);
     const user = await User.findOne({ where: { email } });
     if (!user) {
-        return res.status(401).json({ message: "Указан неверный логин" });
+        return next(ApiError.unauthorized("Указан неверный логин"));
     }
     let comparePassword = bcrypt.compareSync(password, user.password);
     if (!comparePassword) {
-        return res.status(401).json({ message: "Указан неверный пароль" });
+        return next(ApiError.unauthorized("Указан неверный пароль"));
     }
-    const token = generateJWT(user.id, user.email, user.role);
-    return res.json({ token });
+    const accessToken = generateJWT({ id: user.id });
+    let refreshToken;
+    refreshToken = await RefreshToken.findOne({ where: { userId: user.id } });
+    if (!refreshToken) {
+        //@ts-ignore
+        refreshToken = await RefreshToken.createToken(user.id);
+        //@ts-ignore
+        delete $data.refreshToken;
+        //@ts-ignore
+        $data.refreshToken = refreshToken.token;
+    }
+    return res.json({ accessToken });
 };
-export const check = async (req, res, next) => {
-    return res.json({ message: "ALL WORKS!" });
+const issueNewJWT = async (req, res, next) => {
+    const accessToken = generateJWT({ id: req.user.id });
+    //@ts-ignore
+    return res.json({ accessToken });
+};
+export default {
+    registration,
+    login,
+    issueNewJWT
 };

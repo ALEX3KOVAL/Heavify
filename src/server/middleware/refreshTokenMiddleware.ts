@@ -14,6 +14,8 @@ export const refreshTokenMiddleware = async (req: any, res: any, next: any) => {
         if (RefreshToken.verifyExpiration(refreshToken)) {
             //@ts-ignore
             await RefreshToken.destroy({ where: { userId: refreshToken.userId } });
+            //@ts-ignore
+            delete $data.refreshToken
             return next(ApiError.forbidden("Жизненный цикл обновляющего токена закончен, пройдите повторно авторизацию"));
         }
         //@ts-ignore

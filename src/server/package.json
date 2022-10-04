@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --experimental-specifier-resolution=node ../../dist/server/index.js",
+    "up": "node --experimental-specifier-resolution=node ../../dist/server/index.js",
     "ts2js": "tsc"
   },
   "author": "",
@@ -14,6 +15,8 @@
     "@types/play-sound": "^1.1.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.0",
+    "crypto-js": "^3.1.9-1",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
@@ -21,6 +24,8 @@
     "mysql2": "^2.3.3",
     "play-sound": "^1.1.5",
     "sequelize": "^6.21.6",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

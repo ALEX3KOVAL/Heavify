@@ -1,4 +1,4 @@
-import { getAllAlbumsInfoBy } from "../db/apiModels";
+import { getAllAlbumsInfoBy } from "../db/models/apiModels";
 import { getAttributesConstantsBy, getIncludeConstantsBy } from "../db/databaseQueryUtils";
 import { Album } from "../../models/models";
 export const add = async (req, res) => {
