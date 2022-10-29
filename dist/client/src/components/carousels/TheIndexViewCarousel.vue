@@ -43,7 +43,7 @@ export default {
       drawer: true,
       presentationCarouselSlides: [],
       page: "index_page",
-      component: "index_carousel",
+      component: "presentation_carousel",
     }
   },
   created() {

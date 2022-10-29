@@ -2,7 +2,7 @@ import {host} from "@/http";
 
 const getPicturesGroupByNames = async (pageName: string, componentName: string) => {
     //@ts-ignore
-    const {filesNames} = (await host.get(`api/pictures/index_page/index_carousel`)).data;
+    const {filesNames} = (await host.get(`api/pictures/${pageName}/${componentName}`)).data;
     console.log(filesNames);
     return filesNames;
 }
