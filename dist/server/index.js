@@ -10,7 +10,7 @@ import { errorHandlingMiddleware } from "./middleware/middlewares";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.resolve(path.resolve(), '../../static', 'images')));
+app.use(express.static(path.resolve(path.resolve(), '../../assets', 'images')));
 app.use(fileUpload({}));
 app.use('/api', router);
 app.use(errorHandlingMiddleware);
