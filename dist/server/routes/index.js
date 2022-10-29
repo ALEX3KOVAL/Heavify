@@ -7,4 +7,5 @@ router.use('/authors', modelRouter.authorRouter);
 router.use('/albums', modelRouter.albumRouter);
 router.use('/selections', modelRouter.selectionRouter);
 router.use('/songs', modelRouter.songRouter);
+router.use('/pictures', modelRouter.pictureRouter);
 export default router;

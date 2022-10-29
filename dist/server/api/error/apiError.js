@@ -12,6 +12,7 @@ function ApiError(status, message) {
 ApiError.prototype = Object.create(Error.prototype, {
     name: { value: 'ApiError', enumerable: false },
 });
+ApiError.notImplemented = (message = "Данное поведение не предусмотрено сервером") => new ApiError(501, message);
 ApiError.badRequest = (message = "Некорректный запрос") => new ApiError(400, message);
 ApiError.unauthorized = (message = "Недостаточно прав") => new ApiError(401, message);
 ApiError.internal = (message = "Что-то пошло не так...") => new ApiError(500, message);
