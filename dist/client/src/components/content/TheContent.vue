@@ -1,5 +1,6 @@
 <template>
   <v-sheet
+      @scroll=""
       color="background"
       id="scrolling-techniques-2"
       class="overflow-y-auto"
@@ -18,13 +19,28 @@
 
 <script>
 import TheIndexViewCarousel from "@/components/carousels/TheIndexViewCarousel.vue";
+import {computed} from "@vue/composition-api";
+
 export default {
   name: "TheContent",
+  data: () => ({
+    presentationCarouselDrawer: true,
+  }),
+  provide() {
+    return {
+      presentationCarouselDrawer: computed(() => this.presentationCarouselDrawer)
+    }
+  },
   components: {TheIndexViewCarousel},
   props: {
     height: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    callback() {
+      console.log(this.$el.scrollHeight);
     }
   }
 }

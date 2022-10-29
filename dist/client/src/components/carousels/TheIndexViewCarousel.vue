@@ -34,10 +34,10 @@
 import velocityMixin from "@/mixins/velocityMixin";
 import getPicturesGroupByNames from "@/http/api/picture";
 import "../waypoint/vue-waypoint.js";
-import {getCurrentInstance} from "@vue/composition-api";
 
 export default {
   name: "TheIndexViewCarousel",
+  inject: ["presentationCarouselDrawer"],
   data() {
     return {
       drawer: true,

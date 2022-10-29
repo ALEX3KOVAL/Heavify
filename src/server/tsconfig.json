@@ -76,7 +76,7 @@
         "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
         "paths": {
             "crypto": [
-                "node_modules/crypto-js"
+                "./node_modules/crypto-js"
             ]
         },
         /* Type Checking */
