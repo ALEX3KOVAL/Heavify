@@ -1,6 +1,6 @@
 import {Router} from "express";
 import SongController from '../../api/controllers/songController';
-import {checkRoleMiddleware, authMiddleware, errorHandlingMiddleware} from "../../middleware/middlewares";
+import {checkRoleMiddleware, authMiddleware} from "../../middleware/middlewares";
 
 export const songRouter = Router();
 

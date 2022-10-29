@@ -14,8 +14,8 @@ const add = async (req: any, res: any, next: any) => {
         const {imgFile, audioFile} = req.files;
         let imgFileName = v4() + ".jpg";
         let audioFileName = v4() + ".mp3";
-        imgFile.mv(path.resolve(__dirname, "../../../../static", 'images', imgFileName));
-        audioFile.mv(path.resolve(__dirname, "../../../../static", 'songs', audioFileName));
+        imgFile.mv(path.resolve(__dirname, "../../../../assets", 'images', imgFileName));
+        audioFile.mv(path.resolve(__dirname, "../../../../assets", 'songs', audioFileName));
         const song = await Song.create({songName: audioFileName, releaseYear: releaseYear, img: imgFileName});
         return res.json(song);
     }
@@ -26,7 +26,7 @@ const add = async (req: any, res: any, next: any) => {
 
 const getAll = async (req: any, res: any) => {
         const {albumId, selectionId, search} = req.query;
-        Sound().play(path.resolve(__dirname, "../../../../static", "songs", "67202b28-09ed-4762-a8b4-eb1d44beb88b.mp3"));
+        //Sound().play(path.resolve(__dirname, "../../../../assets", "songs", "67202b28-09ed-4762-a8b4-eb1d44beb88b.mp3"));
         if (!albumId && !selectionId && !search) { //пользователь открывает свои аудио
             var allSongsInfo = await getAllSongsInfoBy();
             return res.json(allSongsInfo);
@@ -45,7 +45,6 @@ const getAll = async (req: any, res: any) => {
 
 const getOne = async (req: any, res: any) => {
         const {id} = req.params;
-        //const songInfo = await getOneInfoBy(Song, "song", id);
         const songInfo = await Song.findOne({
             where: {id},
             include: getIncludeConstantsBy("song"),

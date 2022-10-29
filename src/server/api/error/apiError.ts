@@ -24,6 +24,8 @@ ApiError.prototype = Object.create(Error.prototype, {
     name: { value: 'ApiError', enumerable: false },}
 );
 
+ApiError.notImplemented = (message: string = "Сервером не предусмотрен такое поведение"): ApiError => new ApiError(501, message);
+
 ApiError.badRequest = (message: string = "Некорректный запрос"): ApiError => new ApiError(400, message);
 
 ApiError.unauthorized = (message: string = "Недостаточно прав"): ApiError => new ApiError(401, message);
