@@ -1,0 +1,172 @@
+$grid-breakpoints: (
+  'xs': 0,
+  'sm': 600px,
+  'md': 940px,
+  'lg': 1260px,
+  'xl': 1880px,
+);
+
+.header__btn {
+  width: 19px !important;
+  height: 19px !important;
+  position: relative !important;
+  justify-content: center !important;
+  align-self: center !important;
+  align-items: center !important;
+  display: flex !important;
+  background-color: rgba(208,189,244, .4);
+  @media only screen and (min-width: 600px) {
+    width: 25px !important;
+    height: 25px !important;
+  }
+  @media only screen and (min-width: 940px) {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  @media only screen and (min-width: 1240px) {
+    font-size:16px !important;
+  }
+  @media only screen and (min-width: 1880px) {
+    font-size:21px !important;
+  }
+}
+
+.v-btn {
+  min-width: 15px !important;
+  min-height: 15px !important;
+}
+
+.v-btn__content {
+  font-size: 13px !important;
+}
+
+.auth-btn__menu-list {
+  position: relative !important;
+  background-color: rgba(0,0,0,.2) !important;
+  margin-right: 1vw !important;
+  height: 24px !important;
+  top: 0.5vh !important;
+}
+
+.auth-btn__menu-list__item {
+  min-height: 20px !important;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  height: unset;
+}
+
+.v-menu__content--fixed {
+  box-sizing: content-box;
+  font-family: "Absolute Empire", sans-serif;
+}
+
+.header__title {
+  font-family: "Absolute Empire", sans-serif;
+  position:relative;
+  font-size:10px !important;
+  left: 10px !important;
+  color: #fff;
+  @media only screen and (min-width: 600px) {
+    left: 10px !important;
+    font-size:13px !important;
+  }
+  @media only screen and (min-width: 940px) {
+    font-size:13px !important;
+  }
+  @media only screen and (min-width: 1240px) {
+    font-size:16px !important;
+    left: 22px !important;
+  }
+  @media only screen and (min-width: 1880px) {
+    font-size:21px !important;
+  }
+}
+
+.v-sheet::-webkit-scrollbar {
+  background-color: rgba(196,26,143,.5);
+}
+
+.v-sheet::-webkit-scrollbar-thumb {
+  background-color: #000;
+}
+
+.v-toolbar--collapsed {
+  position: relative;
+  top: -11px !important;
+  height: 38px !important;
+  width: 60px !important;
+  @media only screen and (min-width: 600px) {
+    width: 75px !important;
+    height: 42px !important;
+  }
+  @media only screen and (min-width: 940px) {
+    height: 46px !important;
+    width: 90px !important;
+  }
+  @media only screen and (min-width: 1240px) {
+    height: 45px !important;
+  }
+  @media only screen and (min-width: 1880px) {
+    height: 50px !important;
+  }
+}
+
+.presentation-carousel {
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  margin: 1vh auto 0 !important;
+}
+
+.presentation-carousel__slider {
+  position: relative !important;
+  margin: 0.4% !important;
+}
+
+.presentation-carousel__wrapper {
+  display: flex;
+  width: 65vw;
+  align-self: center;
+  justify-content: center;
+  background: #600a7c !important;
+  @media only screen and (min-width: 940px) {
+    width: 55vw;
+  }
+  @media only screen and (min-width: 1240px) {
+    width: 50vw;
+  }
+  @media only screen and (min-width: 1880px) {
+    width: 55vw;
+  }
+}
+
+.v-toolbar {
+  min-height: unset;
+}
+
+.v-image__image {
+  background-size:100% 100%;
+}
+
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@font-face {
+  font-family: "Absolute Empire";
+  src: local("Absolute Empire"),
+    url(../fonts/aAbsoluteEmpire.ttf) format("truetype");
+}
