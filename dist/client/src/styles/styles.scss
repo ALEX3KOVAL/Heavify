@@ -44,12 +44,16 @@ $grid-breakpoints: (
   position: relative !important;
   background-color: rgba(0,0,0,.2) !important;
   margin-right: 1vw !important;
-  height: 24px !important;
+  height: 22px !important;
   top: 0.5vh !important;
 }
 
 .auth-btn__menu-list__item {
   min-height: 20px !important;
+}
+
+.carousel__wrapper {
+  margin-bottom: 25vh !important;
 }
 
 .v-btn:not(.v-btn--round).v-size--default {
@@ -150,9 +154,11 @@ $grid-breakpoints: (
 }
 
 .bounce-enter-active {
-  animation: bounce-in .5s;
+  animation: bounce-in .9s;
 }
-
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
 @keyframes bounce-in {
   0% {
     transform: scale(0);
@@ -163,6 +169,18 @@ $grid-breakpoints: (
   100% {
     transform: scale(1);
   }
+}
+
+.slide-fade-enter-active {
+  transition: all .1s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 
 @font-face {
