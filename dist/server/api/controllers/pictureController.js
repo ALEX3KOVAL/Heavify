@@ -1,9 +1,9 @@
 import ApiError from "../error/apiError";
 import { readdir } from "fs";
 const getPicturesGroupByNames = async (req, res, next) => {
-    const { pageName, componentName } = req.params;
-    if (pageName && componentName) {
-        readdir(`../../assets/images/${pageName}/${componentName}`, (err, files) => {
+    const { pageName, componentType, componentName } = req.params;
+    if (pageName && componentType) {
+        readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName}`, (err, files) => {
             if (err) {
                 return next(ApiError.identify(err));
             }
