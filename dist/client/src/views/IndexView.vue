@@ -1,7 +1,7 @@
 <template>
   <v-col>
-    <the-heading :height="appbarHeight"/>
-    <the-content :height="appbarHeight"/>
+    <the-heading :height="appbarHeight" page-name="index"/>
+    <the-content :height="appbarHeight" page-name="index"/>
   </v-col>
 </template>
 
@@ -16,10 +16,10 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
           var height = this.$vuetify.breakpoint.width * 0.1984;
-          return String(height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height)) + "px";
+          return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
         default:
           var height = this.$vuetify.breakpoint.width * 0.2284;
-          return String(height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height)) + "px";
+          return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
       }
     },
   },

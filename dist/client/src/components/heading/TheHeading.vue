@@ -27,7 +27,10 @@
         Heavify
       </v-toolbar-title>
       <v-spacer></v-spacer>
+        <transition
+            name="slide-fade">
       <the-authorization-button-menu v-if="authorizationButtonMenuVisible" :icons-size="iconsSize"/>
+        </transition>
       <the-heading-button
           class="mr-4"
           :icons-size="iconsSize"
@@ -70,21 +73,16 @@
 <script>
 import TheAuthorizationButtonMenu from "@/components/authrozationButtonMenu/TheAuthorizationButtonMenu.vue";
 import TheHeadingButton from "@/components/heading/TheHeadingButton.vue";
-
-/********************************************************
-
-    -  АДАПТИРОВАТЬ ПОД РАЗНЫЕ РАЗМЕРЫ ОКНА МЕНЮ АВТОРИЗАЦИИ
-    -  Создать компонент кнопки регистрации/логина (один компонент, ему передаётся имя кнопки в props,
- в дочернем компоненте есть метод, который в зависимости от имени кнопки переходит на определённую страницу (такое можно сделать через switch))
-    -  Создать компонент меню авторизации (регистрация либо логин), который будет отрисовывать в v-for кнопки
- (используя prop "is" можно будет указать название компонента кнопки и отрисовать), здесь же указывается что делать при событии @click на кнопку
-
- ********************************************************/
+import getPicturesGroupByNames from "@/http/api/picture";
 
 export default {
   components: {TheHeadingButton, TheAuthorizationButtonMenu},
   props: {
     height: {
+      type: Number,
+      required: true
+    },
+    pageName: {
       type: String,
       required: true
     }
@@ -94,8 +92,10 @@ export default {
     authorizationButtonMenuVisible: false,
   }),
   created() {
-    this.maxHeight = this.$vuetify.breakpoint.height * 0.52,
-    this.minHeight = this.$vuetify.breakpoint.height * 0.12
+    this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
+    this.minHeight = this.$vuetify.breakpoint.height * 0.12;
+    this.API_URL = process.env.VUE_APP_API_URL;
+    getPicturesGroupByNames(this.pageName, "header").then((data) => this.presentationCarouselSlides = data);
   },
   computed: {
     iconsSize() {

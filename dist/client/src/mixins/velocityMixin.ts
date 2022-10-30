@@ -9,12 +9,12 @@ const velocityMixin = {
         },
         enter: function (element: any, done: any) {
             Velocity(element, { opacity: 1},
-                { duration: 750 });
+                { duration: 1050 });
             Velocity(element, { complete: done });
         },
         leave: function (element: any, done: any) {
             Velocity(element, { translateX: '15px', rotateZ: '50deg' },
-                { duration: 300 })
+                { duration: 200 })
             Velocity(element, { rotateZ: '100deg' },
                 { loop: 1 });
             Velocity(element, {
