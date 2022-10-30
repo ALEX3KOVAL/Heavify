@@ -1,29 +1,17 @@
 import ApiError from "../error/apiError";
 import { RefreshToken, User } from "../../models/models";
-import generateJWT from "../../wt/generateJWT";
 import bcrypt from "bcrypt";
 import $data from "../../shared_data";
+import UserService from "../../service/user";
 const registration = async (req, res, next) => {
-    const { userName, email, password, role } = req.body;
-    let message = "";
-    if (!email) {
-        message += "Некорректный логин\n";
+    try {
+        const { userName, email, password, role } = req.body;
+        console.log("userName --- ", userName);
+        const userData = await UserService.registration(userName, email, password, role);
+        res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
+        return res.json(userData);
     }
-    if (!password) {
-        return next(ApiError.badRequest(message + "Некорректный пароль"));
-    }
-    const registered = await User.findOne({ where: { email } });
-    if (registered) {
-        return next(ApiError.conflict("Пользователь с таким логином/паролем уже существует"));
-    }
-    const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({ userName: userName, email: email, role: role, password: hashPassword });
-    const accessToken = generateJWT({ id: user.id });
-    //@ts-ignore
-    let refreshToken = await RefreshToken.createToken(user.id);
-    //@ts-ignore
-    $data.refreshToken = refreshToken.token;
-    return res.json({ accessToken });
+    catch (err) { }
 };
 const login = async (req, res, next) => {
     const { email, password } = req.body;
@@ -35,7 +23,6 @@ const login = async (req, res, next) => {
     if (!comparePassword) {
         return next(ApiError.unauthorized("Указан неверный пароль"));
     }
-    const accessToken = generateJWT({ id: user.id });
     let refreshToken;
     refreshToken = await RefreshToken.findOne({ where: { userId: user.id } });
     if (!refreshToken) {
@@ -46,12 +33,11 @@ const login = async (req, res, next) => {
         //@ts-ignore
         $data.refreshToken = refreshToken.token;
     }
-    return res.json({ accessToken });
+    return res.json();
 };
 const issueNewJWT = async (req, res, next) => {
-    const accessToken = generateJWT({ id: req.user.id });
     //@ts-ignore
-    return res.json({ accessToken });
+    return res.json();
 };
 export default {
     registration,

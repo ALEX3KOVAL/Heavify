@@ -1,4 +1,4 @@
-import {DATE, FLOAT, INTEGER, Model, ModelStatic, STRING} from "sequelize";
+import {DATE, FLOAT, INTEGER, Model, ModelStatic, STRING, BOOLEAN} from "sequelize";
 import sequelize from "../db";
 import {v4} from "uuid";
 
@@ -32,22 +32,26 @@ export const Genre: ModelStatic<Model> = sequelize.define('genres', {
     timestamps: false
 });
 
-export const RefreshToken: ModelStatic<Model> = sequelize.define('refreshTokens', {
+export const RefreshToken: ModelStatic<Model> = sequelize.define('refresh_tokens', {
     //@ts-ignore
     token: {type: STRING, notNull: true},
     //@ts-ignore
     userId: {type: INTEGER, foreignKey: true, unique: true, references: {table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
     //@ts-ignore
-    expiryDate: {type: DATE, notNull: true}
+    expiryDate: {type: DATE, notNull: true},
+    //@ts-ignore
+    isActivated: {type: BOOLEAN, defaultValue: false},
+    //@ts-ignore
+    activationLink: {type: STRING},
 }, {
     timestamps: false
 });
 
 //@ts-ignore
-RefreshToken.createToken = async function (id: string) {
+RefreshToken.createToken = async function (id: string, token) {
     let expiredAt = new Date();
     expiredAt.setSeconds(expiredAt.getSeconds() + Number(process.env.JWT_REFRESH_EXPIRATION!));
-    let _token = v4();
+    let _token = (typeof(token) === "undefined") ? v4() : token;
     let refreshToken = await this.create({
         userId: id,
         token: _token,
@@ -90,7 +94,11 @@ export const User: ModelStatic<Model> = sequelize.define('users', {
     //@ts-ignore
     password: {type: STRING, unique: true, notNull: true},
     //@ts-ignore
-    role: {type: STRING, notNull: true, defaultValue: "USER"}
+    role: {type: STRING, notNull: true, defaultValue: "USER"},
+    //@ts-ignore
+    isActivated: {type: BOOLEAN, defaultValue: false},
+    //@ts-ignore
+    userId: {type: STRING, notNull: true, unique: true}
 }, {
     timestamps: false
 });
