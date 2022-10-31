@@ -9,7 +9,6 @@ import fileUpload from "express-fileupload";
 import {errorHandlingMiddleware} from "./middleware/middlewares";
 import Index from "cookie-parser";
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
