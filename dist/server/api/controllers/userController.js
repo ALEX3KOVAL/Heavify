@@ -11,7 +11,9 @@ const registration = async (req, res, next) => {
         res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
         return res.json(userData);
     }
-    catch (err) { }
+    catch (err) {
+        return next(err);
+    }
 };
 const login = async (req, res, next) => {
     const { email, password } = req.body;
