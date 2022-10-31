@@ -12,7 +12,7 @@ const registration = async (req: any, res: any, next: any) => {
         res.cookie("refreshToken", userData.refreshToken, {maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true});
         return res.json(userData);
     }
-    catch(err) {  }
+    catch(err) { return next(err as ApiError) }
 }
 
 const login = async (req: any, res: any, next: any) => {

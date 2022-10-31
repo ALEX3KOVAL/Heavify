@@ -95,7 +95,7 @@ export default {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
     this.API_URL = process.env.VUE_APP_API_URL;
-    getPicturesGroupByNames(this.pageName, "header").then((data) => this.presentationCarouselSlides = data);
+    //getPicturesGroupByNames(this.pageName, "header").then((data) => this.presentationCarouselSlides = data);
   },
   computed: {
     iconsSize() {
