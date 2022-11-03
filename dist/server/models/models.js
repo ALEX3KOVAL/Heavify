@@ -89,6 +89,8 @@ export const User = sequelize.define('users', {
     //@ts-ignore
     isActivated: { type: BOOLEAN, defaultValue: false },
     //@ts-ignore
+    activationLink: { type: STRING },
+    //@ts-ignore
     userId: { type: STRING, notNull: true, unique: true }
 }, {
     timestamps: false

@@ -8,6 +8,7 @@ const registration = async (req, res, next) => {
         const { userName, email, password, role } = req.body;
         console.log("userName --- ", userName);
         const userData = await UserService.registration(userName, email, password, role);
+        //@ts-ignore
         res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
         return res.json(userData);
     }
@@ -37,12 +38,18 @@ const login = async (req, res, next) => {
     }
     return res.json();
 };
-const issueNewJWT = async (req, res, next) => {
-    //@ts-ignore
-    return res.json();
+const activate = async (req, res, next) => {
+    try {
+        const activationLink = req.params.link;
+        await UserService.activate(activationLink);
+        return res.redirect(process.env.CLIENT_URL);
+    }
+    catch (err) {
+        return next(err);
+    }
 };
 export default {
     registration,
     login,
-    issueNewJWT
+    activate,
 };

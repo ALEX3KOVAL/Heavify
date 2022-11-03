@@ -21,18 +21,35 @@ const registration = async (userName: string, email: string, password: string, r
         throw ApiError.conflict("Пользователь с таким логином/паролем уже существует");
     }
     const hashPassword = await bcrypt.hash(password, 3);
-    //const activationLink = v4();
+    const activationLink = v4();
     $data.rowsCount += 1;
     const userId = encryptValue($data.rowsCount.toString());
-    const user: any = await User.create({userName: userName, email: email, role: role, password: hashPassword, userId});
-    //await MailService.sendActivationMessage(email, activationLink);
-    //@ts-ignore
-    const userDTO = new UserDTO(user);
-    const tokens = await TokenService.generateTokens({...userDTO});
-    console.log("tokens --- ", tokens);
-    await TokenService.saveToken(user.id, tokens.refreshToken);
-
-    return {...tokens, user: userDTO};
+    const user = await User.create({ userName: userName, email: email, role: role, password: hashPassword, userId, activationLink });
+    try {
+        const mailService = new (MailService as any)();
+        //@ts-ignore
+        await mailService.sendActivationMessage(email, `${process.env.API_URL}/api/users/activate/${activationLink}`);
+        //@ts-ignore
+        const userDTO = new UserDTO(user);
+        const tokens = await TokenService.generateTokens({ ...userDTO });
+        //@ts-ignore
+        await TokenService.saveToken(user.id, tokens.refreshToken);
+        return { ...tokens, user: userDTO };
+    }
+    catch(err) { console.log((err as Error).message) }
 }
 
-export default {registration};
+const activate = async (activationLink: any) => {
+    const user = await User.findOne({ where: { activationLink } });
+    if (!user) {
+        throw ApiError.badRequest("Некорректная ссылка активации");
+    }
+    //@ts-ignore
+    user.isActivated = true;
+    await user.save();
+}
+
+export default {
+    registration,
+    activate
+}

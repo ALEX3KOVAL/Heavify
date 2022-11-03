@@ -9,10 +9,12 @@ const registration = async (req: any, res: any, next: any) => {
         const {userName, email, password, role} = req.body;
         console.log("userName --- ", userName);
         const userData = await UserService.registration(userName, email, password, role);
+        //@ts-ignore
         res.cookie("refreshToken", userData.refreshToken, {maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true});
         return res.json(userData);
     }
-    catch(err) { return next(err as ApiError) }
+    catch(err) {
+        return next(err) }
 }
 
 const login = async (req: any, res: any, next: any) => {
@@ -38,13 +40,17 @@ const login = async (req: any, res: any, next: any) => {
     return res.json();
 }
 
-const issueNewJWT = async (req: any, res: any, next: any) => {
-    //@ts-ignore
-    return res.json();
+const activate = async (req: any, res: any, next: any) => {
+    try {
+        const activationLink = req.params.link;
+        await UserService.activate(activationLink);
+        return res.redirect(process.env.CLIENT_URL);
+    }
+    catch (err) { return next(err as ApiError); }
 }
 
 export default {
     registration,
     login,
-    issueNewJWT
+    activate,
 }

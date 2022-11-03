@@ -6,4 +6,5 @@ export const userRouter = Router();
 
 userRouter.post('/registration', UserController.registration);
 userRouter.post('/login', UserController.login);
-userRouter.get('/auth', refreshTokenMiddleware, authMiddleware, UserController.issueNewJWT);
+userRouter.get('/auth');
+userRouter.get('/activate/:link', UserController.activate);
