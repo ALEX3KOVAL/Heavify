@@ -20,7 +20,7 @@ const MailService = function () {
 
 MailService.prototype.sendActivationMessage = async function(to: any, link: any) {
     await this.transporter.sendMail({
-        from: "koval3nich@yandex.ru",
+        from: process.env.SMTP_USER,
         to,
         subject: "Активация аккаунта на " + "http://localhost:3000",
         text: `Для активации перейдите по ссылке ${link}.\n Если вы не регистрировали аккаунт на heavify.ru - просто проигнорируйте данное письмо.`
