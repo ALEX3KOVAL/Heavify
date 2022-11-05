@@ -8,7 +8,7 @@
         style="background: linear-gradient(to right, rgba(44, 4, 106), rgb(196,26,143))"
         shrink-on-scroll
         :height="height"
-        :src=`${API_URL}/index_page/header/${headerPicture}`
+        :src=this.headerPath
         scroll-target="#scrolling-techniques-2"
         scroll-threshold="90"
         fade-img-on-scroll
@@ -74,7 +74,6 @@
 import TheAuthorizationButtonMenu from "@/components/authrozationButtonMenu/TheAuthorizationButtonMenu.vue";
 import TheHeadingButton from "@/components/heading/TheHeadingButton.vue";
 import getPicturesGroupByNames from "@/http/api/picture";
-
 export default {
   components: {TheHeadingButton, TheAuthorizationButtonMenu},
   props: {
@@ -90,13 +89,15 @@ export default {
   data: () => ({
     navigationPanelVisible: false,
     authorizationButtonMenuVisible: false,
-    headerPicture: "",
+    headerPath: ""
   }),
-  created() {
+  async created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
     this.API_URL = process.env.VUE_APP_API_URL;
-    getPicturesGroupByNames(this.pageName, "header").then((data) => this.headerPicture = data[0]);
+    await getPicturesGroupByNames(this.pageName, "header").then((data) => {
+      this.headerPath = `${this.API_URL}/index_page/header/${data[0]}`;
+    });
   },
   computed: {
     iconsSize() {
