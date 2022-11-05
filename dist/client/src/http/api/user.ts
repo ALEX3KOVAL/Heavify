@@ -1,6 +1,5 @@
 import {host} from "@/http";
 import jwt_decode from "jwt-decode";
-import ApiError from "../../../../../src/server/api/http/error/ErrorAPI"
 
 export const registration = async (userName: string, email: string, password: string) => {
     //@ts-ignore
@@ -25,7 +24,7 @@ export const check = async () => {
         return jwt_decode(accessToken);
     }
     catch (err) {
-        return ApiError.identify(err as Error).getMessage();
+        console.log((err as Error).message);
     }
 }
 

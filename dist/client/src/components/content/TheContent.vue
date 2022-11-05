@@ -10,19 +10,19 @@
     </div>
     <div :style="`background: #601a8f;color: white;width: 100%;height: ${this.height}px`">
     </div>
-    <div class="carousel__wrapper" :style="`height: ${appbarHeight}px`">
+    <div class="carousel__wrapper" :style="`height: ${carouselHeight}px`">
       <transition appear
         name="bounce">
         <carousel
           v-if="presentationCarouselDrawer"
-          :height="appbarHeight"
+          :height="carouselHeight"
           :page-name="pageName"
           component-name="presentation"/>
       </transition>
     </div>
-    <div class="carousel__wrapper" :style="`height: ${appbarHeight}px;`">
+    <div class="carousel__wrapper" :style="`height: ${carouselHeight}px;`">
       <carousel
-        :height="appbarHeight"
+        :height="carouselHeight"
         :page-name="pageName"
         component-name="presentation"/>
     </div>
@@ -56,17 +56,8 @@ export default {
     }
   },
   computed: {
-    appbarHeight: function () {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return this.$vuetify.breakpoint.width * 0.3473;
-        case "sm":
-          return this.$vuetify.breakpoint.width * 0.3773;
-        case "lg":
-          return this.$vuetify.breakpoint.width * 0.2973;
-        default:
-          return this.$vuetify.breakpoint.width * 0.3173;
-      }
+    carouselHeight: function () {
+      return this.$vuetify.breakpoint.height * 0.573;
     }
   },
   mixins: [velocityMixin]
