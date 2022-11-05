@@ -4,7 +4,7 @@ import {readdir} from "fs";
 const getPicturesGroupByNames = async (req: any, res: any, next: any) => {
     const {pageName, componentType, componentName} = req.params;
     if (pageName && componentType) {
-        readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName}`, (err, files) => {
+        readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName ? componentName : ""}`, (err, files) => {
             if (err) {
                 return next(ErrorAPI.identify(err));
             }
