@@ -94,9 +94,8 @@ export default {
   async created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
-    this.API_URL = process.env.VUE_APP_API_URL;
     await getPicturesGroupByNames(this.pageName, "header").then((data) => {
-      this.headerPath = `${this.API_URL}/index_page/header/${data[0]}`;
+      this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${data[0]}`;
     });
   },
   computed: {
