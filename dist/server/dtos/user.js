@@ -1,5 +1,5 @@
 function UserDTO(model) {
-    this.id = model.userId;
+    this.id = model.id;
     this.email = model.email;
     this.isActivated = model.isActivated;
 }

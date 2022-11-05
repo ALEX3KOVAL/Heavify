@@ -1,5 +1,6 @@
 import Index from "jsonwebtoken";
 import { RefreshToken } from "../models/models";
+import { ErrorAPI } from "../api/http/HttpAPI";
 const generateTokens = async (payload) => {
     const accessToken = Index.sign(payload, process.env.JWT_ACCESS_SECRET_KEY, { expiresIn: process.env.JWT_ACCESS_EXPIRATION });
     const refreshToken = Index.sign(payload, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: process.env.JWT_REFRESH_EXPIRATION });
@@ -19,7 +20,34 @@ const saveToken = async (userId, refreshToken) => {
     //@ts-ignore
     return await RefreshToken.createToken(userId, refreshToken);
 };
+const removeToken = async (token) => await RefreshToken.destroy({ where: { token } });
+const validateAccessToken = async (accessToken) => {
+    try {
+        return Index.verify(accessToken, process.env.JWT_ACCESS_SECRET_KEY);
+    }
+    catch (err) {
+        throw ErrorAPI.identify(err);
+    }
+};
+const validateRefreshToken = async (refreshToken) => {
+    try {
+        return Index.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
+    }
+    catch (err) {
+        throw ErrorAPI.unauthorized("Обновляющий токен неверен");
+    }
+};
+const findToken = async (token) => {
+    if (!(await RefreshToken.findOne({ where: { token } }))) {
+        throw ErrorAPI.unauthorized("Обновляющий токен не найден");
+    }
+    return true;
+};
 export default {
     generateTokens,
-    saveToken
+    saveToken,
+    removeToken,
+    validateAccessToken,
+    validateRefreshToken,
+    findToken
 };

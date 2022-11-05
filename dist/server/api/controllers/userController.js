@@ -1,10 +1,12 @@
-import ApiError from "../error/apiError";
-import { RefreshToken, User } from "../../models/models";
-import bcrypt from "bcrypt";
-import $data from "../../shared_data";
+import { ErrorAPI, success } from "../http/HttpAPI";
 import UserService from "../../service/user";
+import { validationResult } from "express-validator";
 const registration = async (req, res, next) => {
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return next(ErrorAPI.badRequest("Ошибка при валидации", errors));
+        }
         const { userName, email, password, role } = req.body;
         console.log("userName --- ", userName);
         const userData = await UserService.registration(userName, email, password, role);
@@ -18,25 +20,9 @@ const registration = async (req, res, next) => {
 };
 const login = async (req, res, next) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-        return next(ApiError.unauthorized("Указан неверный логин"));
-    }
-    let comparePassword = bcrypt.compareSync(password, user.password);
-    if (!comparePassword) {
-        return next(ApiError.unauthorized("Указан неверный пароль"));
-    }
-    let refreshToken;
-    refreshToken = await RefreshToken.findOne({ where: { userId: user.id } });
-    if (!refreshToken) {
-        //@ts-ignore
-        refreshToken = await RefreshToken.createToken(user.id);
-        //@ts-ignore
-        delete $data.refreshToken;
-        //@ts-ignore
-        $data.refreshToken = refreshToken.token;
-    }
-    return res.json();
+    const userData = await UserService.login(email, password);
+    res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
+    return res.json(userData);
 };
 const activate = async (req, res, next) => {
     try {
@@ -48,8 +34,33 @@ const activate = async (req, res, next) => {
         return next(err);
     }
 };
+const logout = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.cookies;
+        await UserService.logout(refreshToken);
+        res.clearCookie('refreshToken');
+        return res.status(success.STATUS).json("Выход из профиля прошёл успешно");
+    }
+    catch (err) {
+        return next(err);
+    }
+};
+const refresh = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.cookies;
+        const userData = await UserService.refresh(refreshToken);
+        //@ts-ignore
+        res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
+        return res.json(userData);
+    }
+    catch (err) {
+        return next(err);
+    }
+};
 export default {
     registration,
     login,
     activate,
+    logout,
+    refresh
 };

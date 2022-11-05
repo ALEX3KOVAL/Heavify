@@ -53,8 +53,8 @@ export const createWhereClauseObject = (model, id, queryValue, queryKey = "") =>
             return { id: Sequelize.literal(createSqlStringBy(model, queryValue, queryKey)) };
     }
 };
+export const countOfTableRows = (modelName) => `(SELECT MAX(id) FROM ${modelName})`;
 export const createSqlStringBy = (modelName, queryValue, queryKey) => {
-    console.log(22222);
     switch (modelName) {
         case "song":
             switch (queryKey) {

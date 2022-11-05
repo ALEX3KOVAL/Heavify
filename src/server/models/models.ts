@@ -36,7 +36,7 @@ export const RefreshToken: ModelStatic<Model> = sequelize.define('refresh_tokens
     //@ts-ignore
     token: {type: STRING, notNull: true},
     //@ts-ignore
-    userId: {type: INTEGER, foreignKey: true, unique: true, references: {table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
+    userId: {type: STRING, foreignKey: true, unique: true, references: {table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
     //@ts-ignore
     expiryDate: {type: DATE, notNull: true},
     //@ts-ignore
@@ -60,11 +60,6 @@ RefreshToken.createToken = async function (id: string, token) {
     return refreshToken.token;
 };
 
-//@ts-ignore
-RefreshToken.verifyExpiration = (token) => {
-    return token.expiryDate.getTime() < new Date().getTime();
-};
-
 export const Selection: ModelStatic<Model> = sequelize.define('selections', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
@@ -86,7 +81,7 @@ export const Song: ModelStatic<Model> = sequelize.define('songs', {
 });
 
 export const User: ModelStatic<Model> = sequelize.define('users', {
-    id: {type: INTEGER, primaryKey: true, autoIncrement: true},
+    id: {type: STRING, primaryKey: true},
     //@ts-ignore
     userName: {type: STRING, unique: true, notNull: true},
     email: {type: STRING, unique: true},
@@ -98,9 +93,7 @@ export const User: ModelStatic<Model> = sequelize.define('users', {
     //@ts-ignore
     isActivated: {type: BOOLEAN, defaultValue: false},
     //@ts-ignore
-    activationLink: {type: STRING},
-    //@ts-ignore
-    userId: {type: STRING, notNull: true, unique: true}
+    activationLink: {type: STRING}
 }, {
     timestamps: false
 });
@@ -168,7 +161,7 @@ export const SelectionSong: ModelStatic<Model> = sequelize.define('selection_son
 export const UserSong: ModelStatic<Model> = sequelize.define('user_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
-    userId: {type: INTEGER, foreignKey: true, references: {table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
+    userId: {type: STRING, foreignKey: true, references: {table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
     //@ts-ignore
     songId: {type: INTEGER, foreignKey: true, references: {table: "songs", field: "id", onDelete: "cascade", onUpdate: "cascade"}}
 }, {
@@ -198,5 +191,4 @@ Song.belongsToMany(Genre, {through: GenreSong, as: "genre"});
 Author.belongsToMany(Song, {through: AuthorSong, as: "song"});
 Song.belongsToMany(Author, {through: AuthorSong, as: "author"});
 
-RefreshToken.belongsTo(User, {foreignKey: "id"});
 User.hasOne(RefreshToken, {foreignKey: "userId"});
