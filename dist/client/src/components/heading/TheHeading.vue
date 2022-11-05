@@ -8,7 +8,7 @@
         style="background: linear-gradient(to right, rgba(44, 4, 106), rgb(196,26,143))"
         shrink-on-scroll
         :height="height"
-        src='../../../../../assets/images/index_page/header/header.png'
+        :src=`${API_URL}/index_page/header/${headerPicture}`
         scroll-target="#scrolling-techniques-2"
         scroll-threshold="90"
         fade-img-on-scroll
@@ -90,12 +90,13 @@ export default {
   data: () => ({
     navigationPanelVisible: false,
     authorizationButtonMenuVisible: false,
+    headerPicture: ""
   }),
   created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
     this.API_URL = process.env.VUE_APP_API_URL;
-    //getPicturesGroupByNames(this.pageName, "header").then((data) => this.presentationCarouselSlides = data);
+    getPicturesGroupByNames("index", "header").then((data) => this.headerPicture = data[0]);
   },
   computed: {
     iconsSize() {
