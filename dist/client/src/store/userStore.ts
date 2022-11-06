@@ -1,5 +1,5 @@
 import Vue from "vue";
-import {IUser} from "../../interfaces/IUser";
+import {IUser} from "../interfaces/IUser";
 import AuthHttpAPI from "@/http/api/auth";
 
 const state = Vue.observable({

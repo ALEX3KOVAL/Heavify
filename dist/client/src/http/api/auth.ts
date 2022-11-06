@@ -1,5 +1,5 @@
 import AuthService from "@/services/auth";
-import {IUser} from "../../../interfaces/IUser";
+import {IUser} from "@/interfaces/IUser";
 
 const registration = async (userName: string, email: string, password: string) => {
     const response = await AuthService.registration(userName, email, password);
