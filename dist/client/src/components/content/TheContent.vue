@@ -3,7 +3,7 @@
       @scroll="callback"
       color="background"
       id="scrolling-techniques-2"
-      class="overflow-y-auto overflow-x-hidden"
+      :class="`overflow-y-${overflowYMode} overflow-x-hidden`"
       height="787px"
   >
     <div>
@@ -48,7 +48,7 @@ export default {
     pageName: {
       type: String,
       required: true
-    }
+    },
   },
   methods: {
     callback() {
@@ -56,8 +56,17 @@ export default {
     }
   },
   computed: {
-    carouselHeight: function () {
+    carouselHeight() {
       return this.$vuetify.breakpoint.height * 0.573;
+    },
+    overflowYMode() {
+      switch (this.$vuetify.breakpoint.width) {
+        case "lg":
+          case "xl":
+            return "hidden";
+        default:
+          return "auto";
+      }
     }
   },
   mixins: [velocityMixin]

@@ -1,7 +1,7 @@
 <template>
   <v-col>
-    <the-heading :height="appbarHeight" page-name="index"/>
-    <the-content :height="appbarHeight" page-name="index"/>
+    <the-heading :height="height" :width="width" page-name="index"/>
+    <the-content :height="height" page-name="index"/>
   </v-col>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   name: "IndexView",
   components: {TheContent, TheHeading},
   computed: {
-    appbarHeight: function () {
+    height() {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
           var height = this.$vuetify.breakpoint.width * 0.1984;
@@ -22,7 +22,15 @@ export default {
           return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
       }
     },
-    appbar
+    width() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "lg":
+          case "xl":
+            return this.$vuetify.breakpoint.width - 17;
+        default:
+          return this.$vuetify.breakpoint.width;
+      }
+    }
   },
   created() {
     document.addEventListener("DOMContentLoaded", function(){
