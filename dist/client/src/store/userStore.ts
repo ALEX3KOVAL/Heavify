@@ -1,34 +1,58 @@
-//@ts-ignore
-import {makeAutoObservable} from "mobx";
+import Vue from "vue";
+import {IUser} from "../../interfaces/IUser";
+import AuthHttpAPI from "@/http/api/auth";
 
-declare class UserStore {
-  setIsAuth(authState: boolean): void;
-  setUser(user: any): void;
-  isAuth(): boolean;
-  user(): any;
+const state = Vue.observable({
+  isAuth: false,
+  user: {} as IUser,
+});
+
+const getters = {
+  isAuth: (): boolean => state.isAuth,
+  user: (): IUser => state.user
 }
 
-function UserStore() {
-  var _isAuth: boolean = false;
-  var _user = {};
-  var _instance = new UserStore();
-
-  Object.setPrototypeOf(_instance, UserStore.prototype);
-
-  (() => {
-    //@ts-ignore
-    makeAutoObservable(this);
-  })();
-
-  UserStore.prototype.setIsAuth = (authState: boolean) => _isAuth = authState;
-
-  UserStore.prototype.setUser = (user: any) => _user = user;
-
-  UserStore.prototype.isAuth = () => _isAuth;
-
-  UserStore.prototype.user = () => _user;
-
-  return _instance;
+const mutations = {
+  setAuth: (value: boolean) => state.isAuth = value,
+  setUser: (value: IUser) => state.user = value
 }
 
-export default UserStore;
+const actions = {
+  login: async (email: string, password: string) => {
+    try {
+      const user: IUser = await AuthHttpAPI.login(email, password);
+      mutations.setAuth(true);
+      mutations.setUser(user);
+    }
+    catch(err) {
+      console.log((err as any)?.response?.data?.message);
+    }
+  },
+  registration: async (userName: string, email: string, password: string) => {
+    try {
+      const user: IUser = await AuthHttpAPI.registration(userName, email, password);
+      mutations.setAuth(true);
+      mutations.setUser(user);
+    }
+    catch(err) {
+      console.log((err as any)?.response?.data?.message);
+    }
+  },
+  logout: async () => {
+    try {
+      await AuthHttpAPI.logout();
+      mutations.setAuth(false);
+      mutations.setUser({} as IUser);
+    }
+    catch(err) {
+      console.log((err as any)?.response?.data?.message);
+    }
+  }
+}
+
+export default {
+  getters,
+  mutations,
+  state,
+  actions
+}

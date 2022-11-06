@@ -22,6 +22,7 @@ export default {
           return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
       }
     },
+    appbar
   },
   created() {
     document.addEventListener("DOMContentLoaded", function(){

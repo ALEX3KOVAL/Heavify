@@ -84,7 +84,7 @@ export default {
     pageName: {
       type: String,
       required: true
-    }
+    },
   },
   data: () => ({
     navigationPanelVisible: false,

@@ -1,10 +1,7 @@
-import {host} from "@/http";
+import PictureService from "@/services/picture";
 
-const getPicturesGroupByNames = async (pageName: string, componentType: string, componentName = "") => {
-    console.log(`api/pictures/${pageName}/${componentType}/${componentName}`);
-    //@ts-ignore
-    const {filesNames} = (await host.get(`api/pictures/${pageName}/${componentType}/${componentName}`)).data;
-    console.log(filesNames);
-    return filesNames;
+const getPicturesGroupByNames = async (pageName: string, componentType: string, componentName = ""): Promise<string[]> => {
+    const response = await PictureService.getPicturesGroupByNames(pageName, componentType, componentName);
+    return response.data;
 }
 export default getPicturesGroupByNames;
