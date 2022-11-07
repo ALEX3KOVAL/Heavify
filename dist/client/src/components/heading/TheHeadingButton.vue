@@ -3,7 +3,7 @@
       fab
       icon
       class="elevation-14 header__btn"
-      @click="onClick"> <!-- вызываем метод, где будет $emit родительскому компоненту (TheHeading) -->
+      @click="onClick">
     <v-icon :size="iconsSize">
       {{iconName}}
     </v-icon>

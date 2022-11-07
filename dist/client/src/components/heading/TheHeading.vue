@@ -15,7 +15,7 @@
         app
         class="rounded-b-lg"
     >
-      <v-row class="d-flex justify-center mt-1">
+      <v-row class="d-flex justify-center mt-1" style="height: 1vh !important;">
       <the-heading-button
         :icons-size="iconsSize"
         :icon-name="`mdi-menu`"

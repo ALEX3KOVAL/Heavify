@@ -16,10 +16,10 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
           var height = this.$vuetify.breakpoint.width * 0.1984;
-          return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
+          return height;
         default:
           var height = this.$vuetify.breakpoint.width * 0.2284;
-          return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
+          return height;
       }
     },
     width() {
