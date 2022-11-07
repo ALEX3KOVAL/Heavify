@@ -1,5 +1,7 @@
 import AuthService from "@/services/auth";
 import {IUser} from "@/interfaces/IUser";
+import axios from "axios";
+import {IAuthResponse} from "@/interfaces/IAuthResponse";
 
 const registration = async (userName: string, email: string, password: string) => {
     const response = await AuthService.registration(userName, email, password);
@@ -14,12 +16,19 @@ const login = async (email: string, password: string): Promise<IUser> => {
 }
 
 const logout = async (): Promise<void> => {
-    const response = await AuthService.logout();
+    await AuthService.logout();
     localStorage.removeItem('token');
+}
+
+const checkAuth = async(): Promise<IUser> => {
+    const response = await AuthService.checkAuth();
+    localStorage.setItem('token', response.data.accessToken);
+    return response.data.user;
 }
 
 export default {
     registration,
     login,
-    logout
+    logout,
+    checkAuth
 }
