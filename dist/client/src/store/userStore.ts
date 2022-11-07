@@ -1,6 +1,8 @@
 import Vue from "vue";
-import {IUser} from "../interfaces/IUser";
+import {IUser} from "@/interfaces/IUser";
 import AuthHttpAPI from "@/http/api/auth";
+import axios, {AxiosResponse} from "axios";
+import {IAuthResponse} from "@/interfaces/IAuthResponse";
 
 const state = Vue.observable({
   isAuth: false,
@@ -45,6 +47,16 @@ const actions = {
       mutations.setUser({} as IUser);
     }
     catch(err) {
+      console.log((err as any)?.response?.data?.message);
+    }
+  },
+  checkAuth: async() => {
+    try {
+      const user: IUser = await AuthHttpAPI.checkAuth();
+      mutations.setAuth(true);
+      mutations.setUser(user);
+    }
+    catch (err) {
       console.log((err as any)?.response?.data?.message);
     }
   }
