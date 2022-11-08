@@ -1,7 +1,7 @@
 <template>
     <v-container class="presentation-carousel" :style="`height: ${height}px`">
         <v-card
-          class="elevation-24 rounded-xl presentation-carousel__wrapper" :height="height"
+          class="elevation-24 rounded-xl presentation-carousel__wrapper" :height="height" :style="`width: ${width}px;`"
         >
           <v-carousel
               cycle
@@ -30,16 +30,20 @@ import getPicturesGroupByNames from "@/http/api/picture";
 export default {
   name: "carousel",
   props: {
-    height: {
-      type: Number,
-      required: true,
-    },
     pageName: {
       type: String,
       required: true
     },
     componentName: {
       type: String,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    },
+    width: {
+      type: Number,
       required: true
     }
   },
@@ -52,7 +56,7 @@ export default {
   created() {
     this.API_URL = process.env.VUE_APP_API_URL;
     getPicturesGroupByNames("index", "carousel", this.componentName).then((data) => this.presentationCarouselSlides = data);
-  },
+  }
 }
 </script>
 

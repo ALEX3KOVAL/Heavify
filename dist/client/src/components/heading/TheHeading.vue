@@ -3,7 +3,7 @@
     <v-app-bar
         fixed
         dark
-        :width="$vuetify.breakpoint.width - 17"
+        :width="width"
         dense
         style="background: linear-gradient(to right, rgba(44, 4, 106), rgb(196,26,143))"
         shrink-on-scroll
@@ -15,7 +15,7 @@
         app
         class="rounded-b-lg"
     >
-      <v-row class="d-flex justify-center mt-1">
+      <v-row class="d-flex justify-center mt-1" style="height: 1vh !important;">
       <the-heading-button
         :icons-size="iconsSize"
         :icon-name="`mdi-menu`"
@@ -78,6 +78,10 @@ export default {
   components: {TheHeadingButton, TheAuthorizationButtonMenu},
   props: {
     height: {
+      type: Number,
+      required: true
+    },
+    width: {
       type: Number,
       required: true
     },
