@@ -35,7 +35,7 @@
           class="mr-4"
           :icons-size="iconsSize"
           :icon-name="`mdi-login-variant`"
-          @onButtonClick="toggleAuthorizationButton"
+          @onButtonClick=""
           @authorizationButtonNoNeeded="hideAuthorizationButton"
       />
       </v-row>
