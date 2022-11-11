@@ -2,7 +2,7 @@ import {readdir} from "fs";
 import {ErrorAPI} from "../api/http/HttpAPI";
 
 const getPicturesGroupByNames = async (pageName: string, componentType: string, res: any, componentName: string) => {
-    await readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName}`, (err, files) => {
+    await readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName ? componentName : ""}`, (err, files) => {
         if (err) {
             throw ErrorAPI.identify(err);
         }
