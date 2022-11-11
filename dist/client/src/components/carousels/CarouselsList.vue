@@ -1,15 +1,18 @@
 <template>
   <span>
-    <Lazy v-for="componentName in carouselsComponentsNames">
-      <transition
-          appear
-          name="bounce">
-          <carousel
-              :page-name="this.pageName"
-              :component-name="componentName"
-          />
-      </transition>
-    </Lazy>
+    <Lazy
+      v-for="componentName in carouselsComponentsNames"
+      :unrender="true"
+      :unrender-delay="100">
+    <transition
+        appear
+        name="bounce">
+      <carousel
+        :page-name="pageName"
+        :component-name="componentName"
+      />
+    </transition>
+  </Lazy>
   </span>
 </template>
 
@@ -31,14 +34,21 @@ export default {
     }
   },
   data: () => ({
-    carouselsComponentsNames: []
+    carouselsComponentsNames: [],
+    carouselWrapperHeight: Number,
   }),
   created() {
     getComponentsNamesBy(this.pageName, "carousel")
         .then((data) => {
           console.log(data);
           this.carouselsComponentsNames = data;
+          console.log("ghghghghghgh ---- ", this.carouselsComponentsNames[0]);
         });
+  },
+  methods: {
+    setCarouselWrapperHeight(height) {
+      this.carouselWrapperHeight = height;
+    }
   }
 }
 </script>

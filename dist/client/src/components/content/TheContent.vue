@@ -1,19 +1,16 @@
 <template>
   <v-sheet
-      @scroll="callback"
       color="background"
       id="scrolling-techniques-2"
       :class="`overflow-y-auto overflow-x-hidden`"
-      :height="this.$vuetify.breakpoint.height"
+      :height="pageHeight"
   >
-    <div :style="`background: #601a8f;color: white;width: 100%;height: ${height}px`" slot-scope="">
+    <div :style="`background: #601a8f;color: white;width: 100%;height: ${headerHeight}px`" slot-scope="">
     </div>
-    <!--<div class="carousel__wrapper" :style="`height: ${setHeight}px`"> -->
-    <CarouselsList
-      :page-name="pageName"
-    />
-    <!-- </div> -->
-    <div :style="`background: #601a8f;color: white;width: 100%;height: ${500}px`">
+      <CarouselsList
+        :page-name="this.pageName"
+      />
+    <div :style="`background: #601a8f;color: white;width: 100%;height: ${1500}px`">
     </div>
   </v-sheet>
 </template>
@@ -29,11 +26,9 @@ export default {
   },
   data: () => ({
     presentationCarouselDrawer: true,
-    carouselParams: {
-    }
   }),
   props: {
-    height: {
+    headerHeight: {
       type: Number,
       required: true
     },
@@ -42,13 +37,10 @@ export default {
       required: true
     },
   },
-  methods: {
-    callback() {
-      this.presentationCarouselDrawer =
-          document.getElementsByClassName("carousel__wrapper")[0]
-              .getBoundingClientRect().y * 100 / this.$vuetify.breakpoint.height > 1;
-    },
-  },
-  mixins: [velocityMixin]
+  computed: {
+    pageHeight() {
+      return this.$vuetify.breakpoint.height
+    }
+  }
 }
 </script>

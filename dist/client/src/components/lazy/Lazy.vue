@@ -18,7 +18,7 @@ function onIdle(cb = () => {}) {
   } else {
     setTimeout(() => {
       nextTick(cb);
-    }, 300);
+    }, 100);
   }
 }
 
@@ -29,7 +29,7 @@ export default {
     minHeight: Number,
     unrenderDelay: {
       type: Number,
-      default: 10000,
+      default: 1000,
     },
   },
   setup(props: any) {

@@ -18,7 +18,7 @@
                 class="rounded-xl"
                 v-for="(slide, i) in presentationCarouselSlides"
                 :key="i"
-                :src="`${API_URL}/${pageName}/carousel/${componentName}/${slide}`"
+                :src="`${API_URL}/${pageName}_page/carousel/${componentName}/${slide}`"
             >
             </v-carousel-item>
           </v-carousel>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import getPicturesGroupByNames from "@/http/api/picture";
+import {getPicturesGroupByNames} from "@/http/api/picture";
 
 export default {
   name: "carousel",
@@ -47,10 +47,16 @@ export default {
       presentationCarouselSlides: [],
     }
   },
+  mounted() {
+    this.$emit("mounted", this.setHeight);
+  },
   created() {
     this.API_URL = process.env.VUE_APP_API_URL;
     getPicturesGroupByNames(this.pageName, "carousel", this.componentName)
-        .then((data) => this.presentationCarouselSlides = data);
+        .then((data) => {
+          console.log(this.pageName);
+          this.presentationCarouselSlides = data
+        });
   },
   computed: {
     setHeight() {

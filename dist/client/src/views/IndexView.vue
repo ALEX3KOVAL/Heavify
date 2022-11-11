@@ -1,7 +1,7 @@
 <template>
   <v-col>
-    <the-heading :height="height" :width="width" page-name="index"/>
-    <the-content :height="height" page-name="index"/>
+    <the-heading :height="headerHeight" :width="width" page-name="index"/>
+    <the-content :header-height="headerHeight" page-name="index"/>
   </v-col>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   name: "IndexView",
   components: {TheContent, TheHeading},
   computed: {
-    height() {
+    headerHeight() {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
           var height = this.$vuetify.breakpoint.width * 0.1984;
