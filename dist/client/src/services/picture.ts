@@ -1,6 +1,9 @@
+//@ts-ignore
 import {authHost} from "@/http";
 import {AxiosResponse} from "axios";
+//@ts-ignore
 import {IPictures} from "@/interfaces/IPictures";
+//@ts-ignore
 import {IComponentsNames} from "@/interfaces/IComponentsNames";
 
 export const getPicturesGroupByNames = async (pageName: string, componentType: string, componentName = ""): Promise<AxiosResponse<IPictures>> =>
