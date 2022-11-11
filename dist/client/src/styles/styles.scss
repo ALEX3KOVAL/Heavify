@@ -6,6 +6,15 @@ $grid-breakpoints: (
   'xl': 1880px,
 );
 
+html::-webkit-scrollbar {
+  display: none;
+}
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
 .header__btn {
   width: 19px !important;
   height: 19px !important;

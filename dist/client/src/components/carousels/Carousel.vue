@@ -1,7 +1,9 @@
 <template>
-    <v-container class="presentation-carousel" :style="`height: ${height}px`">
+    <v-container class="presentation-carousel" :style="`height: ${setHeight}px`">
         <v-card
-          class="elevation-24 rounded-xl presentation-carousel__wrapper" :height="height" :style="`width: ${width}px;`"
+          class="elevation-24 rounded-xl presentation-carousel__wrapper"
+          :height="setHeight"
+          :style="`width: ${setWidth}px;`"
         >
           <v-carousel
               cycle
@@ -10,13 +12,13 @@
               delimiter-icon="mdi-guitar-pick"
               show-arrows-on-hover
               class="rounded-xl presentation-carousel__slider"
-              :height="height"
+              :height="setHeight"
           >
             <v-carousel-item
                 class="rounded-xl"
                 v-for="(slide, i) in presentationCarouselSlides"
                 :key="i"
-                :src="`${API_URL}/index_page/carousel/${componentName}/${slide}`"
+                :src="`${API_URL}/${pageName}/carousel/${componentName}/${slide}`"
             >
             </v-carousel-item>
           </v-carousel>
@@ -30,22 +32,14 @@ import getPicturesGroupByNames from "@/http/api/picture";
 export default {
   name: "carousel",
   props: {
-    pageName: {
-      type: String,
-      required: true
-    },
     componentName: {
       type: String,
       required: true
     },
-    height: {
-      type: Number,
+    pageName: {
+      type: String,
       required: true
     },
-    width: {
-      type: Number,
-      required: true
-    }
   },
   data() {
     return {
@@ -55,7 +49,47 @@ export default {
   },
   created() {
     this.API_URL = process.env.VUE_APP_API_URL;
-    getPicturesGroupByNames("index", "carousel", this.componentName).then((data) => this.presentationCarouselSlides = data);
+    getPicturesGroupByNames(this.pageName, "carousel", this.componentName)
+        .then((data) => this.presentationCarouselSlides = data);
+  },
+  computed: {
+    setHeight() {
+      const w = this.$vuetify.breakpoint.width;
+      let h = this.$vuetify.breakpoint.height;
+      if (h > w) {
+        if (w * (100 / h) < 58.7) {
+          this.carouselHeight = w * 0.5;
+          return this.carouselHeight;
+        }
+        else {
+          this.carouselHeight = w * 0.4;
+          return this.carouselHeight;
+        }
+      }
+      else {
+        this.carouselHeight = h * 0.55;
+        return this.carouselHeight;
+      }
+    },
+    setWidth() {
+      const w = this.$vuetify.breakpoint.width;
+      let h = this.$vuetify.breakpoint.height;
+      if (h > w) {
+        switch(this.$vuetify.breakpoint.name) {
+          case "xs":
+            this.carouselWidth = w * 0.9;
+            break;
+          case "md":
+            this.carouselWidth = w * 0.7;
+            break;
+        }
+        return this.carouselWidth;
+      }
+      else {
+        this.carouselWidth = w * 0.5;
+        return this.carouselWidth;
+      }
+    }
   }
 }
 </script>

@@ -26,7 +26,7 @@ export default {
         title: 'register',
       },
       {
-        title: 'login',
+        title: 'signin',
       }
     ]
   }),
