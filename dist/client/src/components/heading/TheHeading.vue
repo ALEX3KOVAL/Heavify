@@ -3,7 +3,7 @@
     <v-app-bar
         fixed
         dark
-        :width="$vuetify.breakpoint.width - 17"
+        :width="width"
         dense
         style="background: linear-gradient(to right, rgba(44, 4, 106), rgb(196,26,143))"
         shrink-on-scroll
@@ -15,29 +15,33 @@
         app
         class="rounded-b-lg"
     >
-      <v-row class="d-flex justify-center mt-1">
-      <the-heading-button
-        :icons-size="iconsSize"
-        :icon-name="`mdi-menu`"
-        class="ml-4"
-        @onButtonClick="onMenuButtonClick"
-        @menuButtonWasClicked="onMenuButtonClick"
-      />
-      <v-toolbar-title class="header__title">
-        Heavify
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-row class="d-flex justify-center mt-1" style="height: 1vh !important;">
+        <the-heading-button
+            :icons-size="iconsSize"
+            :icon-name="`mdi-menu`"
+            class="ml-4"
+            @onButtonClick="onMenuButtonClick"
+            @menuButtonWasClicked="onMenuButtonClick"
+        />
+        <v-toolbar-title class="header__title">
+          Heavify
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
         <transition
             name="slide-fade">
-      <the-authorization-button-menu v-if="authorizationButtonMenuVisible" :icons-size="iconsSize"/>
+          <the-authorization-button-menu v-if="authorizationButtonMenuVisible" :icons-size="iconsSize"/>
         </transition>
-      <the-heading-button
-          class="mr-4"
-          :icons-size="iconsSize"
-          :icon-name="`mdi-login-variant`"
-          @onButtonClick=""
-          @authorizationButtonNoNeeded="hideAuthorizationButton"
-      />
+        <consumer>
+          <template v-slot:default="{userStore}">
+            <the-heading-button
+                class="mr-4"
+                :icons-size="iconsSize"
+                :icon-name="`mdi-login-variant`"
+                @onButtonClick="userStore.actions.test(`It's working`)"
+                @authorizationButtonNoNeeded="hideAuthorizationButton"
+            />
+          </template>
+        </consumer>
       </v-row>
     </v-app-bar>
     <v-navigation-drawer
@@ -57,7 +61,6 @@
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
-
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
@@ -72,12 +75,24 @@
 
 <script>
 import TheAuthorizationButtonMenu from "@/components/authrozationButtonMenu/TheAuthorizationButtonMenu.vue";
-import TheHeadingButton from "@/components/heading/TheHeadingButton.vue";
+import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import getPicturesGroupByNames from "@/http/api/picture";
+import Consumer from "@/context/Consumer.vue";
+import Provider from "@/context/Provider.vue";
+
 export default {
-  components: {TheHeadingButton, TheAuthorizationButtonMenu},
+  components: {
+    Provider,
+    Consumer,
+    TheHeadingButton,
+    TheAuthorizationButtonMenu,
+  },
   props: {
     height: {
+      type: Number,
+      required: true
+    },
+    width: {
       type: Number,
       required: true
     },

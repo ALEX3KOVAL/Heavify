@@ -1,29 +1,24 @@
 <template>
-  <v-app>
-      <router-view/>
-  </v-app>
+    <v-app>
+      <provider>
+        <component is=""/>
+        <router-view/>
+      </provider>
+    </v-app>
 </template>
 
 <script lang="ts">
 import "@fontsource/montserrat";
 import "@fontsource/alkalami"
+import Provider from "@/context/Provider.vue";
 
 export default {
   name: 'App',
-
+  components: {
+    Provider,
+  },
   data: () => ({
     //
   }),
 };
 </script>
-
-<style>
-  html::-webkit-scrollbar {
-    display: none;
-  }
-  * {
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-  }
-</style>

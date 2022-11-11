@@ -20,6 +20,7 @@ const mutations = {
 }
 
 const actions = {
+  test: (message: string) => alert(message),
   login: async (email: string, password: string) => {
     try {
       const user: IUser = await AuthHttpAPI.login(email, password);
@@ -65,6 +66,5 @@ const actions = {
 export default {
   getters,
   mutations,
-  state,
-  actions
+  actions,
 }
