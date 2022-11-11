@@ -76,7 +76,7 @@
 <script>
 import TheAuthorizationButtonMenu from "@/components/authrozationButtonMenu/TheAuthorizationButtonMenu.vue";
 import TheHeadingButton from "@/components/heading/HeadingButton.vue";
-import getPicturesGroupByNames from "@/http/api/picture";
+import {getPicturesGroupByNames} from "@/http/api/picture";
 import Consumer from "@/context/Consumer.vue";
 import Provider from "@/context/Provider.vue";
 
