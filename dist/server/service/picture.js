@@ -13,7 +13,7 @@ const getFoldersNamesBy = async (pageName, componentType, res) => {
         if (err) {
             throw ErrorAPI.identify(err);
         }
-        return res.json({ foldersNames: foldersNames });
+        return res.json({ componentsNames: foldersNames });
     });
 };
 export default {
