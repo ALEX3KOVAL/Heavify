@@ -9,4 +9,3 @@ export const getComponentsNamesBy = async (pageName: string, componentType: stri
     const response = await PictureService.getComponentsNamesBy(pageName, componentType);
     return response.data.componentsNames;
 }
-
