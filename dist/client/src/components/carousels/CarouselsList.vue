@@ -13,7 +13,7 @@
 
 <script>
 import Carousel from "./Carousel.vue";
-import {getComponentsNamesBy} from "../../http/api/picture";
+import {getComponentsNamesBy} from "@/http/api/picture";
 import Lazy from "../lazy/Lazy.vue";
 
 export default {
