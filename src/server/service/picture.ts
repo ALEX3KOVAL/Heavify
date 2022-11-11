@@ -14,7 +14,7 @@ const getFoldersNamesBy = async (pageName: string, componentType: string, res: a
         if (err) {
             throw ErrorAPI.identify(err);
         }
-        return res.json({ foldersNames: foldersNames });
+        return res.json({ componentsNames: foldersNames });
     });
 };
 
