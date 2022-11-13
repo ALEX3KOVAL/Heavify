@@ -33,13 +33,20 @@
         </transition>
         <consumer>
           <template v-slot:default="{userStore}">
-            <the-heading-button
-                class="mr-4"
-                :icons-size="iconsSize"
-                :icon-name="`mdi-login-variant`"
-                @onButtonClick="userStore.actions.test(`It's working`)"
-                @authorizationButtonNoNeeded="hideAuthorizationButton"
-            />
+            <the-authorization-form>
+              <template v-slot:activator="{on, attrs}">
+                <the-heading-button
+                  class="mr-4"
+                  :icons-size="iconsSize"
+                  :icon-name="`mdi-login-variant`"
+                  v-on="on"
+                  v-bind="attrs"
+                  @authorizationButtonNoNeeded="hideAuthorizationButton"
+                />
+                <!-- @onButtonClick="userStore.actions.test(`It's working`)" -->
+              </template>
+            </the-authorization-form>
+
           </template>
         </consumer>
       </v-row>
@@ -79,6 +86,7 @@ import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import {getPicturesGroupByNames} from "@/http/api/picture";
 import Consumer from "@/context/Consumer.vue";
 import Provider from "@/context/Provider.vue";
+import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
 
 export default {
   components: {
@@ -86,6 +94,7 @@ export default {
     Consumer,
     TheHeadingButton,
     TheAuthorizationButtonMenu,
+    TheAuthorizationForm
   },
   props: {
     height: {
