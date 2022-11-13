@@ -8,6 +8,7 @@
 <script>
 import TheHeading from "@/components/heading/TheHeading.vue";
 import TheContent from "@/components/content/TheContent.vue";
+
 export default {
   name: "IndexView",
   components: {TheContent, TheHeading},
@@ -33,9 +34,7 @@ export default {
     }
   },
   created() {
-    document.addEventListener("DOMContentLoaded", function(){
-      window.pageYOffset = 0;
-    });
+    document.addEventListener("DOMContentLoaded", () => window.pageYOffset = 0);
   }
 }
 </script>
