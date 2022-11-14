@@ -35,7 +35,7 @@ export default {
   }),
   methods: {
     toggleVisible() {
-      this.isSideBarVisible = !this.isSideBarVisible;
+      this.isVisible = !this.isVisible;
     }
   }
 }
