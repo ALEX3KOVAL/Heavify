@@ -63,13 +63,14 @@ export default {
   data: () => ({
     isDialogVisible: false
   }),
-  watch: {
-    dialog (val) {
-      if (!val) return
-
-      setTimeout(() => (this.dialog = false), 4000)
+  methods: {
+    hide() {
+      this.isDialogVisible = false;
     },
-  },
+    toggleVisible() {
+      this.isDialogVisible = !this.isDialogVisible;
+    }
+  }
 }
 </script>
 
