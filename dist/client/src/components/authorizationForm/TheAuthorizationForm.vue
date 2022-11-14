@@ -4,7 +4,9 @@
       persistent
       max-width="600px"
   >
-    <slot v-bind="attrs" v-on="on"/>
+    <template v-slot:activator="{on, attrs}">
+      <slot v-bind="{attrs, on}"/>
+    </template>
     <v-card>
       <v-card-title>
         <span class="text-h5">LogIn/Register</span>

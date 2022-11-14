@@ -14,16 +14,9 @@
 export default {
   name: "the-heading-button",
   props: ["iconsSize", "iconName"],
-  created() {
-    window.addEventListener("click", (e) => {
-      if (!this.$el.contains(e.target)) {
-        return this.$emit("authorizationButtonNoNeeded", e);
-      }
-    })
-  },
   methods: {
     onClick(event) {
-        return this.$emit("onButtonClick", event);
+        return this.$emit("onClick", event);
     }
   }
 }

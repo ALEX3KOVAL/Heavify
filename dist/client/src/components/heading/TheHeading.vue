@@ -20,80 +20,48 @@
             :icons-size="iconsSize"
             :icon-name="`mdi-menu`"
             class="ml-4"
-            @onButtonClick="onMenuButtonClick"
-            @menuButtonWasClicked="onMenuButtonClick"
+            @onClick="toggleSideBarVisible"
         />
         <v-toolbar-title class="header__title">
           Heavify
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <transition
-            name="slide-fade">
-          <the-authorization-button-menu v-if="authorizationButtonMenuVisible" :icons-size="iconsSize"/>
-        </transition>
         <consumer>
           <template v-slot:default="{userStore}">
-            <the-authorization-form>
-              <template v-slot:activator="{on, attrs}">
-                <the-heading-button
-                  class="mr-4"
-                  :icons-size="iconsSize"
-                  :icon-name="`mdi-login-variant`"
-                  v-on="on"
-                  v-bind="attrs"
-                  @authorizationButtonNoNeeded="hideAuthorizationButton"
-                />
+            <the-authorization-form ref="theAuthorizationForm">
+                <template v-slot:default="{on}">
+                  <the-heading-button
+                      class="mr-4"
+                      :icons-size="iconsSize"
+                      :icon-name="`mdi-login-variant`"
+                      @authorizationFormNoNeeded="hideAuthorizationForm"
+                      @onClick="toggleAuthorizationFormVisible"
+                  />
+                </template>
                 <!-- @onButtonClick="userStore.actions.test(`It's working`)" -->
-              </template>
             </the-authorization-form>
-
           </template>
         </consumer>
       </v-row>
     </v-app-bar>
-    <v-navigation-drawer
-        v-model="navigationPanelVisible"
-        absolute
-        temporary
-        color="rgba(0,0,0,.8)"
-    >
-      <v-list
-          nav
-          dense
-      >
-        <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+    <the-side-bar ref="theSideBar"/>
   </header>
 </template>
 
 <script>
-import TheAuthorizationButtonMenu from "@/components/authrozationButtonMenu/TheAuthorizationButtonMenu.vue";
-import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import {getPicturesGroupByNames} from "@/http/api/picture";
+import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import Consumer from "@/context/Consumer.vue";
 import Provider from "@/context/Provider.vue";
 import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
+import TheSideBar from "@/components/sidebar/TheSideBar.vue";
 
 export default {
   components: {
+    TheSideBar,
     Provider,
     Consumer,
     TheHeadingButton,
-    TheAuthorizationButtonMenu,
     TheAuthorizationForm
   },
   props: {
@@ -111,8 +79,6 @@ export default {
     },
   },
   data: () => ({
-    navigationPanelVisible: false,
-    authorizationButtonMenuVisible: false,
     headerPath: "",
   }),
   async created() {
@@ -125,7 +91,6 @@ export default {
   },
   computed: {
     iconsSize() {
-      console.log(this.$vuetify.breakpoint);
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
           return 14;
@@ -141,18 +106,15 @@ export default {
     }
   },
     methods: {
-      hideAuthorizationButton() {
-        this.authorizationButtonMenuVisible = false;
+      hideAuthorizationForm() {
+        this.$refs.theAuthorizationForm.hide();
       },
-      toggleAuthorizationButton() {
-        this.authorizationButtonMenuVisible = !this.authorizationButtonMenuVisible
+      toggleSideBarVisible() {
+        this.$refs.theSideBar.toggleVisible();
       },
-      onMenuButtonClick() {
-        this.navigationPanelVisible = !this.navigationPanelVisible;
-      },
+      toggleAuthorizationFormVisible() {
+        this.$refs.theAuthorizationForm.toggleVisible();
+      }
     },
 }
 </script>
-
-<style scoped>
-</style>
