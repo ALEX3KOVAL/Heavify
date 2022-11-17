@@ -2,54 +2,72 @@
   <v-dialog
       v-model="isDialogVisible"
       persistent
-      max-width="600px"
+      class="authorization-form"
+      :max-width="authorizationFormWidth"
   >
     <template v-slot:activator="{on, attrs}">
       <slot v-bind="{attrs, on}"/>
     </template>
-    <v-card>
-      <v-card-title>
-        <span class="text-h5">LogIn/Register</span>
-      </v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
+    <v-card
+      class="authorization-form__fields-row-wrapper"
+    >
+      <span class="authorization-form__title">Login/Register</span>
+          <div
+            class="authorization-form__fields-row"
+          >
             <v-col
+                class="authorization-form__field-wrapper"
                 cols="12"
-                sm="6"
-                md="4"
+                sm="12"
+                md="10"
+                lg="10"
             >
               <v-text-field
+                  v-model="login"
                   label="Логин"
+                  height="40"
                   required
+                  outlined
                   placeholder="email, номер телефона, ID"
               ></v-text-field>
             </v-col>
-            <v-col cols="12">
+            <v-col
+              class="authorization-form__field-wrapper"
+              cols="12"
+              sm="12"
+              md="10"
+              lg="10"
+            >
               <v-text-field
+                  v-model="pwd"
+                  height="40"
                   label="Пароль"
                   type="password"
                   required
+                  outlined
               ></v-text-field>
             </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
+          </div>
       <v-card-actions>
-        <v-spacer></v-spacer>
         <v-btn
-            color="red darken-1"
-            text
-            @click="isDialogVisible = false"
-        >
-          Закрыть
+          text
+          color="red"
+          @click="action">
+          Cancel
         </v-btn>
+        <v-spacer></v-spacer>
+        <v-slide-x-reverse-transition>
+          <v-tooltip
+            left
+          >
+          </v-tooltip>
+        </v-slide-x-reverse-transition>
         <v-btn
-            color="blue darken-1"
-            text
-            @click="isDialogVisible = false"
+          color="primary"
+          text
+          @click="action"
         >
-          Отправить
+          Submit
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -61,7 +79,9 @@
 export default {
   name: "authorization-form",
   data: () => ({
-    isDialogVisible: false
+    isDialogVisible: false,
+    login: "",
+    pwd: ""
   }),
   methods: {
     hide() {
@@ -69,6 +89,25 @@ export default {
     },
     toggleVisible() {
       this.isDialogVisible = !this.isDialogVisible;
+    },
+    action() {
+      this.pwd = "";
+      this.login = "";
+      this.isDialogVisible = false;
+    },
+  },
+  computed: {
+    authorizationFormWidth() {
+      let width = this.$vuetify.breakpoint.width;
+      switch (this.$vuetify.breakpoint.name) {
+        case "sm":
+        case "xs":
+          return width * 0.8;
+        case "md":
+          return width * 0.7;
+        default:
+          return width * 0.3;
+      }
     }
   }
 }

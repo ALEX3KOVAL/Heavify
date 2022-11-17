@@ -9,6 +9,74 @@ $grid-breakpoints: (
 html::-webkit-scrollbar {
   display: none;
 }
+
+.authorization-form__title {
+  display: flex;
+  justify-content: center;
+  font-weight: bold !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 1.3rem !important;
+}
+
+.v-overlay {
+  opacity: 0 !important;
+  background: pink !important;
+  transition: 0.7s ease-in !important;
+}
+
+.v-overlay--active {
+  opacity: 1 !important;
+  background: indianred !important;
+}
+
+.v-dialog {
+  box-shadow: 62px 20px 95px 77px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 44%), 0px 9px 46px 8px rgb(0 0 0 / 12%) !important;
+}
+
+.v-overlay__scrim {
+  opacity: inherit !important;
+  background: #601a8f !important;
+}
+
+.authorization-form__fields-row-wrapper {
+  display: flex;
+  align-content: stretch;
+  background: #ffa4b6  !important;
+  flex-direction: column;
+}
+
+
+.authorization-form__field-wrapper {
+  position: relative;
+  padding: 5% 0 !important;
+}
+
+.authorization-form__fields-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 8% !important;
+}
+
+.v-text-field input {
+  padding-bottom: 0 !important;
+}
+
+.v-input__slot {
+  padding-bottom: 0 !important;
+}
+
+.v-label {
+  transition: 0.4s cubic-bezier(0.2, 0.1, 0.9, 1.6) !important;
+}
+
+.v-text-field input {
+  line-height: 30px !important;
+}
+
 * {
   margin: 0 !important;
   padding: 0 !important;
@@ -38,6 +106,10 @@ html::-webkit-scrollbar {
   @media only screen and (min-width: 1880px) {
     font-size:21px !important;
   }
+}
+
+.v-input__slot {
+  background: white !important;
 }
 
 .v-btn {
