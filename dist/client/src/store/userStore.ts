@@ -53,6 +53,7 @@ const actions = {
   },
   checkAuth: async() => {
     try {
+      console.log("fffffffffffffff");
       const user: IUser = await AuthHttpAPI.checkAuth();
       mutations.setAuth(true);
       mutations.setUser(user);

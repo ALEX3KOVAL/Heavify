@@ -23,10 +23,8 @@ router.beforeEach(async (to, from, next) => {
     if (localStorage.getItem("accessToken")) {
         console.log("auth");
         if (await UserStore.actions.checkAuth()) {
-            if (to.path === AUTH_ROUTE) {
-                return HOME_ROUTE;
-            }
-            return to.path;
+            //@ts-ignore
+            next();
         }
         else {
             if (to.path === INDEX_ROUTE) {
@@ -36,6 +34,7 @@ router.beforeEach(async (to, from, next) => {
         }
     }
     else {
+        console.log("not auth");
         //@ts-ignore
         if (to.meta.requiresAuth) {
             next({path: AUTH_ROUTE});
