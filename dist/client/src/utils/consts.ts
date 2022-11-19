@@ -1,6 +1,5 @@
 export const ADMIN_ROUTE = '/admin';
-export const LOGIN_ROUTE = '/login';
-export const REGISTRATION_ROUTE = '/registration';
+export const AUTH_ROUTE = '/auth';
 export const INDEX_ROUTE = '/';
 export const PLAYER_ROUTE = '/player/:id';
 export const HOME_ROUTE = '/home';

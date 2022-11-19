@@ -2,7 +2,9 @@
     <v-app>
       <provider>
         <component is=""/>
-        <router-view/>
+        <transition name="fade">
+          <router-view/>
+        </transition>
       </provider>
     </v-app>
 </template>

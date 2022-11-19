@@ -18,6 +18,10 @@ html::-webkit-scrollbar {
   font-size: 1.3rem !important;
 }
 
+.v-navigation-drawer {
+  box-shadow: 100px 10px 125px 67px rgb(0 0 0 / 40%) !important;
+}
+
 .v-overlay {
   opacity: 0 !important;
   background: pink !important;
@@ -71,6 +75,11 @@ html::-webkit-scrollbar {
 
 .v-label {
   transition: 0.4s cubic-bezier(0.2, 0.1, 0.9, 1.6) !important;
+  animation: wobble 1s !important;
+}
+
+.v-label--active {
+  transform: translateY(-26px) translateX(3px) scale(0.8) !important;
 }
 
 .v-text-field input {
@@ -268,9 +277,11 @@ html::-webkit-scrollbar {
 .slide-fade-enter-active {
   animation: wobble 0.9s ease-in;
 }
+
 .slide-fade-leave-active {
   transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
+
 .slide-fade-enter, .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;

@@ -4,15 +4,14 @@ import {
     SONG_ADDED_ROUTE,
     HOME_ROUTE,
     INDEX_ROUTE,
-    REGISTRATION_ROUTE,
-    LOGIN_ROUTE, SONG_SELECTION_ROUTE
+    AUTH_ROUTE,
+    SONG_SELECTION_ROUTE
 } from "@/utils/consts";
 import AdminView from "@/views/AdminView.vue";
 import HomeView from "@/views/HomeView.vue";
 import SongAddedView from "@/views/SongAddedView.vue";
 import PlayerView from "@/views/PlayerView.vue";
-import LoginView from "@/views/LoginView.vue";
-import RegisterView from "@/views/RegisterView.vue";
+import AuthView from "@/views/AuthView.vue";
 import IndexView from "@/views/IndexView.vue";
 import SongSelectionView from "@/views/SongSelectionView.vue";
 import {RouteConfig} from "vue-router";
@@ -20,13 +19,17 @@ import {RouteConfig} from "vue-router";
 const routes: Array<RouteConfig> = [
     {
         path: INDEX_ROUTE,
-        component: IndexView
+        component: IndexView,
+        meta: {
+            title: "Heavify - get some heavy"
+        }
     },
     {
         path: HOME_ROUTE,
         component: HomeView,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: "Welcome to Heavify"
         }
     },
     {
@@ -51,19 +54,19 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: LOGIN_ROUTE,
-        component: LoginView
-    },
-    {
-        path: REGISTRATION_ROUTE,
-        component: RegisterView
+        path: AUTH_ROUTE,
+        component: AuthView,
+        meta: {
+            title: "Authorization"
+        }
     },
     {
         path: ADMIN_ROUTE,
         component: AdminView,
         meta: {
             requiresAuth: true,
-            isAdmin : true
+            isAdmin : true,
+            title: "Админ-панель"
         }
     },
 ];

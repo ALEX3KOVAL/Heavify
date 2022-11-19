@@ -33,9 +33,6 @@ export default {
       }
     }
   },
-  created() {
-    document.addEventListener("DOMContentLoaded", () => window.pageYOffset = 0);
-  }
 }
 </script>
 

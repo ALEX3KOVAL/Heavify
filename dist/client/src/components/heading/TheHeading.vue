@@ -28,18 +28,13 @@
         <v-spacer></v-spacer>
         <consumer>
           <template v-slot:default="{userStore}">
-            <the-authorization-form ref="theAuthorizationForm">
-                <template v-slot:default="{on}">
-                  <the-heading-button
-                      class="mr-4"
-                      :icons-size="iconsSize"
-                      :icon-name="`mdi-login-variant`"
-                      @authorizationFormNoNeeded="hideAuthorizationForm"
-                      @onClick="toggleAuthorizationFormVisible"
-                  />
-                </template>
-                <!-- @onButtonClick="userStore.actions.test(`It's working`)" -->
-            </the-authorization-form>
+            <the-heading-button
+                class="mr-4"
+                :icons-size="iconsSize"
+                :icon-name="`mdi-login-variant`"
+                @authorizationFormNoNeeded="hideAuthorizationForm"
+                @onClick="showAuthorizationForm"
+            />
           </template>
         </consumer>
       </v-row>
@@ -105,16 +100,16 @@ export default {
       }
     }
   },
-    methods: {
-      hideAuthorizationForm() {
-        this.$refs.theAuthorizationForm.hide();
-      },
-      toggleSideBarVisible() {
-        this.$refs.theSideBar.toggleVisible();
-      },
-      toggleAuthorizationFormVisible() {
-        this.$refs.theAuthorizationForm.toggleVisible();
-      }
+  methods: {
+    hideAuthorizationForm() {
+      // this.$refs.theAuthorizationForm.hide();
     },
+    toggleSideBarVisible() {
+      this.$refs.theSideBar.toggleVisible();
+    },
+    showAuthorizationForm() {
+      this.$router.push('/auth');
+    }
+  },
 }
 </script>
