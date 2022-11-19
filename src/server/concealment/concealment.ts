@@ -13,6 +13,7 @@ export const encryptValue = (text: string) => {
 };
 
 export const decryptValue = (cipherText: string) => {
+    decipher.setAutoPadding(false);
     let decryptedData = decipher.update(cipherText, "hex", "utf-8");
     decryptedData += decipher.final("utf8");
     return decryptedData;
