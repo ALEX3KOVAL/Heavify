@@ -23,7 +23,8 @@ const login = async (req: any, res: any, next: any) => {
         const { email, password } = req.body;
         const userData = await UserService.login(email, password);
         res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
-        return res.json(userData);
+        //@ts-ignore
+        return res.json({user: userData.user, accessToken: userData.accessToken});
     }
     catch (err) {
         return next(err);
