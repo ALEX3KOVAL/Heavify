@@ -58,7 +58,7 @@ const login = async (email, password) => {
     }
     //@ts-ignore
     const userDto = new UserDTO(user);
-    const tokens = TokenService.generateTokens(userDto);
+    const tokens = TokenService.generateTokens({ ...userDto });
     //@ts-ignore
     await TokenService.saveToken(user.id, tokens.refreshToken);
     return { ...tokens, user: userDto };
