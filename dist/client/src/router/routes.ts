@@ -19,13 +19,15 @@ import {RouteConfig} from "vue-router";
 const routes: Array<RouteConfig> = [
     {
         path: INDEX_ROUTE,
+        name: "index",
         component: IndexView,
         meta: {
             title: "Heavify - get some heavy"
-        }
+        },
     },
     {
         path: HOME_ROUTE,
+        name: "home",
         component: HomeView,
         meta: {
             requiresAuth: true,
@@ -55,6 +57,7 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: AUTH_ROUTE,
+        name: "auth",
         component: AuthView,
         meta: {
             title: "Authorization"
@@ -66,7 +69,7 @@ const routes: Array<RouteConfig> = [
         meta: {
             requiresAuth: true,
             isAdmin : true,
-            title: "Админ-панель"
+            title: "Admin"
         }
     },
 ];

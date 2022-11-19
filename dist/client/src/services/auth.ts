@@ -11,7 +11,8 @@ const registration = async (userName: string, email: string, password: string): 
 const logout = async (): Promise<void> =>
     authHost.post(process.env.VUE_APP_USER_POINT + 'logout');
 
-const checkAuth = async(): Promise<AxiosResponse<IAuthResponse>> => authHost.get<IAuthResponse>(process.env.VUE_APP_API_URL + 'refresh', {withCredentials: true});
+const checkAuth = async(): Promise<AxiosResponse<IAuthResponse>> =>
+    authHost.get<IAuthResponse>(process.env.VUE_APP_API_URL + 'refresh', {withCredentials: true});
 
 export default {
     login,

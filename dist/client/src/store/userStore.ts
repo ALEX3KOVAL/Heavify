@@ -56,9 +56,11 @@ const actions = {
       const user: IUser = await AuthHttpAPI.checkAuth();
       mutations.setAuth(true);
       mutations.setUser(user);
+      return true;
     }
     catch (err) {
       console.log((err as any)?.response?.data?.message);
+      return false;
     }
   }
 }
