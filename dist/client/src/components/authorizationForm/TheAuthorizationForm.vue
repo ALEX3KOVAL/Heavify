@@ -62,7 +62,7 @@
         <v-btn
           color="primary"
           text
-          @click="sdshfdhsdfsahfsahsafhhsdfahdfhfsfsahvsdvvxvhxsa"
+          @click="authorize"
         >
           Submit
         </v-btn>
