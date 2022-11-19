@@ -49,7 +49,7 @@
         <v-btn
           text
           color="red"
-          @click="hide"
+          @click="back"
         >
           Cancel
         </v-btn>
@@ -62,7 +62,7 @@
         <v-btn
           color="primary"
           text
-          @click="hide"
+          @click="sdshfdhsdfsahfsahsafhhsdfahdfhfsfsahvsdvvxvhxsa"
         >
           Submit
         </v-btn>
@@ -73,12 +73,31 @@
 
 <script lang="ts">
 import theAuthorizationFormMixin from "@/mixins/theAuthorizationFormMixin";
+import UserStore from "@/store/userStore";
 
 export default {
   name: "authorization-form",
   mixins: [
-    theAuthorizationFormMixin
+    theAuthorizationFormMixin,
   ],
+  methods: {
+    authorize() {
+      try {
+        //@ts-ignore
+        UserStore.actions.login(this.login, this.pwd).then(() => {
+          //@ts-ignore
+          this.clearFields();
+          //@ts-ignore
+          this.hide();
+          //@ts-ignore
+          this.$router.push('/home');
+        });
+      }
+      catch (err) {
+        //отображаем в форме, что логин/пароль невер(ен)ны
+      }
+    }
+  }
 }
 </script>
 

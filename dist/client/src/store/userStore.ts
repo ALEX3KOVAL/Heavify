@@ -1,8 +1,6 @@
 import Vue from "vue";
 import {IUser} from "@/interfaces/IUser";
 import AuthHttpAPI from "@/http/api/auth";
-import axios, {AxiosResponse} from "axios";
-import {IAuthResponse} from "@/interfaces/IAuthResponse";
 
 const state = Vue.observable({
   isAuth: false,

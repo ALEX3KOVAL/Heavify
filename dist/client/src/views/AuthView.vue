@@ -1,7 +1,7 @@
 <template>
   <the-authorization-form>
-      <!-- @onButtonClick="userStore.actions.test(`It's working`)" -->
-    </the-authorization-form>
+  <!-- @onButtonClick="userStore.actions.test(`It's working`)" -->
+  </the-authorization-form>
 </template>
 
 <script lang="ts">
@@ -10,7 +10,7 @@ import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizatio
 export default {
   name: "AuthorizationView",
   components: {
-    TheAuthorizationForm
+    TheAuthorizationForm,
   },
 };
 </script>

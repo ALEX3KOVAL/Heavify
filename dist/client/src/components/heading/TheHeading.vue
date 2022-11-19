@@ -26,17 +26,13 @@
           Heavify
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <consumer>
-          <template v-slot:default="{userStore}">
-            <the-heading-button
-                class="mr-4"
-                :icons-size="iconsSize"
-                :icon-name="`mdi-login-variant`"
-                @authorizationFormNoNeeded="hideAuthorizationForm"
-                @onClick="showAuthorizationForm"
-            />
-          </template>
-        </consumer>
+          <the-heading-button
+              class="mr-4"
+              :icons-size="iconsSize"
+              :icon-name="`mdi-login-variant`"
+              @authorizationFormNoNeeded="hideAuthorizationForm"
+              @onClick="showAuthorizationForm"
+          />
       </v-row>
     </v-app-bar>
     <the-side-bar ref="theSideBar"/>

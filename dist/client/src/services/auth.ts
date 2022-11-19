@@ -1,5 +1,5 @@
 import {authHost} from "@/http";
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {IAuthResponse} from "@/interfaces/IAuthResponse";
 
 const login = async (email: string, password: string): Promise<AxiosResponse<IAuthResponse>> =>

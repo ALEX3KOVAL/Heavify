@@ -5,12 +5,11 @@ const theAuthorizationFormMixin = {
         pwd: "",
     }),
     methods: {
-        hide: function() {
+        back: function() {
             this.clearFields();
             // @ts-ignore
             this.$router.back();
-            // @ts-ignore
-            this.isDialogVisible = false;
+            this.hide();
         },
         clearFields: function() {
             // @ts-ignore
@@ -18,12 +17,16 @@ const theAuthorizationFormMixin = {
             // @ts-ignore
             this.login = "";
         },
+        hide() {
+            // @ts-ignore
+            this.isDialogVisible = false;
+        },
         clickOutsideHandler: function(event: any) {
             let theAuthorizationFormHTMLNode =
                 document.getElementsByClassName("authorization-form__fields-row-wrapper")[0];
             // @ts-ignore
             if (!(theAuthorizationFormHTMLNode === event.target || theAuthorizationFormHTMLNode.contains(event.target))) {
-                this.hide();
+                this.back();
             }
         }
     },
