@@ -19,10 +19,15 @@ const registration = async (req: any, res: any, next: any) => {
 }
 
 const login = async (req: any, res: any, next: any) => {
-    const {email, password} = req.body;
-    const userData = await UserService.login(email, password);
-    res.cookie("refreshToken", userData.refreshToken, {maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true});
-    return res.json(userData);
+    try {
+        const { email, password } = req.body;
+        const userData = await UserService.login(email, password);
+        res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
+        return res.json(userData);
+    }
+    catch (err) {
+        return next(err);
+    }
 }
 
 const activate = async (req: any, res: any, next: any) => {
