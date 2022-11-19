@@ -55,12 +55,13 @@ const actions = {
     try {
       console.log("fffffffffffffff");
       const user: IUser = await AuthHttpAPI.checkAuth();
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       mutations.setAuth(true);
       mutations.setUser(user);
       return true;
     }
     catch (err) {
-      console.log((err as any)?.response?.data?.message);
+      console.log((err as any).message);
       return false;
     }
   }

@@ -84,19 +84,18 @@ export default {
     async authorize() {
       //@ts-ignore
       let responseMsg = await UserStore.actions.login(this.login, this.pwd);
-      let flag: boolean = responseMsg === "ok";
       //@ts-ignore
       this.clearFields();
       //@ts-ignore
-      this.login = flag ? "О, ВОТ ЭТА ДЕДУ НАДА" : "ПАШОЛ НАХЕР ОТСЮДА, ЧОРТ";
-      setTimeout(() => {
+      this.hide();
+      if (responseMsg === "ok") {
         //@ts-ignore
-        flag ? this.$router.push('/home') : this.back();
+        await this.$router.push('/home');
+      }
+      else {
         //@ts-ignore
-        this.clearFields();
-        //@ts-ignore
-        this.hide();
-      }, 3000);
+        this.back();
+      }
     }
   }
 }
