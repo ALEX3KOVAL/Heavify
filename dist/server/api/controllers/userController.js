@@ -57,7 +57,7 @@ const refresh = async (req, res, next) => {
         const userData = await UserService.refresh(refreshToken);
         //@ts-ignore
         res.cookie("refreshToken", userData.refreshToken, { maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true });
-        return res.json(userData);
+        return res.json({ user: userData.user, accessToken: userData.accessToken });
     }
     catch (err) {
         return next(err);

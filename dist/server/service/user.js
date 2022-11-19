@@ -75,12 +75,14 @@ const refresh = async (refreshToken) => {
         const freshUserData = await User.findOne({ where: { id: userData.id } });
         //@ts-ignore
         const userDto = new UserDTO(freshUserData);
-        const tokens = await TokenService.generateTokens(userDto);
+        const tokens = await TokenService.generateTokens({ ...userDto });
         //@ts-ignore
         await TokenService.saveToken(userDto.id, tokens.refreshToken);
         return { ...tokens, user: userDto };
     }
-    catch (err) { }
+    catch (err) {
+        throw ErrorAPI.identify(err);
+    }
 };
 export default {
     registration,
