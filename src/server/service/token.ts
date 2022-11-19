@@ -16,7 +16,10 @@ const saveToken = async (userId: any, refreshToken: any) => {
     if (tokenData) {
         //@ts-ignore
         tokenData.token = refreshToken;
-        return tokenData.save();
+        await RefreshToken.update(
+            {token: refreshToken},
+            {where: {userId: userId}});
+        return tokenData;
     }
     console.log("created refreshToken --- ", refreshToken);
     //@ts-ignore
