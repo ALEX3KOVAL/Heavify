@@ -59,7 +59,7 @@ const login = async (email: string, password: string) => {
     }
     //@ts-ignore
     const userDto = new UserDTO(user);
-    const tokens = TokenService.generateTokens({...userDto});
+    const tokens = await TokenService.generateTokens({...userDto});
     //@ts-ignore
     await TokenService.saveToken(user.id, tokens.refreshToken);
     return {...tokens, user: userDto};
@@ -78,7 +78,7 @@ const refresh = async (refreshToken: string) => {
         const freshUserData = await User.findOne({where: {id: userData.id}});
         //@ts-ignore
         const userDto = new UserDTO(freshUserData);
-        const tokens = TokenService.generateTokens(userDto);
+        const tokens = await TokenService.generateTokens(userDto);
         //@ts-ignore
         await TokenService.saveToken(userDto.id, tokens.refreshToken);
         return {...tokens, user: userDto};
