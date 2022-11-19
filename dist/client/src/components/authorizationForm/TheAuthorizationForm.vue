@@ -81,20 +81,20 @@ export default {
     theAuthorizationFormMixin,
   ],
   methods: {
-    authorize() {
-      try {
+    async authorize() {
+      //@ts-ignore
+      let responseMsg = await UserStore.actions.login(this.login, this.pwd);
+      //@ts-ignore
+      this.clearFields();
+      //@ts-ignore
+      this.hide();
+      if (responseMsg === "ok") {
         //@ts-ignore
-        UserStore.actions.login(this.login, this.pwd).then(() => {
-          //@ts-ignore
-          this.clearFields();
-          //@ts-ignore
-          this.hide();
-          //@ts-ignore
-          this.$router.push('/home');
-        });
+        await this.$router.push('/home');
       }
-      catch (err) {
-        //отображаем в форме, что логин/пароль невер(ен)ны
+      else {
+        //@ts-ignore
+        this.back();
       }
     }
   }

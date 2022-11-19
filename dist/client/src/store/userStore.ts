@@ -24,9 +24,11 @@ const actions = {
       const user: IUser = await AuthHttpAPI.login(email, password);
       mutations.setAuth(true);
       mutations.setUser(user);
+      return "ok"
     }
     catch(err) {
       console.log((err as any)?.response?.data?.message);
+      return "error";
     }
   },
   registration: async (userName: string, email: string, password: string) => {
