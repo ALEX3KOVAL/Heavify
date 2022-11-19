@@ -24,7 +24,20 @@ router.beforeEach(async (to, from, next) => {
         console.log("auth");
         if (await UserStore.actions.checkAuth()) {
             //@ts-ignore
-            next();
+            if (!to.meta.requiresAuth) {
+                if (to.path !== INDEX_ROUTE) {
+                    return next({path:HOME_ROUTE});
+                }
+                else {
+                    return next();
+                    //если авторизованный пользователь решил перейти на index страницу,
+                    // то необходимо добавить обработчик поведения кнопки входа, чтобы она сразу перебрасывала на HomeView,
+                    // а, если пользователь не авторизован, то по нажатию открыть AuthView
+                }
+            }
+            else {
+                return next();
+            }
         }
         else {
             if (to.path === INDEX_ROUTE) {
