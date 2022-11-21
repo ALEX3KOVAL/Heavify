@@ -16,10 +16,11 @@ export default {
     headerHeight() {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
-          var height = this.$vuetify.breakpoint.width * 0.1984;
+        case "xl":
+          var height = this.$vuetify.breakpoint.height * 0.4084;
           return height;
         default:
-          var height = this.$vuetify.breakpoint.width * 0.2284;
+          var height = this.$vuetify.breakpoint.height * 0.1884;
           return height;
       }
     },

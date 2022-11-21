@@ -1,18 +1,19 @@
 <template>
-    <v-container class="presentation-carousel" :style="`height: ${setHeight}px`">
+    <v-container class="presentation-carousel" :style="`height: ${setHeight}px;`">
         <v-card
-          class="elevation-24 rounded-xl presentation-carousel__wrapper"
+          class="presentation-carousel__wrapper"
           :height="setHeight"
           :style="`width: ${setWidth}px;`"
         >
           <v-carousel
+              interval="5000"
               cycle
               continuous
               hide-delimiter-background
               delimiter-icon="mdi-guitar-pick"
               show-arrows-on-hover
-              class="rounded-xl presentation-carousel__slider"
-              :height="setHeight"
+              class="presentation-carousel__slider"
+              :height="setHeight * 0.97"
           >
             <v-carousel-item
                 class="rounded-xl"

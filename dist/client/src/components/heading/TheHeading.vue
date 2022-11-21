@@ -1,30 +1,28 @@
 <template>
-  <header>
+  <div>
     <v-app-bar
-        fixed
-        dark
         :width="width"
         dense
-        style="background: linear-gradient(to right, rgba(44, 4, 106), rgb(196,26,143))"
         shrink-on-scroll
         :height=height
         :src=this.headerPath
         scroll-target="#scrolling-techniques-2"
-        scroll-threshold="90"
+        scroll-threshold="200"
         fade-img-on-scroll
         app
-        class="rounded-b-lg"
+        class="rounded-b-lg header"
     >
-      <v-row class="d-flex justify-center mt-1" style="height: 1vh !important;">
+      <v-row class="d-flex py-1 ">
         <the-heading-button
             :icons-size="iconsSize"
             :icon-name="`mdi-menu`"
             class="ml-4"
             @onClick="toggleSideBarVisible"
         />
-        <v-toolbar-title class="header__title">
+        <v-spacer></v-spacer>
+        <div v-if="isHeaderTitleVisible" class="d-flex align-center header__title">
           Heavify
-        </v-toolbar-title>
+        </div>
         <v-spacer></v-spacer>
           <the-heading-button
               class="mr-4"
@@ -36,22 +34,18 @@
       </v-row>
     </v-app-bar>
     <the-side-bar ref="theSideBar"/>
-  </header>
+  </div>
 </template>
 
 <script>
 import {getPicturesGroupByNames} from "@/http/api/picture";
 import TheHeadingButton from "@/components/heading/HeadingButton.vue";
-import Consumer from "@/context/Consumer.vue";
-import Provider from "@/context/Provider.vue";
 import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
 import TheSideBar from "@/components/sidebar/TheSideBar.vue";
 
 export default {
   components: {
     TheSideBar,
-    Provider,
-    Consumer,
     TheHeadingButton,
     TheAuthorizationForm
   },
@@ -71,6 +65,7 @@ export default {
   },
   data: () => ({
     headerPath: "",
+    isHeaderTitleVisible: false
   }),
   async created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
@@ -78,7 +73,10 @@ export default {
     await getPicturesGroupByNames(this.pageName, "header").then((data) => {
       this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${data[0]}`;
     });
-
+  },
+  mounted() {
+    this.headerResizeObserver = new ResizeObserver(this.reactToHeaderResize);
+    this.headerResizeObserver.observe(this.$el.firstChild.lastChild);
   },
   computed: {
     iconsSize() {
@@ -105,7 +103,10 @@ export default {
     },
     showAuthorizationForm() {
       this.$router.push('/auth');
-    }
-  },
+    },
+    reactToHeaderResize() {
+      this.isHeaderTitleVisible = this.$el.firstChild.offsetHeight === 36;
+    },
+  }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <v-dialog
     v-model="isDialogVisible"
-    persistent
     class="authorization-form"
     :max-width="authorizationFormWidth"
   >
@@ -49,6 +48,7 @@
         <v-btn
           text
           color="red"
+          style="position: relative; margin: 2% 2% !important;"
           @click="back"
         >
           Cancel
@@ -62,6 +62,7 @@
         <v-btn
           color="primary"
           text
+          style="position: relative; margin: 2% 2% !important;"
           @click="authorize"
         >
           Submit

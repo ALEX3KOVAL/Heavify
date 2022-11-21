@@ -1,8 +1,9 @@
 <template>
   <v-btn
+      color="black"
       fab
       icon
-      class="elevation-14 header__btn"
+      class="header__btn"
       @click="onClick">
     <v-icon :size="iconsSize">
       {{iconName}}

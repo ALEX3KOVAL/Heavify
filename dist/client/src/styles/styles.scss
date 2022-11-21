@@ -24,13 +24,12 @@ html::-webkit-scrollbar {
 
 .v-overlay {
   opacity: 0 !important;
-  background: pink !important;
   transition: 0.7s ease-in !important;
 }
 
 .v-overlay--active {
   opacity: 1 !important;
-  background: indianred !important;
+  background: #9f44a1 !important;
 }
 
 .v-dialog {
@@ -39,16 +38,19 @@ html::-webkit-scrollbar {
 
 .v-overlay__scrim {
   opacity: inherit !important;
-  background: #601a8f !important;
+  background: pink !important;
+  box-shadow: inset 0.1vw 1vh 1vw 1vw rgb(0 0 0 / 40%) !important;
 }
 
 .authorization-form__fields-row-wrapper {
   display: flex;
   align-content: stretch;
-  background: #ffa4b6  !important;
+  background: #c6c6e6  !important;
   flex-direction: column;
+  box-shadow: -30vw 1vh 12vw 3vh rgb(0 0 0 / 40%),
+  30vw 10vh 30px 3vh rgb(0 0 0 / 40%),
+  inset 0.1vw 0.1vh 0.4vw 0.3vw rgb(0 0 0 / 40%) !important;
 }
-
 
 .authorization-form__field-wrapper {
   position: relative;
@@ -95,6 +97,25 @@ html::-webkit-scrollbar {
   box-sizing: border-box !important;
 }
 
+.header {
+  min-height: unset;
+  box-shadow: 0.1vh 1vh 8px 3px rgb(0 0 0 / 20%),
+  10px 9px 30px 8px rgb(0 0 0 / 30%),
+  inset 0px -0.3vh 6px rgb(0 0 0 / 70%),
+  inset 0.3vh 0.1vh 0.3vh rgb(0 0 0 / 30%) !important;
+}
+
+.carousels-row__wrapper {
+  box-shadow: -30vw 1vh 12vw 3px rgb(255 164 182 / 20%),
+  30vw 9px 30px 8px rgb(255 164 182 / 20%),
+  inset 0.1vw 0.1vh 0.4vw 0.3vw rgb(0 0 0 / 40%) !important;
+  width: 100%;
+}
+
+.v-toolbar__image {
+  margin-bottom: 0.4vh !important;
+}
+
 .header__btn {
   width: 19px !important;
   height: 19px !important;
@@ -103,7 +124,12 @@ html::-webkit-scrollbar {
   align-self: center !important;
   align-items: center !important;
   display: flex !important;
-  background-color: rgba(208,189,244, .4);
+  background-color: #c88fdb;
+  box-shadow:
+          1px 7px 8px 3px rgb(0 0 0 / 20%),
+          10px 9px 30px 8px rgb(0 0 0 / 50%),
+          inset -2px -4px 6px rgb(0 0 0 / 70%),
+          inset 0px 2px 3px rgb(0 0 0 / 40%) !important;
   @media only screen and (min-width: 600px) {
     width: 25px !important;
     height: 25px !important;
@@ -147,9 +173,6 @@ html::-webkit-scrollbar {
   margin: 3px 0 3px 0 !important;
 }
 
-.carousel__wrapper {
-  margin-bottom: 25vh !important;
-}
 
 .v-btn:not(.v-btn--round).v-size--default {
   display: flex !important;
@@ -161,12 +184,15 @@ html::-webkit-scrollbar {
   font-family: "Absolute Empire", sans-serif;
 }
 
-.header__title {
+.d-flex > .header__title {
   font-family: "Absolute Empire", sans-serif;
+  animation: bounce-in .5s;
   position:relative;
   font-size:10px !important;
   left: 10px !important;
-  color: #fff;
+  color: rgb(86,6,143);
+  padding: 0 !important;
+  margin-top: 0.5vh !important;
   @media only screen and (min-width: 600px) {
     left: 10px !important;
     font-size:13px !important;
@@ -176,19 +202,31 @@ html::-webkit-scrollbar {
   }
   @media only screen and (min-width: 1240px) {
     font-size:16px !important;
+    margin-top: 0 !important;
     left: 22px !important;
   }
   @media only screen and (min-width: 1880px) {
     font-size:21px !important;
+    margin-top: 0 !important;
   }
 }
 
 .v-sheet::-webkit-scrollbar {
-  background-color: rgba(196,26,143,.5);
+  background-color: rgba(187,113,219,.5);
 }
 
 .v-sheet::-webkit-scrollbar-thumb {
   background-color: #000;
+}
+
+.v-app-bar--is-scrolled {
+  background: linear-gradient(to right, rgba(180, 200, 255), #ffa4b6);
+
+  .header__btn {
+    box-shadow:
+            inset -2px -4px 6px rgb(0 0 0 / 70%),
+            inset 0px 2px 3px rgb(0 0 0 / 40%) !important;
+  }
 }
 
 .v-toolbar--collapsed {
@@ -214,21 +252,27 @@ html::-webkit-scrollbar {
 
 .presentation-carousel {
   display: flex !important;
+  position: relative;
   justify-content: center !important;
   flex-direction: column !important;
-  margin: 1vh auto 0 !important;
+  width: 100%;
+  margin-top: 3vh !important;
 }
 
 .presentation-carousel__slider {
-  position: relative !important;
-  margin: 0.4% !important;
+  margin: 1% !important;
 }
 
 .presentation-carousel__wrapper {
   display: flex;
   align-self: center;
-  justify-content: center;
-  background: #600a7c !important;
+  background: black !important;
+  box-shadow: -0.9vw 0.2vh 1vw 1vh rgb(0 0 0 / 40%),
+  0.9vw 0.2vh 1vw 1vh rgb(0 0 0  / 40%) !important;
+}
+
+.container {
+  max-width: unset !important;
 }
 
 .overflow-y-auto::-webkit-scrollbar {
@@ -238,10 +282,6 @@ html::-webkit-scrollbar {
   @media only screen and (min-width: 200px) and (max-width: 1024px) and (orientation: landscape) {
     display: none;
   }
-}
-
-.v-toolbar {
-  min-height: unset;
 }
 
 .v-image__image {

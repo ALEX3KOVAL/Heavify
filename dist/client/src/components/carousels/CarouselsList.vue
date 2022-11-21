@@ -1,5 +1,8 @@
 <template>
-  <span>
+  <div
+    :style="`margin-top: ${headerHeight} !important;`"
+    class="carousels-row__wrapper rounded-t-lg"
+  >
     <Lazy
       v-for="componentName in carouselsComponentsNames"
       :unrender="true"
@@ -13,7 +16,7 @@
       />
     </transition>
   </Lazy>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -29,6 +32,10 @@ export default {
   },
   props: {
     pageName: {
+      type: String,
+      required: true
+    },
+    headerHeight: {
       type: String,
       required: true
     }
