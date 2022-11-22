@@ -6,7 +6,8 @@
     <Lazy
       v-for="componentName in carouselsComponentsNames"
       :unrender="true"
-      :unrender-delay="100">
+      :unrender-delay="100"
+    >
     <transition
         appear
         name="bounce">
