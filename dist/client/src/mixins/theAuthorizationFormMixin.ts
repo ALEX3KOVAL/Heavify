@@ -3,6 +3,13 @@ const theAuthorizationFormMixin = {
         isDialogVisible: true,
         login: "",
         pwd: "",
+        submitButtonTextShadowStyleString: "",
+        show3: false,
+        rules: {
+            required: (value: any) => !!value || 'Required.',
+            min: (v: any) => v.length >= 8 || 'Min 8 characters',
+            emailMatch: () => (`The email and password you entered don't match`),
+        },
     }),
     methods: {
         back: function() {

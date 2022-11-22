@@ -7,7 +7,7 @@
     <v-card
       class="authorization-form__fields-row-wrapper"
     >
-      <span class="authorization-form__title">Login/Register</span>
+      <span class="authorization-form__title rounded-b">Login</span>
         <div
           class="authorization-form__fields-row"
         >
@@ -35,10 +35,14 @@
             lg="10"
           >
             <v-text-field
+              @click:append="show3 = !show3"
+              :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show3 ? 'text' : 'password'"
+              counter
+              class="authorization-form__field"
               v-model="pwd"
               height="40"
               label="Пароль"
-              type="password"
               required
               outlined
             />
@@ -46,23 +50,20 @@
         </div>
       <v-card-actions>
         <v-btn
+          class="authorization-form__button"
           text
           color="red"
-          style="position: relative; margin: 2% 2% !important;"
+          :style="`position: relative; margin: 2% 2% !important; ${createCancelButtonTextShadow}`"
           @click="back"
         >
           Cancel
         </v-btn>
         <v-spacer></v-spacer>
-        <v-slide-x-reverse-transition>
-          <v-tooltip
-            left
-          />
-        </v-slide-x-reverse-transition>
         <v-btn
+          class="authorization-form__button"
           color="primary"
           text
-          style="position: relative; margin: 2% 2% !important;"
+          :style="`position: relative; margin: 2% 2% !important; ${this.submitButtonTextShadowStyleString}`"
           @click="authorize"
         >
           Submit
@@ -97,7 +98,23 @@ export default {
         //@ts-ignore
         this.back();
       }
+    },
+  },
+  computed: {
+    createCancelButtonTextShadow(): string {
+      //@ts-ignore
+      return (this.submitButtonTextShadowStyleString as string).replace("#6200EE", "red");
     }
+  },
+  mounted() {
+    let styleString: string = "text-shadow: ";
+    for (let i: number = 0.0; i < 2; i += 0.05) {
+      styleString += `0 -${i}px 0 rgba(0,0,0,0.9),`
+    }
+    styleString = styleString.slice(0, -1);
+    styleString +=  " !important;";
+    //@ts-ignore
+    this.submitButtonTextShadowStyleString = styleString;
   }
 }
 </script>
