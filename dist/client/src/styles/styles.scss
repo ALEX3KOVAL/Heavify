@@ -125,7 +125,14 @@ html::-webkit-scrollbar {
 }
 
 .v-text-field__details {
-  display: none !important;
+}
+
+.theme--light.v-messages {
+  background: transparent !important;
+}
+
+:-webkit-autofill {
+  z-index: -1 !important;
 }
 
 .v-label {

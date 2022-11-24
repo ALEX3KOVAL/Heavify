@@ -1,3 +1,5 @@
+import {required, maxLength, email, minLength} from "vuelidate/lib/validators";
+
 const theAuthorizationFormMixin = {
     data: () => ({
         isDialogVisible: true,
@@ -5,12 +7,26 @@ const theAuthorizationFormMixin = {
         pwd: "",
         submitButtonTextShadowStyleString: "",
         show3: false,
-        rules: {
-            required: (value: any) => !!value || 'Required.',
-            min: (v: any) => v.length >= 8 || 'Min 8 characters',
-            emailMatch: () => (`The email and password you entered don't match`),
-        },
+        /*rules: {
+            required: (value: any) => !!value || 'заполните',
+            email:
+                [
+                    (value: string) => value.length >= 8 || 'не менее 8 символов',
+                    (value: string) => value.length <= 30 || "не более 30 символов",
+                    (value: string) => emailPattern.test(value) || "email некорректен",
+                ],
+            pwd:
+                [
+                    (value: string) => value.length >= 15 || 'не менее 15 символов',
+                    (value: string) => value.length <= 40 || "не более 40 символов",
+                    //(value: string) => pwdPattern.test(value) || "пароль некорректен",
+                ]
+        },*/
     }),
+    validations: {
+        login: {required, maxLength: maxLength(30), minLength: minLength(8), email},
+        pwd: {required, maxLength: maxLength(40), minLength: minLength(15)}
+    },
     methods: {
         back: function() {
             this.clearFields();
@@ -38,10 +54,8 @@ const theAuthorizationFormMixin = {
         }
     },
     created() {
-        setTimeout(() => {
-            // @ts-ignore
-            document.body.addEventListener("click", this.clickOutsideHandler);
-        }, 1000);
+        // @ts-ignore
+        setTimeout(() => document.body.addEventListener("click", this.clickOutsideHandler), 1000);
     },
     beforeDestroy() {
         // @ts-ignore
@@ -61,6 +75,24 @@ const theAuthorizationFormMixin = {
                 default:
                     return width * 0.3;
             }
+        },
+        emailErrors() {
+            const errors: any[] = [];
+            //@ts-ignore
+            if (!this.$v.login.$dirty) return errors;
+            //@ts-ignore
+            !this.$v.login.email && errors.push('email некорректен');
+            //@ts-ignore
+            !this.$v.login.required && errors.push('введите email');
+            return errors;
+        },
+        pwdErrors() {
+            const errors: any[] = [];
+            //@ts-ignore
+            if (!this.$v.pwd.$dirty) return errors;
+            //@ts-ignore
+            !this.$v.pwd.required && errors.push('введите пароль');
+            return errors;
         }
     }
 }

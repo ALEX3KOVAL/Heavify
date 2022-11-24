@@ -20,11 +20,13 @@
           >
             <v-text-field
               v-model="login"
+              @change.once="clearFields"
+              :error-messages="emailErrors"
               label="Логин"
               height="40"
               required
               outlined
-              placeholder="email, номер телефона, ID"
+              placeholder="email"
             />
           </v-col>
           <v-col
@@ -36,9 +38,10 @@
           >
             <v-text-field
               @click:append="show3 = !show3"
+              @change.once="clearFields"
+              :error-messages="pwdErrors"
               :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show3 ? 'text' : 'password'"
-              counter
               class="authorization-form__field"
               v-model="pwd"
               height="40"
@@ -76,11 +79,14 @@
 <script lang="ts">
 import theAuthorizationFormMixin from "@/mixins/theAuthorizationFormMixin";
 import UserStore from "@/store/userStore";
+//@ts-ignore
+import {validationMixin} from "vuelidate";
 
 export default {
   name: "authorization-form",
   mixins: [
     theAuthorizationFormMixin,
+    validationMixin,
   ],
   methods: {
     async authorize() {
@@ -96,7 +102,7 @@ export default {
       }
       else {
         //@ts-ignore
-        this.back();
+        this.$v.$touch();
       }
     },
   },
@@ -115,7 +121,7 @@ export default {
     styleString +=  " !important;";
     //@ts-ignore
     this.submitButtonTextShadowStyleString = styleString;
-  }
+  },
 }
 </script>
 
