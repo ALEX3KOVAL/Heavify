@@ -1,23 +1,29 @@
 import AuthService from "@/services/auth";
 import {IUser} from "@/interfaces/IUser";
-import {AxiosResponse} from "axios";
+import {Axios, AxiosResponse} from "axios";
 import {IAuthResponse} from "@/interfaces/IAuthResponse";
+import {IResponse} from "@/interfaces/IResponse";
+import response from "@/http/api/interceptors/rejected/response";
+import {isErrorResponse, isIUser} from "@/typeQuards/typeQuards";
 
-const _addAccessTokenInLSandGetUserData = (response:  AxiosResponse<IAuthResponse, any>) => {
+const _addAccessTokenInLocalStorageAndGetUserData = (response: AxiosResponse<IAuthResponse>) => {
     localStorage.setItem("accessToken", response.data.accessToken);
     return response.data.user;
 }
 
 const registration = async (userName: string, email: string, password: string) => {
     const response = await AuthService.registration(userName, email, password);
-    return _addAccessTokenInLSandGetUserData(response);
+    return _addAccessTokenInLocalStorageAndGetUserData(response);
 }
 
-const login = async (email: string, password: string): Promise<IUser> => {
+const login = async (email: string, password: string): Promise<IUser | IResponse> => {
     console.log("URL ---- ", process.env.VUE_APP_USER_POINT);
     const response = await AuthService.login(email, password);
     console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvv");
-    return _addAccessTokenInLSandGetUserData(response);
+    if (!isErrorResponse(response)) {
+        return _addAccessTokenInLocalStorageAndGetUserData(response as AxiosResponse<IAuthResponse>);
+    }
+    return response;
 }
 
 const logout = async (): Promise<void> => {
@@ -25,9 +31,10 @@ const logout = async (): Promise<void> => {
     localStorage.removeItem('token');
 }
 
-const checkAuth = async(): Promise<IUser> => {
+const checkAuth = async({isNeededUserData = false}): Promise<IUser | undefined> => {
     const response = await AuthService.checkAuth();
-    return _addAccessTokenInLSandGetUserData(response);
+    localStorage.setItem("accessToken", response.data.accessToken);
+    return isNeededUserData ? response.data.user : void 0;
 }
 
 export default {

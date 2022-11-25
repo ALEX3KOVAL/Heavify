@@ -1,4 +1,6 @@
 import {required, maxLength, email, minLength} from "vuelidate/lib/validators";
+import UserStore from "@/store/userStore";
+import httpStatusCodes from "@/http/api/codes/httpStatusCodes";
 
 const theAuthorizationFormMixin = {
     data: () => ({
@@ -6,39 +8,58 @@ const theAuthorizationFormMixin = {
         login: "",
         pwd: "",
         submitButtonTextShadowStyleString: "",
-        show3: false,
-        /*rules: {
-            required: (value: any) => !!value || 'заполните',
-            email:
-                [
-                    (value: string) => value.length >= 8 || 'не менее 8 символов',
-                    (value: string) => value.length <= 30 || "не более 30 символов",
-                    (value: string) => emailPattern.test(value) || "email некорректен",
-                ],
-            pwd:
-                [
-                    (value: string) => value.length >= 15 || 'не менее 15 символов',
-                    (value: string) => value.length <= 40 || "не более 40 символов",
-                    //(value: string) => pwdPattern.test(value) || "пароль некорректен",
-                ]
-        },*/
+        isPasswordVisible: false,
+        register: false,
+        userId: "",
     }),
     validations: {
-        login: {required, maxLength: maxLength(30), minLength: minLength(8), email},
-        pwd: {required, maxLength: maxLength(40), minLength: minLength(15)}
+        login: {required, maxLength: maxLength(30), minLength: minLength(15), email},
+        pwd: {required, maxLength: maxLength(40), minLength: minLength(7)},
+        userId: {required, maxLength: maxLength(30), minLength: minLength(10), email}
     },
     methods: {
+        async authorize() {
+            //@ts-ignore
+            this.$v.$touch();
+            //@ts-ignore
+            if (!this.$v.$invalid) {
+                //@ts-ignore
+                let response = await UserStore.actions.login(this.login, this.pwd);
+                if (response.status === httpStatusCodes.SUCCESS) {
+                    //@ts-ignore
+                    this.clearFields();
+                    //@ts-ignore
+                    this.hide();
+                    //@ts-ignore
+                    await this.$router.push('/home');
+                }
+                else {
+                    //@ts-ignore
+                    this.clearFields();
+                    console.log(response.message);
+                }
+            }
+        },
         back: function() {
             this.clearFields();
             // @ts-ignore
             this.$router.back();
             this.hide();
         },
+        checkForLatinAndNumbers(value: string): boolean {
+            return /^[^А-Яа-яё\W]+$/.test(value);
+        },
+        checkPassword(): boolean {
+            //@ts-ignore
+            return /^[^А-Яа-яё\!\@\#\$\%\&\(\)\-\<\>\?\,\.\`\~\"\'\№\;\:]+$/.test(this.pwd);
+        },
         clearFields: function() {
             // @ts-ignore
             this.pwd = "";
             // @ts-ignore
             this.login = "";
+            // @ts-ignore
+            this.userId = "";
         },
         hide() {
             // @ts-ignore
@@ -76,14 +97,30 @@ const theAuthorizationFormMixin = {
                     return width * 0.3;
             }
         },
+        createCancelButtonTextShadow(): string {
+            //@ts-ignore
+            return (this.submitButtonTextShadowStyleString as string).replace("#6200EE", "red");
+        },
+        setTitle(): string {
+            // @ts-ignore
+            return this.register ? "Регистрация" : "Войти";
+        },
+        setAuthModeBtnTitle(): string {
+            // @ts-ignore
+            return this.register ? "Войти" : "Регистрация";
+        },
         emailErrors() {
             const errors: any[] = [];
             //@ts-ignore
             if (!this.$v.login.$dirty) return errors;
             //@ts-ignore
-            !this.$v.login.email && errors.push('email некорректен');
+            !this.$v.login.email && errors.push('почта некорректна');
             //@ts-ignore
-            !this.$v.login.required && errors.push('введите email');
+            !this.$v.login.minLength && errors.push("должна быть не менее 15 символов");
+            //@ts-ignore
+            !this.$v.login.maxLength && errors.push("не должна превышать 30 символов");
+            //@ts-ignore
+            !this.$v.login.required && errors.push('введите почту');
             return errors;
         },
         pwdErrors() {
@@ -92,6 +129,26 @@ const theAuthorizationFormMixin = {
             if (!this.$v.pwd.$dirty) return errors;
             //@ts-ignore
             !this.$v.pwd.required && errors.push('введите пароль');
+            //@ts-ignore
+            !this.checkPassword() && errors.push("не должен содержать кириллицу и !@#$%&()-<>?,.`~\"№';:");
+            //@ts-ignore
+            !this.$v.pwd.minLength && errors.push("должен быть не менее 7 символов");
+            //@ts-ignore
+            !this.$v.pwd.maxLength && errors.push("не должен превышать 40 символов");
+            return errors;
+        },
+        userIdErrors() {
+            const errors: any[] = [];
+            //@ts-ignore
+            if (!this.$v.userId.$dirty) return errors;
+            //@ts-ignore
+            !this.$v.userId.required && errors.push('введите идентификатор');
+            //@ts-ignore
+            !this.checkForLatinAndNumbers(this.userId) && errors.push("должен содержать только символы латиницы и цифры");
+            //@ts-ignore
+            !this.$v.userId.minLength && errors.push("должен быть не менее 10 символов");
+            //@ts-ignore
+            !this.$v.userId.maxLength && errors.push("не должен превышать 30 символов");
             return errors;
         }
     }
