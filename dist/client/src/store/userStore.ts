@@ -1,6 +1,9 @@
 import Vue from "vue";
 import {IUser} from "@/interfaces/IUser";
 import AuthHttpAPI from "@/http/api/auth";
+import {IResponse} from "@/interfaces/IResponse";
+import {isIUser} from "@/typeQuards/typeQuards";
+import httpStatusCodes from "@/http/api/codes/httpStatusCodes";
 
 const state = Vue.observable({
   isAuth: false,
@@ -19,17 +22,14 @@ const mutations = {
 
 const actions = {
   test: (message: string) => alert(message),
-  login: async (email: string, password: string) => {
-    try {
-      const user: IUser = await AuthHttpAPI.login(email, password);
-      mutations.setAuth(true);
-      mutations.setUser(user);
-      return "ok"
-    }
-    catch(err) {
-      console.log((err as any)?.response?.data?.message);
-      return "error";
-    }
+  login: async (email: string, password: string): Promise<IResponse> => {
+      const user: IUser | IResponse = await AuthHttpAPI.login(email, password);
+      if (isIUser(user)) {
+        mutations.setAuth(true);
+        mutations.setUser(user);
+        return {status: httpStatusCodes.SUCCESS, message: ""}
+      }
+      return {status: user.status, message: user.message};
   },
   registration: async (userName: string, email: string, password: string) => {
     try {
@@ -54,7 +54,7 @@ const actions = {
   checkAuth: async() => {
     try {
       console.log("fffffffffffffff");
-      const user: IUser = await AuthHttpAPI.checkAuth();
+      const user: IUser = (await AuthHttpAPI.checkAuth({isNeededUserData: true}))!;
       console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       mutations.setAuth(true);
       mutations.setUser(user);

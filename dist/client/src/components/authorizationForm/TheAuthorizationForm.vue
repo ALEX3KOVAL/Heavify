@@ -7,7 +7,28 @@
     <v-card
       class="authorization-form__fields-row-wrapper"
     >
-      <span class="authorization-form__title">Login/Register</span>
+      <v-card-actions>
+        <v-btn
+            class="authorization-form__button"
+            text
+            color="red"
+            :style="`position: relative; margin: 2% 2% !important; ${createCancelButtonTextShadow}`"
+            @click="clearFields"
+        >
+          Очистить
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
+            class="authorization-form__button"
+            color="primary"
+            text
+            :style="`position: relative; margin: 2% 2% !important; ${this.submitButtonTextShadowStyleString}`"
+            @click="register = !register"
+        >
+          {{setAuthModeBtnTitle}}
+        </v-btn>
+      </v-card-actions>
+      <span class="authorization-form__title rounded">{{setTitle}}</span>
         <div
           class="authorization-form__fields-row"
         >
@@ -20,13 +41,37 @@
           >
             <v-text-field
               v-model="login"
+              @input="$v.login.$touch()"
+              :error-messages="emailErrors"
+              :counter="30"
               label="Логин"
-              height="40"
               required
               outlined
-              placeholder="email, номер телефона, ID"
+              placeholder="email"
             />
           </v-col>
+          <div class="authorization-form__dynamic-field-wrapper">
+            <v-col
+                class="authorization-form__field-wrapper"
+                cols="12"
+                sm="12"
+                md="10"
+                lg="10"
+            >
+              <v-text-field
+                  v-if="register"
+                  v-model="userId"
+                  :counter="30"
+                  @input="$v.userId.$touch()"
+                  :error-messages="userIdErrors"
+                  label="ID"
+                  required
+                  outlined
+                  placeholder="идентификатор пользователя"
+              />
+            </v-col>
+          </div>
+
           <v-col
             class="authorization-form__field-wrapper"
             cols="12"
@@ -35,10 +80,15 @@
             lg="10"
           >
             <v-text-field
+              @click:append="isPasswordVisible = !isPasswordVisible"
+              @input="$v.pwd.$touch()"
+              :counter="40"
+              :error-messages="pwdErrors"
+              :append-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="isPasswordVisible ? 'text' : 'password'"
+              class="authorization-form__field"
               v-model="pwd"
-              height="40"
               label="Пароль"
-              type="password"
               required
               outlined
             />
@@ -46,26 +96,23 @@
         </div>
       <v-card-actions>
         <v-btn
+          class="authorization-form__button"
           text
           color="red"
-          style="position: relative; margin: 2% 2% !important;"
+          :style="`${createCancelButtonTextShadow}`"
           @click="back"
         >
-          Cancel
+          Отмена
         </v-btn>
         <v-spacer></v-spacer>
-        <v-slide-x-reverse-transition>
-          <v-tooltip
-            left
-          />
-        </v-slide-x-reverse-transition>
         <v-btn
+          class="authorization-form__button"
           color="primary"
           text
-          style="position: relative; margin: 2% 2% !important;"
-          @click="authorize"
+          :style="`position: relative; margin: 2% 2% !important; ${this.submitButtonTextShadowStyleString}`"
+          @click.prevent="authorize"
         >
-          Submit
+          Отправить
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -74,31 +121,25 @@
 
 <script lang="ts">
 import theAuthorizationFormMixin from "@/mixins/theAuthorizationFormMixin";
-import UserStore from "@/store/userStore";
+//@ts-ignore
+import {validationMixin} from "vuelidate";
 
 export default {
   name: "authorization-form",
   mixins: [
     theAuthorizationFormMixin,
+    validationMixin,
   ],
-  methods: {
-    async authorize() {
-      //@ts-ignore
-      let responseMsg = await UserStore.actions.login(this.login, this.pwd);
-      //@ts-ignore
-      this.clearFields();
-      //@ts-ignore
-      this.hide();
-      if (responseMsg === "ok") {
-        //@ts-ignore
-        await this.$router.push('/home');
-      }
-      else {
-        //@ts-ignore
-        this.back();
-      }
+  mounted() {
+    let styleString: string = "text-shadow: ";
+    for (let i: number = 0.0; i < 2; i += 0.05) {
+      styleString += `0 -${i}px 0 rgba(0,0,0,0.9),`
     }
-  }
+    styleString = styleString.slice(0, -1);
+    styleString +=  " !important;";
+    //@ts-ignore
+    this.submitButtonTextShadowStyleString = styleString;
+  },
 }
 </script>
 

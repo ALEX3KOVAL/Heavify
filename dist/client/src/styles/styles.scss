@@ -11,16 +11,35 @@ html::-webkit-scrollbar {
 }
 
 .authorization-form__title {
-  display: flex;
+  display: flex !important;
+  padding: 0.4% 0.8% !important;
+  padding-bottom: 0.7% !important;
   justify-content: center;
+  background: pink;
+  margin: 5% auto !important;
   font-weight: bold !important;
   font-family: "Montserrat", sans-serif !important;
   font-size: 1.3rem !important;
+  text-shadow:
+          -0.8px -0.8px 0 rgba(0,0,0,.3),
+          -0.8px -1.6px 0 #c88fdb,
+          -0.8px -2.4px 0 #c88fdb,
+          -0.8px -3.2px 0 rgba(0,0,0,.3) !important;
+  box-shadow:
+          -8px -8px 16px #999,
+          8px 8px 16px #fff,
+          inset -9px -2px 18px #8f8f8f,
+          inset 2px 2px 18px #fff !important;
 }
 
 .v-navigation-drawer {
   box-shadow: 100px 10px 125px 67px rgb(0 0 0 / 40%) !important;
 }
+
+.v-messages__wrapper {
+  background: #c6c6e6 !important;
+}
+
 
 .v-overlay {
   opacity: 0 !important;
@@ -42,10 +61,23 @@ html::-webkit-scrollbar {
   box-shadow: inset 0.1vw 1vh 1vw 1vw rgb(0 0 0 / 40%) !important;
 }
 
+.authorization-form__dynamic-field-wrapper {
+  height: 13vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.v-input__append-inner {
+  position: relative !important;
+  display: flex !important;
+  align-self: center !important;
+  margin-right: 6% !important;
+}
+
 .authorization-form__fields-row-wrapper {
   display: flex;
-  align-content: stretch;
-  background: #c6c6e6  !important;
+  background: #c6c6e6 !important;
   flex-direction: column;
   box-shadow: -30vw 1vh 12vw 3vh rgb(0 0 0 / 40%),
   30vw 10vh 30px 3vh rgb(0 0 0 / 40%),
@@ -55,6 +87,16 @@ html::-webkit-scrollbar {
 .authorization-form__field-wrapper {
   position: relative;
   padding: 5% 0 !important;
+}
+
+.v-input__slot {
+  max-height: 56px !important;
+  min-height: 20px !important;
+  height: 6vh !important;
+}
+
+.v-input__control {
+  background: linear-gradient(315deg, #e6e6e6, #fff);
 }
 
 .authorization-form__fields-row {
@@ -67,24 +109,67 @@ html::-webkit-scrollbar {
   margin: 0 8% !important;
 }
 
+.authorization-form__button {
+  position: relative;
+  margin: 2% 2% !important;
+  padding: 0.5% !important;
+  background: pink;
+  box-shadow:
+          -8px -8px 16px #999,
+          8px 8px 16px #fff,
+          inset -9px -2px 18px #8f8f8f,
+          inset 2px 2px 18px #fff !important;
+}
+
 .v-text-field input {
   padding-bottom: 0 !important;
 }
 
 .v-input__slot {
+  caret-color: black !important;
   padding-bottom: 0 !important;
+  background: linear-gradient(315deg, #e6e6e6, #fff);
+  box-shadow:
+          -8px -8px 16px #999,
+          8px 8px 16px #fff,
+          inset -9px -9px 18px #8f8f8f,
+          inset 9px 9px 18px #fff !important;
+}
+
+.v-input  input {
+  position: relative !important;
+  margin-left: 2% !important;
+}
+
+.v-text-field__details {
+}
+
+.theme--light.v-messages {
+  background: #c6c6e6 !important;
 }
 
 .v-label {
-  position: relative;
   transition: 0.4s cubic-bezier(0.2, 0.1, 0.9, 1.6) !important;
   animation: wobble 1s !important;
   margin-left: 2% !important;
+  color: rgba(0,0,0,0.8) !important;
+  font-size: 1.1rem;
+  text-shadow:
+          0 -0.7px 0 rgba(0,0,0,.3),
+          0 -1.4px 0 #c88fdb,
+          0 -2.1px 0 rgba(0,0,0,.3),
+          0 -2.1px 0 rgba(0,0,0,.3),
+          0 -2.1px 0 rgba(0,0,0,.3),
+          0 -2.8px 0 rgba(0,0,0,.3) !important;
+}
+
+.v-text-field--outlined .v-label {
+  top: 28% !important;
 }
 
 .v-label--active {
   margin-left: 0 !important;
-  transform: translateY(-26px) translateX(3px) scale(0.8) !important;
+  transform: translateY(-95%) translateX(3px) scale(0.8) !important;
 }
 
 .v-text-field input {
@@ -144,10 +229,6 @@ html::-webkit-scrollbar {
   @media only screen and (min-width: 1880px) {
     font-size:21px !important;
   }
-}
-
-.v-input__slot {
-  background: white !important;
 }
 
 .v-btn {
