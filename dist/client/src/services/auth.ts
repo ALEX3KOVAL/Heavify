@@ -6,7 +6,6 @@ const login = async (email: string, password: string): Promise<AxiosResponse<IAu
     return authHost.post<IAuthResponse>(process.env.VUE_APP_API_URL + process.env.VUE_APP_USER_POINT + 'login', {email, password});
 }
 
-
 const registration = async (userName: string, email: string, password: string): Promise<AxiosResponse<IAuthResponse>> =>
     authHost.post<IAuthResponse>(process.env.VUE_APP_API_URL + process.env.VUE_APP_USER_POINT + 'registration', {userName, email, password});
 

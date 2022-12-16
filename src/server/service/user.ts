@@ -69,7 +69,7 @@ const logout = async (refreshToken: string) => await TokenService.removeToken(re
 
 const refresh = async (refreshToken: string) => {
     if (!refreshToken) {
-        throw ErrorAPI.unauthorized("Укажите обновляющий токен");
+        throw ErrorAPI.badRequest("Укажите обновляющий токен");
     }
     try {
         const userData = await TokenService.validateRefreshToken(refreshToken);
@@ -88,10 +88,27 @@ const refresh = async (refreshToken: string) => {
     }
 }
 
+const checkActivated = async (email: string) => {
+    if (!email) {
+        throw ErrorAPI.badRequest("Укажите почту!");
+    }
+    //@ts-ignore
+    const isActivated = await User.checkIsActivated(email);
+    if (isActivated === null) {
+        throw ErrorAPI.unauthorized("Такой email не зарегистрирован");
+    }
+    if (!isActivated) {
+        throw ErrorAPI.unauthorized("Активируйте свой аккаунт");
+    }
+    return isActivated;
+}
+
+
 export default {
     registration,
     activate,
     login,
     logout,
-    refresh
+    refresh,
+    checkActivated
 }

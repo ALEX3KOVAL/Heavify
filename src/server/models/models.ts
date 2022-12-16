@@ -98,6 +98,14 @@ export const User: ModelStatic<Model> = sequelize.define('users', {
     timestamps: false
 });
 
+//@ts-ignore
+User.checkIsActivated = async function(email: string) {
+    const userData = await this.findOne({
+        where: {email}
+    });
+    return userData?.isActivated;
+}
+
 export const AlbumSong: ModelStatic<Model> = sequelize.define('album_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore

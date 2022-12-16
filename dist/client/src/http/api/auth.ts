@@ -14,9 +14,7 @@ const registration = async (userName: string, email: string, password: string) =
 }
 
 const login = async (email: string, password: string): Promise<IUser> => {
-    console.log("URL ---- ", process.env.VUE_APP_USER_POINT);
     const response = await AuthService.login(email, password);
-    console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvv");
     return _addAccessTokenInLSandGetUserData(response);
 }
 

@@ -14,9 +14,8 @@ export const authMiddleware = (req: any, res: any, next: any) => {
         return next(ErrorAPI.badRequest("Укажите токен доступа"));
     }
     try {
-        const userData = TokenService.validateAccessToken(accessToken);
-        req.user = userData;
+        req.user = TokenService.validateAccessToken(accessToken);
         next();
     }
-    catch (err) { next(err as Error); }
+    catch (err) { next(err as ErrorAPI); }
 };
