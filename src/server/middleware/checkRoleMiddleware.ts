@@ -3,14 +3,9 @@ import jwt from "jsonwebtoken";
 
 export const checkRoleMiddleware = (role: any) => {
     return (req: any, res: any, next: any) => {
-        console.log("()()()()()()()(((((((((((((((((");
-        if (req.method === "OPTIONS") {
-            next();
-        }
         try {
             const token = req.headers.authorization.split(' ')[1];
             if (!token) {
-                console.log("lllllllllll");
                 next(ErrorAPI.badRequest("Укажите токен доступа"));
             }
             const decoded = jwt.verify(token, process.env.SECRET_KEY!);

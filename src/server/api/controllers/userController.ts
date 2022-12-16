@@ -15,7 +15,7 @@ const registration = async (req: any, res: any, next: any) => {
         res.cookie("refreshToken", userData.refreshToken, {maxAge: process.env.JWT_REFRESH_EXPIRATION, httpOnly: true});
         return res.json(userData);
     }
-    catch(err) { return next(err) }
+    catch(err) { return next(err as ErrorAPI) }
 }
 
 const login = async (req: any, res: any, next: any) => {
@@ -27,7 +27,7 @@ const login = async (req: any, res: any, next: any) => {
         return res.json({user: userData.user, accessToken: userData.accessToken});
     }
     catch (err) {
-        return next(err);
+        return next(err as ErrorAPI);
     }
 }
 
