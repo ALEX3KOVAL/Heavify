@@ -1,18 +1,17 @@
 <template>
   <v-dialog
-    v-model="isDialogVisible"
-    class="authorization-form"
-    :max-width="authorizationFormWidth"
+      v-model="isDialogVisible"
+      :max-width="authorizationFormWidth"
   >
     <v-card
-      class="authorization-form__fields-row-wrapper"
+        class="authorization-form__fields-row-wrapper"
     >
       <v-card-actions>
         <v-btn
             class="authorization-form__button"
             text
             color="red"
-            :style="`position: relative; margin: 2% 2% !important; ${createCancelButtonTextShadow}`"
+            :style="`${createCancelButtonTextShadow}`"
             @click="clearFields"
         >
           Очистить
@@ -22,24 +21,24 @@
             class="authorization-form__button"
             color="primary"
             text
-            :style="`position: relative; margin: 2% 2% !important; ${this.submitButtonTextShadowStyleString}`"
+            :style="`${this.submitButtonTextShadowStyleString}`"
             @click="register = !register"
         >
           {{setAuthModeBtnTitle}}
         </v-btn>
       </v-card-actions>
       <span class="authorization-form__title rounded">{{setTitle}}</span>
-        <div
+      <div
           class="authorization-form__fields-row"
-        >
-          <v-col
+      >
+        <v-col
             class="authorization-form__field-wrapper"
             cols="12"
             sm="12"
             md="10"
             lg="10"
-          >
-            <v-text-field
+        >
+          <v-text-field
               v-model="login"
               @input="$v.login.$touch()"
               :error-messages="emailErrors"
@@ -48,9 +47,10 @@
               required
               outlined
               placeholder="email"
-            />
-          </v-col>
-          <div class="authorization-form__dynamic-field-wrapper">
+          />
+        </v-col>
+        <v-expand-transition>
+          <div v-show=register class="authorization-form__dynamic-field-wrapper">
             <v-col
                 class="authorization-form__field-wrapper"
                 cols="12"
@@ -59,7 +59,6 @@
                 lg="10"
             >
               <v-text-field
-                  v-if="register"
                   v-model="userId"
                   :counter="30"
                   @input="$v.userId.$touch()"
@@ -71,15 +70,15 @@
               />
             </v-col>
           </div>
-
-          <v-col
+        </v-expand-transition>
+        <v-col
             class="authorization-form__field-wrapper"
             cols="12"
             sm="12"
             md="10"
             lg="10"
-          >
-            <v-text-field
+        >
+          <v-text-field
               @click:append="isPasswordVisible = !isPasswordVisible"
               @input="$v.pwd.$touch()"
               :counter="40"
@@ -91,26 +90,26 @@
               label="Пароль"
               required
               outlined
-            />
-          </v-col>
-        </div>
+          />
+        </v-col>
+      </div>
       <v-card-actions>
         <v-btn
-          class="authorization-form__button"
-          text
-          color="red"
-          :style="`${createCancelButtonTextShadow}`"
-          @click="back"
+            class="authorization-form__button"
+            text
+            color="red"
+            :style="`${createCancelButtonTextShadow}`"
+            @click="back"
         >
           Отмена
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
-          class="authorization-form__button"
-          color="primary"
-          text
-          :style="`position: relative; margin: 2% 2% !important; ${this.submitButtonTextShadowStyleString}`"
-          @click.prevent="authorize"
+            class="authorization-form__button"
+            color="primary"
+            text
+            :style="`${this.submitButtonTextShadowStyleString}`"
+            @click="authorize"
         >
           Отправить
         </v-btn>

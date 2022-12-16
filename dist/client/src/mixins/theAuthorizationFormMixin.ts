@@ -20,9 +20,11 @@ const theAuthorizationFormMixin = {
     methods: {
         async authorize() {
             //@ts-ignore
-            this.$v.$touch();
+            this.$v.pwd.$touch();
             //@ts-ignore
-            if (!this.$v.$invalid) {
+            this.$v.login.$touch();
+            //@ts-ignore
+            if (!this.$v.login.$invalid && !this.$v.pwd.$invalid) {
                 //@ts-ignore
                 let response = await UserStore.actions.login(this.login, this.pwd);
                 if (response.status === httpStatusCodes.SUCCESS) {
@@ -38,6 +40,9 @@ const theAuthorizationFormMixin = {
                     this.clearFields();
                     console.log(response.message);
                 }
+            }
+            else {
+                // потрясти неправильно заполненные формы
             }
         },
         back: function() {

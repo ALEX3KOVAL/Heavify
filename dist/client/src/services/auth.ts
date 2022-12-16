@@ -21,6 +21,10 @@ const checkAuth = async(): Promise<AxiosResponse<IAuthResponse>> => {
     return res;
 }
 
+const fetcAll = async (urls: string[]) => {
+    const responses = urls.map(async (url) => await fetch(url, {method: "GET"}));
+}
+
 
 export default {
     login,

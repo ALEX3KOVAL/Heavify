@@ -1,14 +1,12 @@
 <template>
   <v-sheet
       id="scrolling-techniques-2"
-      class="overflow-y-auto overflow-x-hidden"
       :height="pageHeight"
-      width="100%"
   >
-    <div class="d-flex justify-center" :style="`background: linear-gradient(to right, rgb(215,211,241), rgb(231,236,246));color: white;width: 100%;height: ${1900}px;` ">
+    <div class="content__wrapper">
       <CarouselsList
           :page-name="this.pageName"
-          :header-height="`${headerHeight-1}px`"
+          :header-height="this.headerHeight"
       />
     </div>
   </v-sheet>
