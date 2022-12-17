@@ -1,7 +1,7 @@
 import { ErrorAPI } from "../http/HttpAPI";
 import PictureService from "../../service/picture";
 const getPicturesGroupByNames = async (req, res, next) => {
-    const { pageName, componentType, componentName } = req.params;
+    const { pageName, componentType, componentName} = req.params;
     if (pageName && componentType) {
         return PictureService.getPicturesGroupByNames(pageName, componentType, res, componentName);
     }
@@ -14,7 +14,6 @@ const getFoldersNamesBy = async (req, res, next) => {
     if (pageName && componentType) {
         if (!/^(?!.*header).+$/.test(componentType))
             return next('route');
-        console.log("()()(()()()(");
         return PictureService.getFoldersNamesBy(pageName, componentType, res);
     }
     else {

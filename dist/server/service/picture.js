@@ -6,14 +6,15 @@ const getPicturesGroupByNames = async (pageName, componentType, res, componentNa
         if (err) {
             throw ErrorAPI.identify(err);
         }
+        console.log(files);
         filesNamesObject.filesNames =
             (files.length > 2
                 ?
-                    files
-                        .sort((a, b) => Number(a.slice(a.lastIndexOf("_") + 1, a.lastIndexOf("."))) >
-                        Number(b.slice(b.lastIndexOf("_") + 1, b.lastIndexOf("."))) ? 1 : -1)
+                files
+                    .sort((a, b) => Number(a.slice(a.lastIndexOf("_") + 1, a.lastIndexOf("."))) >
+                    Number(b.slice(b.lastIndexOf("_") + 1, b.lastIndexOf("."))) ? 1 : -1)
                 :
-                    files).filter(value => value !== "clay");
+                files).filter(value => value !== "clay");
         if (componentType === "carousel") {
             await readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName}/clay`, (err, files) => {
                 if (err) {
@@ -27,7 +28,6 @@ const getPicturesGroupByNames = async (pageName, componentType, res, componentNa
         else {
             return res.json(filesNamesObject.filesNames[0]);
         }
-
     });
 };
 const getFoldersNamesBy = async (pageName, componentType, res) => {
@@ -35,7 +35,7 @@ const getFoldersNamesBy = async (pageName, componentType, res) => {
         if (err) {
             throw ErrorAPI.identify(err);
         }
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ---- ",foldersNames);
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ---- ", foldersNames);
         return res.json({ componentsNames: foldersNames });
     });
 };
