@@ -20,7 +20,7 @@ const routes: Array<RouteConfig> = [
     {
         path: INDEX_ROUTE,
         name: "index",
-        component: IndexView,
+        component: () => import("@/views/IndexView.vue"),
         meta: {
             title: "Heavify - get some heavy"
         },
@@ -28,7 +28,7 @@ const routes: Array<RouteConfig> = [
     {
         path: HOME_ROUTE,
         name: "home",
-        component: HomeView,
+        component: () => import("@/views/HomeView.vue"),
         meta: {
             requiresAuth: true,
             title: "Welcome to Heavify"
@@ -58,9 +58,10 @@ const routes: Array<RouteConfig> = [
     {
         path: AUTH_ROUTE,
         name: "auth",
-        component: AuthView,
+        component: () => import("@/views/AuthView.vue"),
         meta: {
-            title: "Authorization"
+            title: "Authorization",
+            layout: "AuthLayout"
         }
     },
     {

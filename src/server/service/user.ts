@@ -94,7 +94,7 @@ const checkActivated = async (email: string) => {
     }
     //@ts-ignore
     const isActivated = await User.checkIsActivated(email);
-    if (isActivated === null) {
+    if (isActivated === undefined) {
         throw ErrorAPI.unauthorized("Такой email не зарегистрирован");
     }
     if (!isActivated) {

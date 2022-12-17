@@ -11,6 +11,7 @@ const theAuthorizationFormMixin = {
         isPasswordVisible: false,
         register: false,
         userId: "",
+        isVisibleErrorMessage: false,
     }),
     validations: {
         login: {required, maxLength: maxLength(30), minLength: minLength(15), email},
@@ -38,7 +39,12 @@ const theAuthorizationFormMixin = {
                 else {
                     //@ts-ignore
                     this.clearFields();
-                    console.log(response.message);
+                    //@ts-ignore
+                    this.errorMessage = response.message;
+                    //@ts-ignore
+                    this.isVisibleErrorMessage = true;
+                    //@ts-ignore
+                    setTimeout(() => this.isVisibleErrorMessage = false, 3000);
                 }
             }
             else {

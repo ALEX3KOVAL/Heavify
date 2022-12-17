@@ -1,9 +1,10 @@
 <template>
   <v-navigation-drawer
     v-model="isVisible"
+    class="side-bar"
     absolute
     temporary
-    color="rgba(0,0,0,.8)"
+    :color="`${this.$vuetify.theme.currentTheme.background}ac`"
   >
     <v-list
       nav

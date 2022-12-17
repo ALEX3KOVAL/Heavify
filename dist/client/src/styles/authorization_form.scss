@@ -1,0 +1,92 @@
+.auth__layout {
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: pink !important;
+  box-shadow: inset 0.4vw 0.4vh 0.3vw 0.1vw,
+  inset -0.4vw 0.4vw 0.3vw 0.1vw,
+  inset 0vw -0.4vw 0.3vw 0.1vw !important;
+}
+
+.authorization-form {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.authorization-form__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: inline-flex !important;
+  padding: 0.4% 0.8% !important;
+  padding-bottom: 0.7% !important;
+  justify-content: center;
+  background: pink;
+  margin: 5% auto !important;
+  font-weight: bold !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 1.3rem !important;
+  text-shadow:
+          -0.8px -0.8px 0 rgba(0,0,0,.3),
+          -0.8px -1.6px 0 #c88fdb,
+          -0.8px -2.4px 0 #c88fdb,
+          -0.8px -3.2px 0 rgba(0,0,0,.3) !important;
+  box-shadow:
+          -8px -8px 16px #999,
+          8px 8px 16px #fff,
+          inset -9px -2px 18px #8f8f8f,
+          inset 2px 2px 18px #fff !important;
+}
+
+.authorization-form__dynamic-field-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+}
+
+.authorization-form__fields-row-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  overflow-x: hidden;
+  background: #c6c6e6 !important;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  box-shadow: -30vw 1vh 12vw 3vh rgb(0 0 0 / 40%),
+  30vw 10vh 30px 3vh rgb(0 0 0 / 40%),
+  inset 0.1vw 0.1vh 0.4vw 0.3vw rgb(0 0 0 / 40%) !important;
+}
+
+.authorization-form__field-wrapper {
+  position: relative;
+  padding: 5% 0 !important;
+}
+
+.authorization-form__fields-row {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 8% !important;
+}
+
+.authorization-form__button {
+  position: relative;
+  margin: 3% !important;
+  padding: 0.5% !important;
+  background: pink;
+  box-shadow:
+          -8px -8px 16px #999,
+          8px 8px 16px #fff,
+          inset -9px -2px 18px #8f8f8f,
+          inset 2px 2px 18px #fff !important;
+}

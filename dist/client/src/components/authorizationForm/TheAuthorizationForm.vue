@@ -1,11 +1,23 @@
 <template>
   <v-dialog
       v-model="isDialogVisible"
+      :style="`max-width: ${authorizationFormWidth}px`"
       :max-width="authorizationFormWidth"
+      class="authorization-form"
   >
     <v-card
         class="authorization-form__fields-row-wrapper"
     >
+      <v-expand-transition>
+        <transition name="bounce">
+          <h2
+              class="error-message__text"
+              v-if="isVisibleErrorMessage"
+          >
+            {{this.errorMessage}}
+          </h2>
+        </transition>
+      </v-expand-transition>
       <v-card-actions>
         <v-btn
             class="authorization-form__button"
@@ -39,6 +51,7 @@
             lg="10"
         >
           <v-text-field
+              @focus="isVisibleErrorMessage = false"
               v-model="login"
               @input="$v.login.$touch()"
               :error-messages="emailErrors"
@@ -59,6 +72,7 @@
                 lg="10"
             >
               <v-text-field
+                  @focus="isVisibleErrorMessage = false"
                   v-model="userId"
                   :counter="30"
                   @input="$v.userId.$touch()"

@@ -1,12 +1,13 @@
 <template>
-    <v-app>
-      <provider>
-        <component is=""/>
-        <transition name="fade">
-          <router-view/>
-        </transition>
-      </provider>
-    </v-app>
+  <v-app>
+    <provider>
+      <transition name="fade">
+        <component :is="layout">
+          <router-view />
+        </component>
+      </transition>
+    </provider>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -18,6 +19,15 @@ export default {
   name: 'App',
   components: {
     Provider,
+  },
+  computed: {
+    layout() {
+      //@ts-ignore
+      const layoutName = this.$route.meta.layout || "DefaultLayout";
+      console.log(layoutName);
+      //@ts-ignore
+      return () => import(`@/layouts/${layoutName}.vue`);
+    }
   },
   data: () => ({
     //

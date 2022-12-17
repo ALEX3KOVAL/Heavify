@@ -3,49 +3,56 @@
     :style="`margin-top: ${headerHeight}px !important;`"
     class="carousels-row__wrapper rounded-t-lg"
   >
-    <Lazy
-      class="carousels-row"
-      v-for="componentName in carouselsComponentsNames"
-      :unrender="true"
-      :unrender-delay="100"
+    <div :style="`height: ${setHeight}px;`"
+      class="carousels-row__wrapper"
     >
-    <transition
-        name="bounce"
-        appear>
-      <carousel
-        :page-name="pageName"
-        :component-name="componentName"
-        :height="`${setHeight}px`"
-      />
-    </transition>
-    <img
-      v-if="$vuetify.breakpoint.name !== 'xs'"
-      src="../../icon.png"
-      alt=""
-      class="carousel__img"
-      :style="`height: ${setHeight}px`"/>
-  </Lazy>
-    <Lazy
-        class="carousels-row"
-        v-for="componentName in carouselsComponentsNames"
-        :unrender="true"
-        :unrender-delay="100"
-    >
-      <transition
-          name="bounce"
-          appear>
-        <carousel
-            :page-name="pageName"
-            :component-name="componentName"
-            :height="`${setHeight}px`"
-        />
-      </transition>
-      <img
-        v-if="$vuetify.breakpoint.name !== 'xs'"
-        src="../../icon.png" alt=""
-        class="carousel__img"
-        :style="`height: ${setHeight}px`"/>
-    </Lazy>
+      <Lazy
+          class="carousels-row"
+          v-for="componentName in carouselsComponentsNames"
+          :unrender="true"
+          :unrender-delay="100"
+      >
+        <transition
+            name="bounce"
+            appear
+        >
+          <carousel
+              :page-name="pageName"
+              :component-name="componentName"
+              :height="`${setHeight}px`"
+          />
+        </transition>
+        <img
+            v-if="$vuetify.breakpoint.name !== 'xs'"
+            src="../../icon.png"
+            alt=""
+            class="carousel__img"
+            :style="`height: ${setHeight}px`"/>
+      </Lazy>
+    </div>
+    <div :style="``">
+      <Lazy
+          class="carousels-row"
+          v-for="componentName in carouselsComponentsNames"
+          :unrender="true"
+          :unrender-delay="100"
+      >
+        <transition
+            name="bounce"
+            appear>
+          <carousel
+              :page-name="pageName"
+              :component-name="componentName"
+              :height="`${setHeight}px`"
+          />
+        </transition>
+        <img
+            v-if="$vuetify.breakpoint.name !== 'xs'"
+            src="../../icon.png" alt=""
+            class="carousel__img"
+            :style="`height: ${setHeight}px`"/>
+      </Lazy>
+    </div>
   </div>
 </template>
 
@@ -90,7 +97,10 @@ export default {
         }
       }
       else {
-        return h * 0.5335;
+        if (this.$vuetify.breakpoint.name === "lg") {
+          return h * 0.5535;
+        }
+        return h * 0.6035;
       }
     },
   },

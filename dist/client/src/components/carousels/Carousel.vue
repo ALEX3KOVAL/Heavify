@@ -1,28 +1,30 @@
 <template>
-    <v-container class="presentation-carousel">
-        <v-card
-          class="presentation-carousel__wrapper rounded-xl"
-          :height="height"
-          :style="`width: ${setWidth}px;`"
+  <v-container
+    class="carousel"
+    :style="`width: ${setWidth}px;height:${height};`"
+  >
+      <v-card
+        class="carousel__wrapper rounded-xl"
+      >
+        <v-carousel
+            interval="5000"
+            cycle
+            continuous
+            hide-delimiter-background
+            delimiter-icon="mdi-guitar-pick"
+            show-arrows-on-hover
+            :style="`width: ${setWidth}px;`"
+            :height="height"
         >
-          <v-carousel
-              interval="5000"
-              cycle
-              continuous
-              hide-delimiter-background
-              delimiter-icon="mdi-guitar-pick"
-              show-arrows-on-hover
-              :height="height"
+          <v-carousel-item
+              v-for="(slide, i) in presentationCarouselSlides"
+              :key="i"
+              :src="`${API_URL}/${pageName}_page/carousel/${componentName}/${slide}`"
           >
-            <v-carousel-item
-                v-for="(slide, i) in presentationCarouselSlides"
-                :key="i"
-                :src="`${API_URL}/${pageName}_page/carousel/${componentName}/${slide}`"
-            >
-            </v-carousel-item>
-          </v-carousel>
-        </v-card>
-    </v-container>
+          </v-carousel-item>
+        </v-carousel>
+      </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -61,11 +63,11 @@ export default {
     setWidth() {
       const w = this.$vuetify.breakpoint.width,
           h = this.$vuetify.breakpoint.height;
+      console.log(this.$vuetify.breakpoint.name);
       if (h > w) {
         switch (this.$vuetify.breakpoint.name) {
           case "xs":
           case "sm":
-            return w * 0.85;
           case "md":
             return w * 0.6;
           default:
@@ -73,7 +75,7 @@ export default {
         }
       }
       else {
-        return w * 0.5;
+        return w * 0.55;
       }
     }
   }
