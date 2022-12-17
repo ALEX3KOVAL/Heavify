@@ -94,7 +94,6 @@ User.checkIsActivated = async function (email) {
     const userData = await this.findOne({
         where: { email }
     });
-    console.log("()()()()()()()()()()()()()()--=-==-=-= ", userData);
     return userData?.isActivated;
 };
 export const AlbumSong = sequelize.define('album_songs', {

@@ -1,19 +1,30 @@
 import { readdir } from "fs";
 import { ErrorAPI } from "../api/http/HttpAPI";
 const getPicturesGroupByNames = async (pageName, componentType, res, componentName) => {
+    let filesNamesObject = { filesNames: [""] };
     await readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName ? componentName : ""}`, (err, files) => {
         if (err) {
             throw ErrorAPI.identify(err);
         }
-        return res.json({
-            filesNames: files.length > 1
+        filesNamesObject.filesNames =
+            (files.length > 2
                 ?
-                    files.sort((a, b) => Number(a.slice(a.lastIndexOf("_") + 1, a.lastIndexOf("."))) >
+                    files
+                        .sort((a, b) => Number(a.slice(a.lastIndexOf("_") + 1, a.lastIndexOf("."))) >
                         Number(b.slice(b.lastIndexOf("_") + 1, b.lastIndexOf("."))) ? 1 : -1)
                 :
-                    files
-        });
+                    files).filter(value => value !== "clay");
     });
+    if (componentType === "carousel") {
+        await readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName}/clay`, (err, files) => {
+            if (err) {
+                throw ErrorAPI.identify(err);
+            }
+            //@ts-ignore
+            filesNamesObject.clay = files[0];
+            return res.json(filesNamesObject);
+        });
+    }
 };
 const getFoldersNamesBy = async (pageName, componentType, res) => {
     await readdir(`../../assets/images/${pageName}_page/${componentType}/`, (err, foldersNames) => {
