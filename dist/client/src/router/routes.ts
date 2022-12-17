@@ -31,7 +31,8 @@ const routes: Array<RouteConfig> = [
         component: () => import("@/views/HomeView.vue"),
         meta: {
             requiresAuth: true,
-            title: "Welcome to Heavify"
+            title: "Welcome to Heavify",
+            layout: "HomeLayout"
         }
     },
     {

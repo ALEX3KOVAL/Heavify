@@ -6,6 +6,7 @@ const getPicturesGroupByNames = async (pageName: string, componentType: string, 
         if (err) {
             throw ErrorAPI.identify(err);
         }
+        console.log(files);
         filesNamesObject.filesNames =
             (files.length > 2
                 ?
@@ -27,7 +28,6 @@ const getPicturesGroupByNames = async (pageName: string, componentType: string, 
         else {
             return res.json(filesNamesObject.filesNames[0]);
         }
-
     });
 };
 const getFoldersNamesBy = async (pageName: string, componentType: string, res: any) => {

@@ -2,9 +2,9 @@ import {ErrorAPI} from "../http/HttpAPI";
 import PictureService from "../../service/picture";
 
 const getPicturesGroupByNames = async (req: any, res: any, next: any) => {
-    const { pageName, componentType, componentName } = req.params;
+    const { pageName, componentType, componentName, screenBreakpoint } = req.params;
     if (pageName && componentType) {
-        return PictureService.getPicturesGroupByNames(pageName, componentType, res, componentName);
+        return PictureService.getPicturesGroupByNames(pageName, componentType, res, componentName, screenBreakpoint);
     }
     else {
         return next(ErrorAPI.notImplemented("Необходимо верные задать имя страницы и компонента"));
