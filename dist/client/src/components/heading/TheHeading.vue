@@ -70,8 +70,8 @@ export default {
   async created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
-    await getPicturesGroupByNames(this.pageName, "header").then((data) => {
-      this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${data[0]}`;
+    await getPicturesGroupByNames(this.pageName, "header").then((fileName) => {
+      this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${fileName}`;
     });
   },
   mounted() {

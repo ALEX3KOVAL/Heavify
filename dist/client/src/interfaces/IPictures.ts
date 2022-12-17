@@ -1,3 +1,4 @@
 export interface IPictures {
-    filesNames: string[]
+    filesNames: string[],
+    clay: string
 }

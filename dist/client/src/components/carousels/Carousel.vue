@@ -49,14 +49,18 @@ export default {
   data() {
     return {
       drawer: true,
-      presentationCarouselSlides: [],
+      presentationCarouselSlides: {
+        filesNames: [""],
+        clay: ""
+      },
     }
   },
   created() {
     this.API_URL = process.env.VUE_APP_API_URL;
     getPicturesGroupByNames(this.pageName, "carousel", this.componentName)
         .then((data) => {
-          this.presentationCarouselSlides = data
+          this.presentationCarouselSlides = data.filesNames;
+          this.$emit("clayIsLoaded", data.clay);
         });
   },
   computed: {

@@ -1,8 +1,9 @@
 import PictureService from "@/services/picture";
+import {IPictures} from "@/interfaces/IPictures";
 
-export const getPicturesGroupByNames = async (pageName: string, componentType: string, componentName = ""): Promise<string[]> => {
+export const getPicturesGroupByNames = async (pageName: string, componentType: string, componentName = ""): Promise<IPictures> => {
     const response = await PictureService.getPicturesGroupByNames(pageName, componentType, componentName);
-    return response.data.filesNames;
+    return response.data;
 }
 
 export const getComponentsNamesBy = async (pageName: string, componentType: string) => {
