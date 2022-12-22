@@ -2,7 +2,9 @@
   <v-app>
     <provider>
       <transition name="fade">
-        <component :is="layout">
+        <component
+          :is="layout"
+        >
           <router-view />
         </component>
       </transition>

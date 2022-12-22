@@ -1,20 +1,21 @@
 <template>
   <v-container
     class="carousel"
-    :style="`width: ${setWidth}px;height:${height};`"
+    :style="`height:${height};`"
   >
       <v-card
         class="carousel__wrapper rounded-xl"
       >
         <v-carousel
-            interval="5000"
-            cycle
-            continuous
-            hide-delimiter-background
-            delimiter-icon="mdi-guitar-pick"
-            show-arrows-on-hover
-            :style="`width: ${setWidth}px;`"
-            :height="height"
+          v-if="presentationCarouselSlides.clay !== ''"
+          interval="5000"
+          cycle
+          continuous
+          hide-delimiter-background
+          delimiter-icon="mdi-guitar-pick"
+          show-arrows-on-hover
+          class="carousel-container"
+          :height="height"
         >
           <v-carousel-item
               v-for="(slide, i) in presentationCarouselSlides"
@@ -55,11 +56,12 @@ export default {
       },
     }
   },
-  created() {
+  async created() {
     this.API_URL = process.env.VUE_APP_API_URL;
-    getPicturesGroupByNames(this.pageName, "carousel", this.componentName)
+    await getPicturesGroupByNames(this.pageName, "carousel", this.componentName)
         .then((data) => {
           this.presentationCarouselSlides = data.filesNames;
+          console.log(this.presentationCarouselSlides);
           this.$emit("clayIsLoaded", data.clay);
         });
   },
@@ -73,7 +75,7 @@ export default {
           case "xs":
           case "sm":
           case "md":
-            return w * 0.6;
+            return w * 0.8;
           default:
             return w * 0.5;
         }

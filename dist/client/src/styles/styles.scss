@@ -1,22 +1,17 @@
+@import "./normalize";
 @import "./carousel";
 @import "./authorization_form";
 @import "./heading";
 @import "./animations";
-
-* {
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-}
+@import "./home";
 
 $grid-breakpoints: (
-  'xs': 0,
-  'sm': 600px,
-  'md': 940px,
-  'lg': 1260px,
-  'xl': 1880px,
+        'xs': 0,
+        'sm': 600px,
+        'md': 940px,
+        'lg': 1260px,
+        'xl': 1880px,
 );
-
 html::-webkit-scrollbar {
   display: none;
 }
@@ -200,7 +195,7 @@ html::-webkit-scrollbar {
 
 #scrolling-techniques-2 {
   position: relative;
-  overflow: hidden auto;
+  overflow-x: hidden;
   width: 100%;
 }
 
@@ -227,15 +222,6 @@ html::-webkit-scrollbar {
 
 .container {
   max-width: unset !important;
-}
-
-.overflow-y-auto::-webkit-scrollbar {
-  @media only screen and (min-width: 200px) and (max-width: 830px) and (orientation: portrait) {
-    display: none;
-  }
-  @media only screen and (min-width: 200px) and (max-width: 1024px) and (orientation: landscape) {
-    display: none;
-  }
 }
 
 .v-image__image {

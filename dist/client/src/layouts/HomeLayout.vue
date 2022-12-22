@@ -1,8 +1,13 @@
 <template>
-  <section :style="`background-image: url(${this.API_URL}/home_page/background/${backgroundImagePath})`">
+  <section
+    :style="`background-image: url(${this.API_URL}/home_page/background/${backgroundImagePath});height: 99.9vh;`"
+  >
     <slot />
-    <img :src="`${this.API_URL}/home_page/background/${this.$vuetify.breakpoint.name}/${backgroundImagePath}`" alt=""
-           style="width: 100vw; height: 100vh"/>
+    <img
+      :src="`${this.API_URL}/home_page/background/${this.$vuetify.breakpoint.name}/${backgroundImagePath}`"
+      alt=""
+      class="home__layout__background"
+    />
   </section>
 </template>
 
