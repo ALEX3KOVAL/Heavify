@@ -8,11 +8,8 @@ import {
     SONG_SELECTION_ROUTE
 } from "@/utils/consts";
 import AdminView from "@/views/AdminView.vue";
-import HomeView from "@/views/HomeView.vue";
 import SongAddedView from "@/views/SongAddedView.vue";
 import PlayerView from "@/views/PlayerView.vue";
-import AuthView from "@/views/AuthView.vue";
-import IndexView from "@/views/IndexView.vue";
 import SongSelectionView from "@/views/SongSelectionView.vue";
 import {RouteConfig} from "vue-router";
 
@@ -32,8 +29,8 @@ const routes: Array<RouteConfig> = [
         meta: {
             requiresAuth: true,
             title: "Welcome to Heavify",
-            layout: "HomeLayout"
-        }
+            layout: "DefaultLayout"
+        },
     },
     {
         path: SONG_ADDED_ROUTE,
@@ -47,7 +44,7 @@ const routes: Array<RouteConfig> = [
         component: SongSelectionView,
         meta: {
             requiresAuth: true
-        }
+        },
     },
     {
         path: PLAYER_ROUTE,

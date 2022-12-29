@@ -4,7 +4,6 @@
   >
     <div
       :style="`height: ${setHeight}px;`"
-      class="carousels-row__wrapper"
     >
       <Lazy
           class="carousels-row"
@@ -17,22 +16,23 @@
             appear
         >
           <carousel
+              @clayIsLoaded="setClayHuman"
               :page-name="pageName"
               :component-name="componentName"
               :height="`${setHeight}px`"
           />
         </transition>
         <img
-            v-if="$vuetify.breakpoint.name !== 'xs'"
-            :src="`${API_URL}/${pageName}_page/carousel/${componentName}/clay/${clayHumanFileName}`"
-            alt=""
-            class="carousel__img"
-            :style="`height: ${setHeight}px`"/>
+          v-if="clayHumanFileName !== ''"
+          :src="`${API_URL}/${pageName}_page/carousel/${componentName}/clay/${clayHumanFileName}`"
+          alt=""
+          class="carousel__img"
+          :style="`height: ${setHeight}px !important;`"
+        />
       </Lazy>
     </div>
     <div
-      :style="`height: ${setHeight}px;`"
-      class="carousels-row__wrapper"
+      :style="`height: ${setHeight}px !important;`"
     >
       <Lazy
           class="carousels-row"
@@ -44,7 +44,6 @@
             name="bounce"
             appear>
           <carousel
-              ref="carousel"
               @clayIsLoaded="setClayHuman"
               :page-name="pageName"
               :component-name="componentName"
@@ -52,10 +51,10 @@
           />
         </transition>
         <img
-            v-if="$vuetify.breakpoint.name !== 'xs'"
+            v-if="clayHumanFileName !== ''"
             :src="`${API_URL}/${pageName}_page/carousel/${componentName}/clay/${clayHumanFileName}`" alt=""
             class="carousel__img"
-            :style="`height: ${setHeight}px`"/>
+            :style="`height: ${setHeight}px !important;`"/>
       </Lazy>
     </div>
   </div>
@@ -81,10 +80,11 @@ export default {
   data: () => ({
     carouselsComponentsNames: [],
     carouselWrapperHeight: Number,
-    clayHumanFileName: String
+    clayHumanFileName: ""
   }),
   async created() {
     this.API_URL = process.env.VUE_APP_API_URL;
+    console.log("---------------   ", this.pageName);
     this.carouselsComponentsNames = await getComponentsNamesBy(this.pageName, "carousel");
   },
   methods: {
@@ -99,7 +99,7 @@ export default {
           h = this.$vuetify.breakpoint.height;
       if (h > w) {
         if (w * (100 / h) < 58.7) {
-          return w * 0.485;
+          return w * 0.595;
         }
         else {
           return w * 0.388;

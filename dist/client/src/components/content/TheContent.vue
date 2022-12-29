@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <v-sheet
     :style="`margin-top: ${this.headerHeight}px;`"
     id="scrolling-techniques-2"
@@ -10,6 +11,11 @@
       />
     </div>
   </v-sheet>
+=======
+  <main>
+    <slot />
+  </main>
+>>>>>>> indexView
 </template>
 
 <script>
@@ -32,11 +38,6 @@ export default {
       type: String,
       required: true
     },
-  },
-  computed: {
-    pageHeight() {
-      return this.$vuetify.breakpoint.height;
-    }
   },
 }
 </script>

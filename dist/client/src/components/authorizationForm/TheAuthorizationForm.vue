@@ -6,13 +6,13 @@
       class="authorization-form"
   >
     <v-card
-        class="authorization-form__fields-row-wrapper"
+      class="authorization-form__fields-row-wrapper"
     >
       <v-expand-transition>
         <transition name="bounce">
           <h2
-              class="error-message__text"
-              v-if="isVisibleErrorMessage"
+            class="error-message__text"
+            v-if="isVisibleErrorMessage"
           >
             {{this.errorMessage}}
           </h2>

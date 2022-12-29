@@ -1,4 +1,11 @@
 <template>
+  <v-sheet
+      id="scrolling-techniques-2"
+      :height="height"
+  >
+    <div class="content__wrapper">
+    </div>
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -8,6 +15,13 @@ export default {
   name: 'HomeView',
   components: {
     SelectionList
-  }
+  },
+  computed: {
+    //@ts-ignore
+    height() {
+      //@ts-ignore
+      return this.$vuetify.breakpoint.height;
+    }
+  },
 };
 </script>

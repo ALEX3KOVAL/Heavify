@@ -1,9 +1,15 @@
 <template>
   <v-app>
     <provider>
-      <transition name="fade">
+      <transition
+        name="fade"
+        appear
+        mode="out-in"
+      >
         <component :is="layout">
-          <router-view />
+          <the-content :header-height="headerHeight" :page-name="'index'">
+            <router-view />
+          </the-content>
         </component>
       </transition>
     </provider>
@@ -14,11 +20,13 @@
 import "@fontsource/montserrat";
 import "@fontsource/alkalami"
 import Provider from "@/context/Provider.vue";
+import TheContent from "@/components/content/TheContent.vue";
 
 export default {
   name: 'App',
   components: {
     Provider,
+    TheContent
   },
   computed: {
     layout() {
@@ -27,7 +35,21 @@ export default {
       console.log(layoutName);
       //@ts-ignore
       return () => import(`@/layouts/${layoutName}.vue`);
-    }
+    },
+      //@ts-ignore
+      headerHeight() {
+        //@ts-ignore
+        switch (this.$vuetify.breakpoint.name) {
+          case "lg":
+          case "xl":
+            //@ts-ignore
+            return this.$vuetify.breakpoint.height * 0.4084;
+          default:
+            //@ts-ignore
+            var height = this.$vuetify.breakpoint.height * 0.1884;
+            return height;
+        }
+      },
   },
   data: () => ({
     //
