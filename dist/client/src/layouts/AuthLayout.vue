@@ -1,12 +1,20 @@
 <template>
   <section class="auth__layout">
-    <slot />
+    <content
+        :page-name="'index'"
+    >
+      <router-view />
+    </content>
   </section>
 </template>
 
 <script>
+import Content from "../components/content/TheContent.vue";
 export default {
-  name: "AuthLayout"
+  name: "AuthLayout",
+  components: {
+    Content,
+  }
 }
 </script>
 

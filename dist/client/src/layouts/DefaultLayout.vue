@@ -5,7 +5,11 @@
         v-slot="{headerHeight}"
       >
         <the-heading :height="headerHeight" :width="width" :page-name="'index'"/>
-        <slot />
+        <the-content
+            :page-name="'index'"
+        >
+          <router-view />
+        </the-content>
       </consumer>
     </v-col>
   </section>

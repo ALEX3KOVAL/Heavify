@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "TheContent",
+  name: "content",
   data: () => ({
     presentationCarouselDrawer: true,
   }),
