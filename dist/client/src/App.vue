@@ -7,7 +7,9 @@
         mode="out-in"
       >
         <component :is="layout">
-          <the-content :header-height="headerHeight" :page-name="'index'">
+          <the-content
+            :page-name="'index'"
+          >
             <router-view />
           </the-content>
         </component>

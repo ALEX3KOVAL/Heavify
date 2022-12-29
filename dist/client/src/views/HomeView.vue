@@ -1,11 +1,6 @@
 <template>
-  <v-sheet
-      id="scrolling-techniques-2"
-      :height="height"
-  >
-    <div class="content__wrapper">
-    </div>
-  </v-sheet>
+  <div class="content__wrapper">
+  </div>
 </template>
 
 <script lang="ts">
