@@ -1,6 +1,5 @@
 <template>
   <div
-    :style="`margin-top: ${headerHeight}px !important;`"
     class="carousels-row__wrapper rounded-t-lg"
   >
     <div
@@ -78,10 +77,6 @@ export default {
       type: String,
       required: true
     },
-    headerHeight: {
-      type: Number,
-      required: true
-    }
   },
   data: () => ({
     carouselsComponentsNames: [],

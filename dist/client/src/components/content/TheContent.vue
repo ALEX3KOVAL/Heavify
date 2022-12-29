@@ -1,12 +1,12 @@
 <template>
   <v-sheet
-      id="scrolling-techniques-2"
-      :height="pageHeight"
+    :style="`margin-top: ${this.headerHeight}px;`"
+    id="scrolling-techniques-2"
+    :height="pageHeight"
   >
     <div class="content__wrapper">
       <CarouselsList
-          :page-name="this.pageName"
-          :header-height="this.headerHeight"
+        :page-name="this.pageName"
       />
     </div>
   </v-sheet>
