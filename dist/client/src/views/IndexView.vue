@@ -1,17 +1,25 @@
 <template>
-  <v-col>
-    <the-heading :height="headerHeight" :width="width" page-name="index"/>
-    <the-content :header-height="headerHeight" page-name="index"/>
-  </v-col>
+  <v-sheet
+      id="scrolling-techniques-2"
+      :height="height"
+  >
+    <div class="content__wrapper">
+      <CarouselsList
+          :page-name="'index'"
+          :header-height="this.headerHeight"
+      />
+    </div>
+  </v-sheet>
 </template>
 
 <script>
 import TheHeading from "@/components/heading/TheHeading.vue";
 import TheContent from "@/components/content/TheContent.vue";
+import CarouselsList from "@/components/carousels/CarouselsList.vue";
 
 export default {
   name: "IndexView",
-  components: {TheContent, TheHeading},
+  components: {TheContent, TheHeading, CarouselsList},
   computed: {
     headerHeight() {
       switch (this.$vuetify.breakpoint.name) {
@@ -24,14 +32,10 @@ export default {
           return height;
       }
     },
-    width() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "lg":
-          case "xl":
-            return this.$vuetify.breakpoint.width - 17;
-        default:
-          return this.$vuetify.breakpoint.width;
-      }
+    //@ts-ignore
+    height() {
+      //@ts-ignore
+      return this.$vuetify.breakpoint.height;
     }
   },
 }

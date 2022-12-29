@@ -89,6 +89,7 @@ export default {
   }),
   async created() {
     this.API_URL = process.env.VUE_APP_API_URL;
+    console.log("---------------   ", this.pageName);
     this.carouselsComponentsNames = await getComponentsNamesBy(this.pageName, "carousel");
   },
   methods: {

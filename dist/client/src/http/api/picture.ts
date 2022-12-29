@@ -7,6 +7,7 @@ export const getPicturesGroupByNames = async (pageName: string, componentType: s
 }
 
 export const getComponentsNamesBy = async (pageName: string, componentType: string) => {
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55 ---- ", componentType);
     const response = await PictureService.getComponentsNamesBy(pageName, componentType);
     console.log(response);
     return response.data.componentsNames;

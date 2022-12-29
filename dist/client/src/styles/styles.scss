@@ -4,6 +4,7 @@
 @import "./heading";
 @import "./animations";
 @import "./home";
+@import "./default-layout";
 
 $grid-breakpoints: (
         'xs': 0,
@@ -181,6 +182,10 @@ html::-webkit-scrollbar {
 .v-overlay {
   opacity: 0 !important;
   transition: .8s ease-in-out !important;
+  background-color: pink;
+  box-shadow: inset 0.2vw 0.2vh 0.9vw 0.6vw #f0a0cbff,
+  inset -0.2vw 0.2vw 0.9vw 0.6vw #f0a0cbff,
+  inset 0vw -0.2vw 0.9vw 0.6vw #f0a0cbff!important;
 }
 
 .v-overlay--active {
@@ -188,8 +193,14 @@ html::-webkit-scrollbar {
   backdrop-filter: blur(15px) !important;
 }
 
+.v-overlay--absolute {
+  background-color: transparent;
+}
+
 .v-overlay__scrim {
   opacity: 1 !important;
+  width: 100vw !important;
+  height: 100vh !important;
   background-color: transparent !important;
 }
 

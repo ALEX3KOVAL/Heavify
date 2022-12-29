@@ -1,15 +1,7 @@
 <template>
-  <v-sheet
-      id="scrolling-techniques-2"
-      :height="pageHeight"
-  >
-    <div class="content__wrapper">
-      <CarouselsList
-          :page-name="this.pageName"
-          :header-height="this.headerHeight"
-      />
-    </div>
-  </v-sheet>
+  <main>
+    <slot />
+  </main>
 </template>
 
 <script>
@@ -32,11 +24,6 @@ export default {
       type: String,
       required: true
     },
-  },
-  computed: {
-    pageHeight() {
-      return this.$vuetify.breakpoint.height;
-    }
   },
 }
 </script>

@@ -29,7 +29,7 @@
               :icons-size="iconsSize"
               :icon-name="`mdi-login-variant`"
               @authorizationFormNoNeeded="hideAuthorizationForm"
-              @onClick="showAuthorizationForm"
+              @onClick="auth"
           />
       </v-row>
     </v-app-bar>
@@ -38,10 +38,13 @@
 </template>
 
 <script>
+import VueRouter from "vue-router";
+const {isNavigationFailure, NavigationFailureType} = VueRouter;
 import {getPicturesGroupByNames} from "@/http/api/picture";
 import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
 import TheSideBar from "@/components/sidebar/TheSideBar.vue";
+import {AUTH_ROUTE, HOME_ROUTE} from "@/utils/consts";
 
 export default {
   components: {
@@ -101,8 +104,12 @@ export default {
     toggleSideBarVisible() {
       this.$refs.theSideBar.toggleVisible();
     },
-    showAuthorizationForm() {
-      this.$router.push('/auth');
+    auth() {
+      this.$router.push({path: AUTH_ROUTE, query: {redirect: HOME_ROUTE}}).catch((e) => {
+            if (!isNavigationFailure(e, NavigationFailureType.redirected)) {
+              Promise.reject(e)
+            }
+      });
     },
     reactToHeaderResize() {
       this.isHeaderTitleVisible = this.$el.firstChild.offsetHeight === 36;

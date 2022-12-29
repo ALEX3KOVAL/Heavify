@@ -1,7 +1,5 @@
 <template>
-  <the-authorization-form>
-  <!-- @onButtonClick="userStore.actions.test(`It's working`)" -->
-  </the-authorization-form>
+  <the-authorization-form />
 </template>
 
 <script lang="ts">
@@ -14,7 +12,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

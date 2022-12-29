@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
             if (to.path === INDEX_ROUTE) {
                 return next({path: INDEX_ROUTE, query: {from: window.location.pathname}})
             }
-            return AUTH_ROUTE;
+            return next(AUTH_ROUTE);
         }
     }
     else {
