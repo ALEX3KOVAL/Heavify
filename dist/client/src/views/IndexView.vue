@@ -7,7 +7,8 @@
       :style="`margin-top: ${headerHeight}px !important;`"
     >
       <CarouselsList
-          :page-name="'index'"
+        v-if="pageName !== ''"
+        :page-name="pageName"
       />
     </div>
   </consumer>
@@ -22,6 +23,12 @@ import Consumer from "../context/Consumer.vue";
 export default {
   name: "IndexView",
   components: {Consumer, TheContent, TheHeading, CarouselsList},
+  data: () => ({
+    pageName: ""
+  }),
+  created() {
+    this.pageName = this.$route.name;
+  },
   computed: {
     //@ts-ignore
     height() {

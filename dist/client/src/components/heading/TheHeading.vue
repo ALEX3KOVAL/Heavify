@@ -12,7 +12,7 @@
         app
         class="rounded-b-lg header"
     >
-      <v-row class="d-flex py-1 ">
+      <v-row class="d-flex py-1">
         <the-heading-button
             :icons-size="iconsSize"
             :icon-name="`mdi-menu`"

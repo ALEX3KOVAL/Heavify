@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Content from "../components/content/TheContent.vue";
+import Content from "../../components/content/TheContent.vue";
 export default {
   name: "AuthLayout",
   components: {

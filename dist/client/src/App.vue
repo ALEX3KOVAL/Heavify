@@ -27,10 +27,9 @@ export default {
   computed: {
     layout() {
       //@ts-ignore
-      const layoutName = this.$route.meta.layout || "DefaultLayout";
-      console.log(layoutName);
+      const layoutName = this.$route.meta.layout || "DefaultPageLayout";
       //@ts-ignore
-      return () => import(`@/layouts/${layoutName}.vue`);
+      return () => import(`@/layouts/page/${layoutName}.vue`);
     },
   },
   data: () => ({

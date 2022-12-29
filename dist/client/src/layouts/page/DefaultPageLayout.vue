@@ -6,7 +6,8 @@
       >
         <the-heading :height="headerHeight" :width="width" :page-name="'index'"/>
         <the-content
-            :page-name="'index'"
+          v-if="pageName !== ''"
+          :page-name="pageName"
         >
           <router-view />
         </the-content>
@@ -16,9 +17,9 @@
 </template>
 
 <script>
-import TheHeading from "../components/heading/TheHeading.vue";
-import TheContent from "../components/content/TheContent.vue";
-import Consumer from "../context/Consumer.vue";
+import TheHeading from "../../components/heading/TheHeading.vue";
+import TheContent from "../../components/content/TheContent.vue";
+import Consumer from "../../context/Consumer.vue";
 
 export default {
   name: "DefaultLayout",
@@ -26,6 +27,14 @@ export default {
     TheHeading,
     TheContent,
     Consumer
+  },
+  data: () => ({
+    pageName: ""
+  }),
+  created() {
+    if (this.$route.name) {
+      this.pageName = this.$route.name;
+    }
   },
   computed: {
     width() {
