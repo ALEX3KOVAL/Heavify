@@ -2,14 +2,19 @@
   <section class="default__layout">
     <v-col>
       <consumer
-        v-slot="{headerHeight}"
+          v-slot="{headerHeight}"
       >
         <the-heading :height="headerHeight" :width="width" :page-name="'index'"/>
         <the-content
           v-if="pageName !== ''"
           :page-name="pageName"
         >
-          <router-view />
+          <div
+            class="content__wrapper"
+            :style="`margin-top: ${headerHeight}px !important;`"
+          >
+            <router-view />
+          </div>
         </the-content>
       </consumer>
     </v-col>

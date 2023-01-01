@@ -1,17 +1,8 @@
 <template>
-  <consumer
-    v-slot="{headerHeight}"
-  >
-    <div
-      class="content__wrapper"
-      :style="`margin-top: ${headerHeight}px !important;`"
-    >
-      <CarouselsList
-        v-if="pageName !== ''"
-        :page-name="pageName"
-      />
-    </div>
-  </consumer>
+  <CarouselsList
+    v-if="pageName !== ''"
+    :page-name="pageName"
+  />
 </template>
 
 <script>
