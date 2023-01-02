@@ -13,7 +13,7 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
         case "xl":
-          var height = this.$vuetify.breakpoint.height * 0.4084;
+          var height = this.$vuetify.breakpoint.height * 0.3584;
           return height;
         default:
           var height = this.$vuetify.breakpoint.height * 0.1884;

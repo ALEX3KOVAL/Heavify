@@ -3,3 +3,10 @@
   padding: 0 !important;
   box-sizing: border-box !important;
 }
+
+html::-webkit-scrollbar {
+  display: none;
+}
+html {
+  overflow: hidden;
+}

@@ -16,13 +16,11 @@
 import "@fontsource/montserrat";
 import "@fontsource/alkalami"
 import Provider from "@/context/Provider.vue";
-import Content from "@/components/content/TheContent.vue";
 
 export default {
   name: 'App',
   components: {
     Provider,
-    Content
   },
   computed: {
     layout() {

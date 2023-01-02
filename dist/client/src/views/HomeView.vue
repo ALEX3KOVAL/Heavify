@@ -1,6 +1,5 @@
 <template>
-  <div class="content__wrapper">
-  </div>
+
 </template>
 
 <script lang="ts">

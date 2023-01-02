@@ -5,6 +5,7 @@
 @import "./animations";
 @import "./home";
 @import "./default-layout";
+@import "../../node_modules/vueperslides/dist/vueperslides.css";
 
 $grid-breakpoints: (
         'xs': 0,
@@ -13,8 +14,14 @@ $grid-breakpoints: (
         'lg': 1260px,
         'xl': 1880px,
 );
-html::-webkit-scrollbar {
-  display: none;
+
+.vueperslides__arrow {
+  color: #c88fdb;
+}
+
+.vueperslides__bullets {
+  color: black !important;
+  padding-bottom: 0.2% !important;
 }
 
 .v-navigation-drawer {
@@ -172,11 +179,12 @@ html::-webkit-scrollbar {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  padding: 1% !important;
   justify-content: center;
   background: linear-gradient(to right, rgb(215,211,241), rgb(231,236,246));
   color: white;
   width: 100%;
-  height: 2100px;
+  height: 2300px;
 }
 
 .v-overlay {

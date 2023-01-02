@@ -11,7 +11,7 @@
         >
           <div
             class="content__wrapper"
-            :style="`margin-top: ${headerHeight}px !important;`"
+            :style="`margin-top: ${headerHeight}px !important;height:${height - headerHeight - height * 0.01}px`"
           >
             <router-view />
           </div>
@@ -46,10 +46,13 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":
         case "xl":
-          return this.$vuetify.breakpoint.width - 17;
+          return this.$vuetify.breakpoint.width - (this.$route.name !== "index" ? 17 : 0);
         default:
           return this.$vuetify.breakpoint.width;
       }
+    },
+    height() {
+      return screen.height
     }
   }
 }
