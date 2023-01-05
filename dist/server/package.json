@@ -2,7 +2,7 @@
   "name": "heavify-server-js",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.1aa172a04b50db89cc6e.js",
   "type": "module",
   "scripts": {
     "up": "node --experimental-specifier-resolution=node index.js",
