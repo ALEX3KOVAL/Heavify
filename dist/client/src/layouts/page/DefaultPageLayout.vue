@@ -31,7 +31,7 @@ export default {
   components: {
     TheHeading,
     TheContent,
-    Consumer
+    Consumer,
   },
   data: () => ({
     pageName: ""

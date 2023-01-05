@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {getPicturesGroupByNames} from "@/http/api/picture";
+import PictureService from "../../services/picture";
 
 export default {
   name: "carousel",
@@ -58,12 +58,11 @@ export default {
   },
   async created() {
     this.API_URL = process.env.VUE_APP_API_URL;
-    await getPicturesGroupByNames(this.pageName, "carousel", this.componentName)
-        .then((data) => {
-          this.presentationCarouselSlides = data.filesNames;
-          console.log(this.presentationCarouselSlides);
-          this.$emit("clayIsLoaded", data.clay);
-        });
+    PictureService.getPicturesGroupByNames(this.pageName, "carousel", this.componentName).then((response) => {
+      this.presentationCarouselSlides = response.data.filesNames;
+      console.log(this.presentationCarouselSlides);
+      this.$emit("clayIsLoaded", response.data.clay);
+    })
   },
   computed: {
     setWidth() {

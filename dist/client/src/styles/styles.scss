@@ -15,6 +15,10 @@ $grid-breakpoints: (
         'xl': 1880px,
 );
 
+.letter {
+  z-index: 99;
+}
+
 .vueperslides__arrow {
   color: #c88fdb;
 }

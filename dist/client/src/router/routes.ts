@@ -29,7 +29,7 @@ const routes: Array<RouteConfig> = [
         meta: {
             requiresAuth: true,
             title: "Welcome to Heavify",
-            layout: "DefaultPageLayout"
+            layout: "DefaultPageLayout.vue"
         },
     },
     {
@@ -59,7 +59,7 @@ const routes: Array<RouteConfig> = [
         component: () => import("@/views/AuthView.vue"),
         meta: {
             title: "Authorization",
-            layout: "AuthPageLayout"
+            layout: "AuthPageLayout.vue"
         }
     },
     {

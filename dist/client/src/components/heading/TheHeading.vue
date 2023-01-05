@@ -40,11 +40,12 @@
 <script>
 import VueRouter from "vue-router";
 const {isNavigationFailure, NavigationFailureType} = VueRouter;
-import {getPicturesGroupByNames} from "@/http/api/picture";
+//import {getPicturesGroupByNames} from "@/http/api/picture";
 import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
 import TheSideBar from "@/components/sidebar/TheSideBar.vue";
 import {AUTH_ROUTE, HOME_ROUTE} from "@/utils/consts";
+import PictureService from "../../services/picture";
 
 export default {
   components: {
@@ -73,8 +74,8 @@ export default {
   async created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
-    await getPicturesGroupByNames(this.pageName, "header").then((fileName) => {
-      this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${fileName}`;
+    PictureService.getPicturesGroupByNames(this.pageName, "header").then((response) => {
+      this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${response.data}`;
     });
   },
   mounted() {

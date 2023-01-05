@@ -1,37 +1,50 @@
 <template>
   <v-app>
+    <div v-if="!isLoaded">
+      <the-loader />
+    </div>
     <provider>
       <transition
         name="fade"
         appear
         mode="out-in"
       >
-        <component :is="layout" />
+        <div>
+          <component
+            :is="setLayout" />
+        </div>
       </transition>
     </provider>
   </v-app>
 </template>
 
-<script lang="ts">
+<script>
 import "@fontsource/montserrat";
 import "@fontsource/alkalami"
 import Provider from "@/context/Provider.vue";
+import TheLoader from "@/components/TheLoader.vue";
 
 export default {
   name: 'App',
   components: {
     Provider,
+    TheLoader
+  },
+  async created() {
+    setTimeout(_ => this.isLoaded = true, 3100);
   },
   computed: {
-    layout() {
-      //@ts-ignore
-      const layoutName = this.$route.meta.layout || "DefaultPageLayout";
-      //@ts-ignore
-      return () => import(`@/layouts/page/${layoutName}.vue`);
+    setLayout() {
+      const layoutName = this.$route.meta.layout || "DefaultPageLayout.vue";
+      return () => ({
+        component: import(`@/layouts/page/${layoutName}`),
+        loading: TheLoader,
+        delay: 3100
+      });
     },
   },
   data: () => ({
-    //
+    isLoaded: false,
   }),
 };
 </script>

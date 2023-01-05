@@ -8,7 +8,7 @@
       <vueper-slide
         :title="i.toString()"
         style="color: black !important;background-color: white;"
-        v-for="i in 2"
+        v-for="i in 3"
         :key="i"
       >
         <template #content>
@@ -48,7 +48,7 @@ export default {
       switch(this.$vuetify.breakpoint.name) {
         case "xs":
         case "sm":
-          return 0.02;
+          return 0.12;
         case "md":
         case "lg":
           return 0.12;

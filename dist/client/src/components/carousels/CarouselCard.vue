@@ -39,8 +39,9 @@
 
 <script>
 import Carousel from "./Carousel.vue";
-import {getComponentsNamesBy} from "@/http/api/picture";
+//import {getComponentsNamesBy} from "@/http/api/picture";
 import Lazy from "../lazy/Lazy.vue";
+import PictureService from "../../services/picture";
 
 export default {
   name: "CarouselCard",
@@ -66,7 +67,9 @@ export default {
   async created() {
     this.API_URL = process.env.VUE_APP_API_URL;
     console.log("---------------   ", this.pageName);
-    this.carouselsComponentsNames = await getComponentsNamesBy(this.pageName, "carousel");
+    PictureService.getComponentsNamesBy(this.pageName, "carousel").then((response) =>
+        this.carouselsComponentsNames = response.data.componentsNames
+    );
   },
   methods: {
     setClayHuman(fileName) {
