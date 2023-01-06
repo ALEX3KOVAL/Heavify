@@ -1,5 +1,5 @@
 import {Router} from "express";
-import UserController from '../../api/controllers/userController';
+import {UserController} from '../../api/controllers/controllers';
 import {body} from "express-validator";
 import {activateMiddleware} from "../../middleware/activateMiddleware";
 
