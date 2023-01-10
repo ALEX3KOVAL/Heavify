@@ -71,6 +71,10 @@ const theAuthorizationFormMixin = {
             this.login = "";
             // @ts-ignore
             this.userId = "";
+            //@ts-ignore
+            this.isVisibleErrorMessage = false;
+            //@ts-ignore
+            this.$v.$reset();
         },
         hide() {
             // @ts-ignore

@@ -1,6 +1,37 @@
 .authorization-form {
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden !important;
+  height: 120vh !important;
+  left: -10vw !important;
+  top: -5vw !important;
+  justify-content: end !important;
+  background-size: 100% 100% !important;
+  width: 120vw !important;
+  background-color: transparent !important;
+  -webkit-animation-duration: 1s !important;
+  animation-duration: 1s !important;
+  -webkit-animation-fill-mode: both !important;
+  animation-fill-mode: both !important;
+  -webkit-animation-name: fadeIn !important;
+  animation-name: fadeIn !important;
+}
+
+@media only screen and (max-width: 580px) {
+  .authorization-form__title {
+    font-size: 10vw !important;
+  }
+}
+
+@media only screen and (min-width: 581px) and (max-width: 768px) {
+  .authorization-form__title {
+    font-size: 11vw !important;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .authorization-form__title {
+    font-size: 3vw !important;
+  }
 }
 
 .authorization-form__title {
@@ -11,22 +42,18 @@
   padding: 0.4% 0.8% !important;
   padding-bottom: 0.7% !important;
   justify-content: center;
-  background: pink !important;
   margin: 5% auto !important;
   font-weight: bold !important;
   font-family: "Montserrat", sans-serif !important;
-  font-size: 1.3rem !important;
+  color: rgb(0 0 0 / 70%);
   text-shadow:
-          -0.8px -0.8px 0 rgba(0,0,0,.3),
+          -0.8px -0.8px 0 rgba(200,143,210,.7),
           -0.8px -1.6px 0 #c88fdb,
           -0.8px -2.4px 0 #c88fdb,
-          -0.8px -3.2px 0 rgba(0,0,0,.3) !important;
-  box-shadow:
-          -8px -8px 16px #999,
-          8px 8px 16px #fff,
-          inset -9px -2px 18px #8f8f8f,
-          inset 2px 2px 18px #fff !important;
+          -0.8px -3.2px 0 rgba(250,250,200,.9) !important;
 }
+
+
 
 .authorization-form__dynamic-field-wrapper {
   width: 100%;
@@ -43,19 +70,33 @@
   display: -webkit-flex;
   display: flex;
   overflow-x: hidden;
-  background: #c6c6e6 !important;
+  background: transparent !important;
   justify-content: center;
   text-align: center;
   flex-direction: column;
-  box-shadow: -30vw 1vh 12vw 3vh rgb(0 0 0 / 40%),
-  30vw 10vh 30px 3vh rgb(0 0 0 / 40%),
-  inset 0.1vw 0.1vh 0.4vw 0.3vw rgb(0 0 0 / 40%) !important;
+  box-shadow: inset -4px -2px 3px 7px #ffffff22,
+  inset 4px 2px 3px 7px rgba(94, 104, 121, 0.288) !important;
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
 }
 
 .authorization-form__field-wrapper {
   position: relative;
   padding: 5% 0 !important;
+  input {
+    color: white !important;
+  }
 }
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
 
 .authorization-form__fields-row {
   position: relative;
@@ -72,12 +113,8 @@
 
 .authorization-form__button {
   position: relative;
-  margin: 3% !important;
+  margin: 5% !important;
   padding: 0.5% !important;
-  background: pink;
-  box-shadow:
-          -0.1vw -0.1vw 0.2vw #999,
-          0.1vw 0.1vw 0.2vw #fff,
-          inset -0.2vw -0.2vw 0.3vw #8f8f8f,
-          inset 0.1vw 0.1vw 0.25vw #fff !important;
+  box-shadow: inset 1px 1px 8px 1px #babecc,
+  -1px -1px 8px 1px #ffffff73;
 }
