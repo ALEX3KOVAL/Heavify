@@ -1,8 +1,8 @@
 import {ErrorAPI, success} from "../http/HttpAPI";
 import UserService from "../../service/user";
 import {validationResult} from "express-validator";
-
-const registration = async (req: any, res: any, next: any) => {
+export const UserController = function() {};
+UserController.registration = async (req: any, res: any, next: any) => {
     try {
         const errors: any = validationResult(req);
         if (!errors.isEmpty()) {
@@ -17,8 +17,7 @@ const registration = async (req: any, res: any, next: any) => {
     }
     catch(err) { return next(err as ErrorAPI) }
 }
-
-const login = async (req: any, res: any, next: any) => {
+UserController.login = async (req: any, res: any, next: any) => {
     try {
         const { email, password } = req.body;
         const userData = await UserService.login(email, password);
@@ -30,8 +29,7 @@ const login = async (req: any, res: any, next: any) => {
         return next(err as ErrorAPI);
     }
 }
-
-const activate = async (req: any, res: any, next: any) => {
+UserController.activate = async (req: any, res: any, next: any) => {
     try {
         const activationLink = req.params.link;
         await UserService.activate(activationLink);
@@ -39,8 +37,7 @@ const activate = async (req: any, res: any, next: any) => {
     }
     catch (err) { return next(err as ErrorAPI); }
 }
-
-const logout = async (req: any, res: any, next: any) => {
+UserController.logout = async (req: any, res: any, next: any) => {
     try {
         const {refreshToken} = req.cookies;
         await UserService.logout(refreshToken);
@@ -49,8 +46,7 @@ const logout = async (req: any, res: any, next: any) => {
     }
     catch(err) { return next(err); }
 }
-
-const refresh = async (req: any, res: any, next: any) => {
+UserController.refresh = async (req: any, res: any, next: any) => {
     try {
         const {refreshToken} = req.cookies;
         const userData = await UserService.refresh(refreshToken);
@@ -59,12 +55,4 @@ const refresh = async (req: any, res: any, next: any) => {
         return res.json({user: userData.user, accessToken: userData.accessToken});
     }
     catch(err) { return next(err); }
-}
-
-export default {
-    registration,
-    login,
-    activate,
-    logout,
-    refresh
 }

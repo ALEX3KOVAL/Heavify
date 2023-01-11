@@ -32,6 +32,7 @@
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
+    "@types/parallax-js": "^3.1.0",
     "@types/velocity-animate": "^2.0.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",

@@ -1,12 +1,13 @@
 <template>
     <vueper-slides
+      :dragging-distance="70" prevent-y-scroll
       3d
       v-if="pageName !== ''"
       :style="`height:${setHeight(headerHeight)}px;width:100%;color:black;`"
     >
       <!-- здесь будет потом componentsNames -->
       <vueper-slide
-        :title="i.toString()"
+        title="AAAAAAAAAAAA"
         style="color: black !important;background-color: white;"
         v-for="i in 3"
         :key="i"
@@ -53,7 +54,7 @@ export default {
         case "lg":
           return 0.12;
         case "xl":
-          return 0.14;
+          return 0.15;
       }
     }
   },
@@ -61,6 +62,7 @@ export default {
     height() {
       document.getElementsByClassName("vueperslides__inner")[0].setAttribute("style", `height: ${this.height}px;`)
       document.getElementsByClassName("vueperslides__parallax-wrapper")[0].setAttribute("style", `height: ${this.height}px;`)
+
     }
   },
   inject: ["headerHeight"]

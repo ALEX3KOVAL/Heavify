@@ -2,13 +2,14 @@ import {getAllAlbumsInfoBy} from "../db/models/apiModels";
 import {getAttributesConstantsBy, getIncludeConstantsBy} from "../db/databaseQueryUtils";
 import {Album} from "../../models/models";
 
-export const add = async (req: any, res: any) => {
+export const AlbumController = function() {};
+AlbumController.addAlbum = async (req: any, res: any) => {
         const {name, rating} = req.body;
         await Album.create({name, rating});
         return res.json({name, rating});
     }
 
-export const getAll = async (req: any, res: any) => {
+AlbumController.getAll = async (req: any, res: any) => {
         const {authorId} = req.query;
         if (!authorId) {
             const albumsInfo = await getAllAlbumsInfoBy();
@@ -18,7 +19,7 @@ export const getAll = async (req: any, res: any) => {
         return res.json(albumsInfo);
     }
 
-export const getOne = async(req: any, res: any) => {
+AlbumController.getOneAlbum = async(req: any, res: any) => {
         const {id} = req.params;
         const albumInfo = await Album.findOne({
             where: {id},
@@ -31,4 +32,3 @@ export const getOne = async(req: any, res: any) => {
         delete albumInfo["song"];
         return res.json(albumInfo);
     }
-

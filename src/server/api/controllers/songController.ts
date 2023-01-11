@@ -7,8 +7,8 @@ import {v4} from "uuid";
 import {fileURLToPath} from "url";
 import path from "node:path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const add = async (req: any, res: any, next: any) => {
+export const SongController = function() {};
+SongController.addSong = async (req: any, res: any, next: any) => {
     try {
         const {releaseYear} = req.body;
         const {imgFile, audioFile} = req.files;
@@ -24,7 +24,7 @@ const add = async (req: any, res: any, next: any) => {
     }
 }
 
-const getAll = async (req: any, res: any) => {
+SongController.getAllSongs = async (req: any, res: any) => {
         const {albumId, selectionId, search} = req.query;
         Sound().play(path.resolve(__dirname, "../../../../assets", "songs", "67202b28-09ed-4762-a8b4-eb1d44beb88b.mp3"));
         if (!albumId && !selectionId && !search) { //пользователь открывает свои аудио
@@ -41,9 +41,9 @@ const getAll = async (req: any, res: any) => {
         }
         var allSongsInfoQuery = await getAllSongsInfoBy(search, "search");
         return res.json(allSongsInfoQuery);
-    }
+}
 
-const getOne = async (req: any, res: any) => {
+SongController.getOneSong = async (req: any, res: any) => {
         const {id} = req.params;
         //const songInfo = await getOneInfoBy(Song, "song", id);
         const songInfo = await Song.findOne({
@@ -58,10 +58,4 @@ const getOne = async (req: any, res: any) => {
         //@ts-ignore
         delete songInfo['author'];
         return res.json(songInfo);
-    }
-
-export default {
-    add,
-    getAll,
-    getOne
-};
+}

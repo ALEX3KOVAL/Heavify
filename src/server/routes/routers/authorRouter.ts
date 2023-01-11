@@ -1,8 +1,8 @@
 import {Router} from "express";
-import * as AuthorController from '../../api/controllers/authorController';
+import {AuthorController} from '../../api/controllers/controllers';
 
 export const authorRouter: Router = Router();
 
-authorRouter.post('/', AuthorController.add);
-authorRouter.get('/', AuthorController.getAll);
+authorRouter.post('/', AuthorController.addAuthor);
+authorRouter.get('/', AuthorController.getAllAuthors);
 
