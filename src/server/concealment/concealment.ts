@@ -1,31 +1,20 @@
-import Index from "crypto-js";
+import * as crypto from "crypto";
 
-const key = Index.enc.Hex.parse(process.env.AES_SECRET_KEY!);
-const iv = Index.enc.Hex.parse(process.env.AES_IV!);
+const key = crypto.randomBytes(Number(process.env.AES_SECRET_KEY));
+const algorithm: string = process.env.ALGORITHM!;
+const initVector = crypto.randomBytes(Number(process.env.AES_IV));
+const cipher = crypto.createCipheriv(algorithm, key, initVector, {});
+const decipher = crypto.createDecipheriv(algorithm, key, initVector);
 
 export const encryptValue = (text: string) => {
-    let encrypted = Index.AES.encrypt(encryptBeforeAes(text), key, {iv: iv}).toString();
-    console.log("encrypted --- ", encrypted);
-    return encrypted;
-}
+    let encryptedData = cipher.update(text, "utf-8", "hex");
+    encryptedData += cipher.final("hex");
+    return encryptedData;
+};
 
 export const decryptValue = (cipherText: string) => {
-    let decrypted = Index.AES.decrypt(cipherText, key, {iv: iv}).toString();
-    decrypted = decryptAfterAes(decrypted);
-    console.log("decrypted --- ", decrypted);
-    return decrypted;
-}
-
-export const encryptBeforeAes = (text: string) => {
-    return Array.from(text).map((symbol, index) => String.fromCharCode(symbol.charCodeAt(0) + index & 1 ?
-         Math.floor(index * Number(process.env.SECRET_CONSTANT!)) :
-        Math.ceil(index * Number(process.env.SECRET_CONSTANT!)))
-    ).toString();
-}
-
-export const decryptAfterAes = (text: string) => {
-    return Array.from(text).map((symbol, index) => String.fromCharCode(symbol.charCodeAt(0) - index & 1 ?
-        Math.floor(index * Number(process.env.SECRET_CONSTANT!)) :
-        Math.ceil(index * Number(process.env.SECRET_CONSTANT!)))
-    ).toString();
-}
+    decipher.setAutoPadding(false);
+    let decryptedData = decipher.update(cipherText, "hex", "utf-8");
+    decryptedData += decipher.final("utf8");
+    return decryptedData;
+};

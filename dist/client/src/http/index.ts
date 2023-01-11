@@ -1,20 +1,20 @@
 import axios from "axios";
+import authRequestInterceptor from "@/http/api/interceptors/fulfilled/request";
+import authResponseRejectedInterceptor from "@/http/api/interceptors/rejected/response";
 
 export const host = axios.create({
     baseURL: process.env.VUE_APP_API_URL
 });
 
 export const authHost = axios.create({
+    withCredentials: true,
     baseURL: process.env.VUE_APP_API_URL
 });
 
-const authInterceptor = (config: any) => {
-    console.log("cccccccccccccccccccc");
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken != null) {
-        config.headers.authorization = `Bearer ${accessToken}`;
-        return config;
-    }
-}
 
-authHost.interceptors.request.use(authInterceptor);
+authHost.interceptors.request.use(authRequestInterceptor);
+
+authHost.interceptors.response.use(
+    (config) => config,
+    (error) => authResponseRejectedInterceptor(error)
+);

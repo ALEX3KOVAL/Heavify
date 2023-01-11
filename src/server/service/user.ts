@@ -1,12 +1,11 @@
-import ApiError from "../api/error/apiError";
+import {ErrorAPI} from "../api/http/HttpAPI";
 import {User} from "../models/models";
 import bcrypt from "bcrypt";
 import {v4} from "uuid";
 import MailService from "./mail";
 import TokenService from "./token";
 import UserDTO from "../dtos/user";
-import $data from "../shared_data";
-import {encryptValue} from "../concealment/concealment";
+import {incrementRowsCount} from "../shared_data";
 
 const registration = async (userName: string, email: string, password: string, role = "USER") => {
     let message = "";
@@ -14,25 +13,102 @@ const registration = async (userName: string, email: string, password: string, r
         message += "Некорректный логин\n";
     }
     if (!password) {
-        throw ApiError.badRequest(message + "Некорректный пароль");
+        throw ErrorAPI.badRequest(message + "Некорректный пароль");
     }
     const registered = await User.findOne({where: {email}});
     if (registered) {
-        throw ApiError.conflict("Пользователь с таким логином/паролем уже существует");
+        throw ErrorAPI.conflict("Пользователь с таким логином/паролем уже существует");
     }
     const hashPassword = await bcrypt.hash(password, 3);
-    //const activationLink = v4();
-    $data.rowsCount += 1;
-    const userId = encryptValue($data.rowsCount.toString());
-    const user: any = await User.create({userName: userName, email: email, role: role, password: hashPassword, userId});
-    //await MailService.sendActivationMessage(email, activationLink);
-    //@ts-ignore
-    const userDTO = new UserDTO(user);
-    const tokens = await TokenService.generateTokens({...userDTO});
-    console.log("tokens --- ", tokens);
-    await TokenService.saveToken(user.id, tokens.refreshToken);
-
-    return {...tokens, user: userDTO};
+    const activationLink = v4();
+    const id = await incrementRowsCount();
+    const user = await User.create({ id, userName: userName, email: email, role: role, password: hashPassword, activationLink });
+    try {
+        const mailService = new (MailService as any)();
+        //@ts-ignore
+        await mailService.sendActivationMessage(email, `${process.env.API_URL}/api/users/activate/${activationLink}`);
+        //@ts-ignore
+        const userDTO = new UserDTO(user);
+        const tokens = await TokenService.generateTokens({ ...userDTO });
+        //@ts-ignore
+        await TokenService.saveToken(user.id, tokens.refreshToken);
+        return { ...tokens, user: userDTO };
+    }
+    catch(err) { throw err; }
 }
 
-export default {registration};
+const activate = async (activationLink: any) => {
+    const user = await User.findOne({ where: { activationLink } });
+    if (!user) {
+        throw ErrorAPI.badRequest("Некорректная ссылка активации");
+    }
+    //@ts-ignore
+    user.isActivated = true;
+    await user.save();
+}
+
+const login = async (email: string, password: string) => {
+    const user = await User.findOne({where: {email}});
+    if (!user) {
+        throw ErrorAPI.badRequest("Пользователь с таким email не найден");
+    }
+    //@ts-ignore
+    const isPasswordsEquals: boolean = await bcrypt.compare(password, user.password);
+    if (!isPasswordsEquals) {
+        throw ErrorAPI.badRequest("Неверный пароль");
+    }
+    //@ts-ignore
+    const userDto = new UserDTO(user);
+    const tokens = await TokenService.generateTokens({...userDto});
+    //@ts-ignore
+    await TokenService.saveToken(user.id, tokens.refreshToken);
+    return {...tokens, user: userDto};
+}
+
+const logout = async (refreshToken: string) => await TokenService.removeToken(refreshToken);
+
+const refresh = async (refreshToken: string) => {
+    if (!refreshToken) {
+        throw ErrorAPI.badRequest("Укажите обновляющий токен");
+    }
+    try {
+        const userData = await TokenService.validateRefreshToken(refreshToken);
+        await TokenService.findToken(refreshToken);
+        //@ts-ignore
+        const freshUserData = await User.findOne({where: {id: userData.id}});
+        //@ts-ignore
+        const userDto = new UserDTO(freshUserData);
+        const tokens = await TokenService.generateTokens({...userDto});
+        //@ts-ignore
+        await TokenService.saveToken(userDto.id, tokens.refreshToken);
+        return {...tokens, user: userDto};
+    }
+    catch (err) {
+        throw ErrorAPI.identify(err as any);
+    }
+}
+
+const checkActivated = async (email: string) => {
+    if (!email) {
+        throw ErrorAPI.badRequest("Укажите почту!");
+    }
+    //@ts-ignore
+    const isActivated = await User.checkIsActivated(email);
+    if (isActivated === undefined) {
+        throw ErrorAPI.unauthorized("Такой email не зарегистрирован");
+    }
+    if (!isActivated) {
+        throw ErrorAPI.unauthorized("Активируйте свой аккаунт");
+    }
+    return isActivated;
+}
+
+
+export default {
+    registration,
+    activate,
+    login,
+    logout,
+    refresh,
+    checkActivated
+}

@@ -58,8 +58,9 @@ export const createWhereClauseObject = (model:string, id: string, queryValue: st
     }
 }
 
+export const countOfTableRows = (modelName: string) => `(SELECT MAX(id) FROM ${modelName})`;
+
 export const createSqlStringBy = (modelName: string, queryValue: string, queryKey: string) => {
-    console.log(22222);
     switch(modelName) {
         case "song":
             switch(queryKey) {

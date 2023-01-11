@@ -1,105 +1,89 @@
 <template>
-  <header>
+  <div>
     <v-app-bar
-        fixed
-        dark
-        :width="$vuetify.breakpoint.width - 17"
+        :width="width"
         dense
-        style="background: linear-gradient(to right, rgba(44, 4, 106), rgb(196,26,143))"
         shrink-on-scroll
-        :height="height"
-        src='../../../../../assets/images/index_page/header/header.png'
+        :height=height
+        :src=this.headerPath
         scroll-target="#scrolling-techniques-2"
-        scroll-threshold="90"
+        scroll-threshold="200"
         fade-img-on-scroll
         app
-        class="rounded-b-lg"
+        class="rounded-b-lg header"
     >
-      <v-row class="d-flex justify-center mt-1">
-      <the-heading-button
-        :icons-size="iconsSize"
-        :icon-name="`mdi-menu`"
-        class="ml-4"
-        @onButtonClick="onMenuButtonClick"
-        @menuButtonWasClicked="onMenuButtonClick"
-      />
-      <v-toolbar-title class="header__title">
-        Heavify
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-        <transition
-            name="slide-fade">
-      <the-authorization-button-menu v-if="authorizationButtonMenuVisible" :icons-size="iconsSize"/>
-        </transition>
-      <the-heading-button
-          class="mr-4"
-          :icons-size="iconsSize"
-          :icon-name="`mdi-login-variant`"
-          @onButtonClick="toggleAuthorizationButton"
-          @authorizationButtonNoNeeded="hideAuthorizationButton"
-      />
+      <v-row class="d-flex py-1">
+        <the-heading-button
+            :icons-size="iconsSize"
+            :icon-name="`mdi-menu`"
+            class="ml-4"
+            @onClick="toggleSideBarVisible"
+        />
+        <v-spacer></v-spacer>
+        <div v-if="isHeaderTitleVisible" class="d-flex align-center header__title">
+          Heavify
+        </div>
+        <v-spacer></v-spacer>
+          <the-heading-button
+              class="mr-4"
+              :icons-size="iconsSize"
+              :icon-name="`mdi-login-variant`"
+              @authorizationFormNoNeeded="hideAuthorizationForm"
+              @onClick="auth"
+          />
       </v-row>
     </v-app-bar>
-    <v-navigation-drawer
-        v-model="navigationPanelVisible"
-        absolute
-        temporary
-        color="rgba(0,0,0,.8)"
-    >
-      <v-list
-          nav
-          dense
-      >
-        <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-  </header>
+    <the-side-bar ref="theSideBar"/>
+  </div>
 </template>
 
 <script>
-import TheAuthorizationButtonMenu from "@/components/authrozationButtonMenu/TheAuthorizationButtonMenu.vue";
-import TheHeadingButton from "@/components/heading/TheHeadingButton.vue";
-import getPicturesGroupByNames from "@/http/api/picture";
+import VueRouter from "vue-router";
+const {isNavigationFailure, NavigationFailureType} = VueRouter;
+//import {getPicturesGroupByNames} from "@/http/api/picture";
+import TheHeadingButton from "@/components/heading/HeadingButton.vue";
+import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
+import TheSideBar from "@/components/sidebar/TheSideBar.vue";
+import {AUTH_ROUTE, HOME_ROUTE} from "@/utils/consts";
+import PictureService from "../../services/picture";
 
 export default {
-  components: {TheHeadingButton, TheAuthorizationButtonMenu},
+  components: {
+    TheSideBar,
+    TheHeadingButton,
+    TheAuthorizationForm
+  },
   props: {
     height: {
+      type: Number,
+      required: true
+    },
+    width: {
       type: Number,
       required: true
     },
     pageName: {
       type: String,
       required: true
-    }
+    },
   },
   data: () => ({
-    navigationPanelVisible: false,
-    authorizationButtonMenuVisible: false,
+    headerPath: "",
+    isHeaderTitleVisible: false
   }),
-  created() {
+  async created() {
     this.maxHeight = this.$vuetify.breakpoint.height * 0.52;
     this.minHeight = this.$vuetify.breakpoint.height * 0.12;
-    this.API_URL = process.env.VUE_APP_API_URL;
-    //getPicturesGroupByNames(this.pageName, "header").then((data) => this.presentationCarouselSlides = data);
+    PictureService.getPicturesGroupByNames(this.pageName, "header").then((response) => {
+      this.headerPath = `${process.env.VUE_APP_API_URL}/index_page/header/${response.data}`;
+    });
+  },
+  mounted() {
+    this.headerResizeObserver = new ResizeObserver(this.reactToHeaderResize);
+    this.headerResizeObserver.observe(this.$el.firstChild.lastChild);
   },
   computed: {
     iconsSize() {
-      console.log(this.$vuetify.breakpoint);
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
           return 14;
@@ -114,19 +98,23 @@ export default {
       }
     }
   },
-    methods: {
-      hideAuthorizationButton() {
-        this.authorizationButtonMenuVisible = false;
-      },
-      toggleAuthorizationButton() {
-        this.authorizationButtonMenuVisible = !this.authorizationButtonMenuVisible
-      },
-      onMenuButtonClick() {
-        this.navigationPanelVisible = !this.navigationPanelVisible;
-      },
+  methods: {
+    hideAuthorizationForm() {
+      // this.$refs.theAuthorizationForm.hide();
     },
+    toggleSideBarVisible() {
+      this.$refs.theSideBar.toggleVisible();
+    },
+    auth() {
+      this.$router.push({path: AUTH_ROUTE, query: {redirect: HOME_ROUTE}}).catch((e) => {
+            if (!isNavigationFailure(e, NavigationFailureType.redirected)) {
+              Promise.reject(e)
+            }
+      });
+    },
+    reactToHeaderResize() {
+      this.isHeaderTitleVisible = this.$el.firstChild.offsetHeight === 36;
+    },
+  }
 }
 </script>
-
-<style scoped>
-</style>

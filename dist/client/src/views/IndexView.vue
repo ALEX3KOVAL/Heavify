@@ -1,33 +1,69 @@
 <template>
-  <v-col>
-    <the-heading :height="appbarHeight" page-name="index"/>
-    <the-content :height="appbarHeight" page-name="index"/>
-  </v-col>
+    <vueper-slides
+      3d
+      v-if="pageName !== ''"
+      :style="`height:${setHeight(headerHeight)}px;width:100%;color:black;`"
+    >
+      <!-- здесь будет потом componentsNames -->
+      <vueper-slide
+        :title="i.toString()"
+        style="color: black !important;background-color: white;"
+        v-for="i in 3"
+        :key="i"
+      >
+        <template #content>
+          <CarouselCard
+              page-name="index"
+              component-name="presentation"
+          />
+        </template>
+      </vueper-slide>
+    </vueper-slides>
 </template>
 
 <script>
 import TheHeading from "@/components/heading/TheHeading.vue";
 import TheContent from "@/components/content/TheContent.vue";
+import CarouselCard from "@/components/carousels/CarouselCard.vue";
+import Consumer from "../context/Consumer.vue";
+import {VueperSlides, VueperSlide} from "vueperslides";
+
 export default {
   name: "IndexView",
-  components: {TheContent, TheHeading},
-  computed: {
-    appbarHeight: function () {
-      switch (this.$vuetify.breakpoint.name) {
-        case "lg":
-          var height = this.$vuetify.breakpoint.width * 0.1984;
-          return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
-        default:
-          var height = this.$vuetify.breakpoint.width * 0.2284;
-          return height > this.maxHeight ? this.maxHeight : (height < this.minHeight ? this.minHeight : height);
-      }
-    },
-  },
+  components: {Consumer, TheContent, TheHeading, CarouselCard, VueperSlide, VueperSlides},
+  data: () => ({
+    pageName: "",
+    height: 0
+  }),
   created() {
-    document.addEventListener("DOMContentLoaded", function(){
-      window.pageYOffset = 0;
-    });
-  }
+    this.pageName = this.$route.name;
+  },
+  methods: {
+    //@ts-ignore
+    setHeight(headerHeight) {
+      this.height = screen.height - screen.height * (this.calcPadding()) - headerHeight;
+      return this.height;
+    },
+    calcPadding() {
+      switch(this.$vuetify.breakpoint.name) {
+        case "xs":
+        case "sm":
+          return 0.12;
+        case "md":
+        case "lg":
+          return 0.12;
+        case "xl":
+          return 0.14;
+      }
+    }
+  },
+  watch: {
+    height() {
+      document.getElementsByClassName("vueperslides__inner")[0].setAttribute("style", `height: ${this.height}px;`)
+      document.getElementsByClassName("vueperslides__parallax-wrapper")[0].setAttribute("style", `height: ${this.height}px;`)
+    }
+  },
+  inject: ["headerHeight"]
 }
 </script>
 

@@ -8,9 +8,13 @@ import router from "./routes/index";
 import fileUpload from "express-fileupload";
 import {errorHandlingMiddleware} from "./middleware/middlewares";
 import Index from "cookie-parser";
+import {initSharedData} from "./shared_data";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL
+}));
 app.use(express.json());
 app.use(Index());
 app.use(express.static(path.resolve(path.resolve(), '../../assets', 'images')));
@@ -22,8 +26,8 @@ const start = async () => {
     try {
         await sequelize.authenticate();
         await sequelize.sync();
+        await initSharedData();
         app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
-
     } catch (e) {
         console.log(e);
     }

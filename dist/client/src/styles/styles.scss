@@ -1,63 +1,168 @@
+@import "./normalize";
+@import "./carousel";
+@import "./authorization_form";
+@import "./heading";
+@import "./animations";
+@import "./home";
+@import "./default-layout";
+@import "../../node_modules/vueperslides/dist/vueperslides.css";
+
 $grid-breakpoints: (
-  'xs': 0,
-  'sm': 600px,
-  'md': 940px,
-  'lg': 1260px,
-  'xl': 1880px,
+        'xs': 0,
+        'sm': 600px,
+        'md': 940px,
+        'lg': 1260px,
+        'xl': 1880px,
 );
 
-.header__btn {
-  width: 19px !important;
-  height: 19px !important;
-  position: relative !important;
-  justify-content: center !important;
-  align-self: center !important;
-  align-items: center !important;
-  display: flex !important;
-  background-color: rgba(208,189,244, .4);
-  @media only screen and (min-width: 600px) {
-    width: 25px !important;
-    height: 25px !important;
-  }
-  @media only screen and (min-width: 940px) {
-    width: 28px !important;
-    height: 28px !important;
-  }
-  @media only screen and (min-width: 1240px) {
-    font-size:16px !important;
-  }
-  @media only screen and (min-width: 1880px) {
-    font-size:21px !important;
-  }
+.letter {
+  z-index: 99;
 }
 
+.vueperslides__arrow {
+  color: #c88fdb;
+}
+
+.vueperslides__bullets {
+  color: black !important;
+  padding-bottom: 0.2% !important;
+}
+
+.v-navigation-drawer {
+  box-shadow: 100px 10px 125px 67px rgb(0 0 0 / 40%) !important;
+}
+
+.v-messages__wrapper {
+  background: #c6c6e6 !important;
+}
+
+.v-counter {
+  background-color: #c6c6e6 !important;
+}
+
+.v-input__append-inner {
+  position: relative !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex !important;
+  align-self: center !important;
+  margin-right: 6% !important;
+}
+
+.error-message__text {
+  @media only screen and (max-width: 500px) {
+    font-size: 1.3rem;
+  }
+  font-size: 1.7rem;
+  position: relative;
+  color: red;
+  text-shadow: -1px 0 1px rgb(130,0,0);
+  margin: 2% 0 !important;
+}
+
+.theme--light.v-counter {
+  color: unset !important;
+}
+
+.v-input__slot {
+  max-height: 56px !important;
+  min-height: 20px !important;
+  height: 6vh !important;
+}
+
+.v-input__control {
+  background: linear-gradient(315deg, #e6e6e6, #fff);
+}
+
+.v-text-field input {
+  padding-bottom: 0 !important;
+}
+
+.v-input__slot {
+  caret-color: black !important;
+  padding-bottom: 0 !important;
+  background: linear-gradient(315deg, #e6e6e6, #fff);
+  box-shadow:
+          inset -9px -9px 18px #8f8f8f,
+          inset 9px 9px 18px #fff !important;
+}
+
+.v-input  input {
+  position: relative !important;
+  margin-left: 2% !important;
+}
+
+.theme--light.v-messages {
+  background: #c6c6e6 !important;
+}
+
+.v-label {
+  transition: 0.4s cubic-bezier(0.2, 0.1, 0.9, 1.6) !important;
+  animation: wobble 1s !important;
+  margin-left: 2% !important;
+  color: rgba(0,0,0,0.8) !important;
+  font-size: 1.1rem;
+  text-shadow:
+          0 -0.7px 0 rgba(0,0,0,.3),
+          0 -1.4px 0 #c88fdb,
+          0 -2.1px 0 rgba(0,0,0,.3),
+          0 -2.1px 0 rgba(0,0,0,.3),
+          0 -2.1px 0 rgba(0,0,0,.3),
+          0 -2.8px 0 rgba(0,0,0,.3) !important;
+}
+
+.v-text-field--outlined .v-label {
+  top: 28% !important;
+}
+
+.v-label--active {
+  margin-left: 0 !important;
+  transform: translateY(-95%) translateX(3px) scale(0.8) !important;
+}
+
+.v-text-field input {
+  line-height: 30px !important;
+}
+
+
+
+.v-toolbar__image {
+  margin-bottom: 0.4vh !important;
+}
+
+
+
 .v-btn {
-  min-width: 15px !important;
-  min-height: 15px !important;
+  min-width: 10px !important;
+  min-height: 10px !important;
 }
 
 .v-btn__content {
-  font-size: 13px !important;
+  height: 100% !important;
+  font-size: 100% !important;
 }
 
 .auth-btn__menu-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex !important;
   position: relative !important;
   background-color: rgba(0,0,0,.2) !important;
   margin-right: 1vw !important;
-  height: 22px !important;
-  top: 0.5vh !important;
+  top: -0.1vh !important;
 }
 
 .auth-btn__menu-list__item {
   min-height: 20px !important;
+  margin: 3px 0 3px 0 !important;
 }
 
-.carousel__wrapper {
-  margin-bottom: 25vh !important;
-}
 
 .v-btn:not(.v-btn--round).v-size--default {
-  height: unset;
+  display: flex !important;
+  height: 100% !important;
 }
 
 .v-menu__content--fixed {
@@ -65,34 +170,56 @@ $grid-breakpoints: (
   font-family: "Absolute Empire", sans-serif;
 }
 
-.header__title {
-  font-family: "Absolute Empire", sans-serif;
-  position:relative;
-  font-size:10px !important;
-  left: 10px !important;
-  color: #fff;
-  @media only screen and (min-width: 600px) {
-    left: 10px !important;
-    font-size:13px !important;
-  }
-  @media only screen and (min-width: 940px) {
-    font-size:13px !important;
-  }
-  @media only screen and (min-width: 1240px) {
-    font-size:16px !important;
-    left: 22px !important;
-  }
-  @media only screen and (min-width: 1880px) {
-    font-size:21px !important;
-  }
-}
-
 .v-sheet::-webkit-scrollbar {
-  background-color: rgba(196,26,143,.5);
+  background-color: rgba(187,113,219,.5);
 }
 
 .v-sheet::-webkit-scrollbar-thumb {
   background-color: #000;
+}
+
+.content__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  padding: 1% !important;
+  justify-content: center;
+  background: linear-gradient(to right, rgb(215,211,241), rgb(231,236,246));
+  color: white;
+  width: 100%;
+  height: 2300px;
+}
+
+.v-overlay {
+  opacity: 0 !important;
+  transition: .8s ease-in-out !important;
+  background-color: pink;
+  box-shadow: inset 0.2vw 0.2vh 0.9vw 0.6vw #f0a0cbff,
+  inset -0.2vw 0.2vw 0.9vw 0.6vw #f0a0cbff,
+  inset 0vw -0.2vw 0.9vw 0.6vw #f0a0cbff!important;
+}
+
+.v-overlay--active {
+  opacity: 1 !important;
+  backdrop-filter: blur(15px) !important;
+}
+
+.v-overlay--absolute {
+  background-color: transparent;
+}
+
+.v-overlay__scrim {
+  opacity: 1 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: transparent !important;
+}
+
+#scrolling-techniques-2 {
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .v-toolbar--collapsed {
@@ -116,71 +243,12 @@ $grid-breakpoints: (
   }
 }
 
-.presentation-carousel {
-  display: flex !important;
-  justify-content: center !important;
-  flex-direction: column !important;
-  margin: 1vh auto 0 !important;
-}
-
-.presentation-carousel__slider {
-  position: relative !important;
-  margin: 0.4% !important;
-}
-
-.presentation-carousel__wrapper {
-  display: flex;
-  width: 65vw;
-  align-self: center;
-  justify-content: center;
-  background: #600a7c !important;
-  @media only screen and (min-width: 940px) {
-    width: 55vw;
-  }
-  @media only screen and (min-width: 1240px) {
-    width: 50vw;
-  }
-  @media only screen and (min-width: 1880px) {
-    width: 55vw;
-  }
-}
-
-.v-toolbar {
-  min-height: unset;
+.container {
+  max-width: unset !important;
 }
 
 .v-image__image {
-  background-size:100% 100%;
-}
-
-.bounce-enter-active {
-  animation: bounce-in .9s;
-}
-.bounce-leave-active {
-  animation: bounce-in .5s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.slide-fade-enter-active {
-  transition: all .1s ease;
-}
-.slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active до версии 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
+  background-size: cover;
 }
 
 @font-face {

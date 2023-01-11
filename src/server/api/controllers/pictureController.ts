@@ -1,19 +1,27 @@
-import ApiError from "../error/apiError";
-import {readdir} from "fs";
+import {ErrorAPI} from "../http/HttpAPI";
+import PictureService from "../../service/picture";
 
 const getPicturesGroupByNames = async (req: any, res: any, next: any) => {
-    const {pageName, componentType, componentName} = req.params;
+    const { pageName, componentType, componentName} = req.params;
     if (pageName && componentType) {
-        readdir(`../../assets/images/${pageName}_page/${componentType}/${componentName}`, (err, files) => {
-            if (err) {
-                return next(ApiError.identify(err));
-            }
-            return res.json({filesNames: files.sort((a, b) => Number(a.slice(a.lastIndexOf("_") + 1, a.lastIndexOf("."))) > Number(b.slice(b.lastIndexOf("_") + 1, b.lastIndexOf("."))) ? 1 : -1 )});
-        });
+        return PictureService.getPicturesGroupByNames(pageName, componentType, res, componentName);
     }
     else {
-        return next(ApiError.notImplemented("Необходимо задать имя страницы и компонента"));
+        return next(ErrorAPI.notImplemented("Необходимо верные задать имя страницы и компонента"));
     }
-}
+};
+const getFoldersNamesBy = async (req: any, res: any, next: any) => {
+    const { pageName, componentType } = req.params;
+    if (pageName && componentType) {
+        if (!/^(?!.*header).+$/.test(componentType)) return next('route');
+        return PictureService.getFoldersNamesBy(pageName, componentType, res);
+    }
+    else {
+        return next(ErrorAPI.notImplemented("Необходимо задать верные имя страницы и компонента"));
+    }
+};
 
-export default { getPicturesGroupByNames };
+export default {
+    getPicturesGroupByNames,
+    getFoldersNamesBy
+};

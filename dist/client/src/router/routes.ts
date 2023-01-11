@@ -4,30 +4,33 @@ import {
     SONG_ADDED_ROUTE,
     HOME_ROUTE,
     INDEX_ROUTE,
-    REGISTRATION_ROUTE,
-    LOGIN_ROUTE, SONG_SELECTION_ROUTE
+    AUTH_ROUTE,
+    SONG_SELECTION_ROUTE
 } from "@/utils/consts";
 import AdminView from "@/views/AdminView.vue";
-import HomeView from "@/views/HomeView.vue";
 import SongAddedView from "@/views/SongAddedView.vue";
 import PlayerView from "@/views/PlayerView.vue";
-import LoginView from "@/views/LoginView.vue";
-import RegisterView from "@/views/RegisterView.vue";
-import IndexView from "@/views/IndexView.vue";
 import SongSelectionView from "@/views/SongSelectionView.vue";
 import {RouteConfig} from "vue-router";
 
 const routes: Array<RouteConfig> = [
     {
         path: INDEX_ROUTE,
-        component: IndexView
+        name: "index",
+        component: () => import("@/views/IndexView.vue"),
+        meta: {
+            title: "Heavify - get some heavy"
+        },
     },
     {
         path: HOME_ROUTE,
-        component: HomeView,
+        name: "home",
+        component: () => import("@/views/HomeView.vue"),
         meta: {
-            requiresAuth: true
-        }
+            requiresAuth: true,
+            title: "Welcome to Heavify",
+            layout: "DefaultPageLayout.vue"
+        },
     },
     {
         path: SONG_ADDED_ROUTE,
@@ -41,7 +44,7 @@ const routes: Array<RouteConfig> = [
         component: SongSelectionView,
         meta: {
             requiresAuth: true
-        }
+        },
     },
     {
         path: PLAYER_ROUTE,
@@ -51,19 +54,21 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: LOGIN_ROUTE,
-        component: LoginView
-    },
-    {
-        path: REGISTRATION_ROUTE,
-        component: RegisterView
+        path: AUTH_ROUTE,
+        name: "auth",
+        component: () => import("@/views/AuthView.vue"),
+        meta: {
+            title: "Authorization",
+            layout: "AuthPageLayout.vue"
+        }
     },
     {
         path: ADMIN_ROUTE,
         component: AdminView,
         meta: {
             requiresAuth: true,
-            isAdmin : true
+            isAdmin : true,
+            title: "Admin"
         }
     },
 ];

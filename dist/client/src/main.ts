@@ -5,11 +5,11 @@ import vuetify from './plugins/vuetify';
 import "@/styles/styles.scss";
 import VueCompositionAPI from "@vue/composition-api";
 //@ts-ignore
-import VueWaypoint from "vue-waypoint";
+import Vuelidate from "vuelidate";
 
 Vue.config.productionTip = false;
 Vue.use(VueCompositionAPI);
-Vue.use(VueWaypoint);
+Vue.use(Vuelidate);
 
 new Vue({
   router,
