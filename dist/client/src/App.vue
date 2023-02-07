@@ -31,15 +31,16 @@ export default {
     TheLoader
   },
   async created() {
-    setTimeout(_ => this.isLoaded = true, 3100);
+    setTimeout(_ => this.isLoaded = true, 3400);
   },
   computed: {
     setLayout() {
       const layoutName = this.$route.meta.layout || "DefaultPageLayout.vue";
+      console.log("--------------------",layoutName);
       return () => ({
         component: import(`@/layouts/page/${layoutName}`),
         loading: TheLoader,
-        delay: 3100
+        delay: 3400
       });
     },
   },

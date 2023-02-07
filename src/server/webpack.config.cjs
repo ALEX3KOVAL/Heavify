@@ -3,11 +3,12 @@ const DotenvPlugin = require("dotenv-webpack");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-    mode: "production",
-    entry: './index.ts',
+    mode: "development",
+    entry: './index.js',
     devtool: 'inline-source-map',
     externals: {
-        "node:path": "commonjs path"
+        "node:path": "commonjs path",
+        "node:url": "commonjs url",
     },
     module: {
         rules: [
@@ -43,7 +44,10 @@ module.exports = {
             "http": require.resolve("stream-http"),
             "nock": false,
             "aws-sdk": false,
-            "mock-aws-s3": false
+            "mock-aws-s3": false,
+            "async_hooks": false,
+            "npm": false,
+            "node-gyp": false,
         }
     },
     output: {
@@ -51,7 +55,9 @@ module.exports = {
         path: path.resolve(__dirname, '../../dist/server'),
     },
     devServer: {
-        static: path.join(__dirname, "../../dist/server"),
+        host: "localhost",
+        port: 3000,
+        historyApiFallback: true,
     },
     plugins: [
         new DotenvPlugin({path: "./.env",}),

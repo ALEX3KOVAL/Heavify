@@ -55,7 +55,7 @@ const login = async (email: string, password: string) => {
     //@ts-ignore
     const isPasswordsEquals: boolean = await bcrypt.compare(password, user.password);
     if (!isPasswordsEquals) {
-        throw ErrorAPI.badRequest("Неверный пароль");
+        throw ErrorAPI.unauthorized("Неверный пароль");
     }
     //@ts-ignore
     const userDto = new UserDTO(user);

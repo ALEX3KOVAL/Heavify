@@ -61,7 +61,6 @@ export default {
     PictureService.getPicturesGroupByNames(this.pageName, "carousel", this.componentName).then((response) => {
       this.presentationCarouselSlides = response.data.filesNames;
       console.log(this.presentationCarouselSlides);
-      this.$emit("clayIsLoaded", response.data.clay);
     })
   },
   computed: {
