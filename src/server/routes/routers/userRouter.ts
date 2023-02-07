@@ -1,6 +1,5 @@
 import {Router} from "express";
-import UserController from '../../api/controllers/userController';
-import {body} from "express-validator";
+import {UserController} from '../../api/controllers/controllers';
 import {activateMiddleware} from "../../middleware/activateMiddleware";
 
 export const userRouter = Router();

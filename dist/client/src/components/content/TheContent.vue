@@ -4,7 +4,7 @@
       id="scrolling-techniques-2"
       :height="screenHeight"
     >
-      <slot />
+      <slot/>
     </v-sheet>
   </main>
 </template>
@@ -12,9 +12,6 @@
 <script>
 export default {
   name: "content",
-  data: () => ({
-    presentationCarouselDrawer: true,
-  }),
   props: {
     pageName: {
       type: String,
@@ -23,6 +20,6 @@ export default {
   },
   computed: {
     screenHeight: () => screen.height
-  }
+  },
 }
 </script>

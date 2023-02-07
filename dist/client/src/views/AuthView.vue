@@ -1,5 +1,7 @@
 <template>
-  <the-authorization-form />
+  <the-authorization-form
+    @onDataIsLoaded="test"
+  />
 </template>
 
 <script lang="ts">
@@ -10,5 +12,11 @@ export default {
   components: {
     TheAuthorizationForm,
   },
+  methods: {
+    test(eventName: string) {
+      //@ts-ignore
+      this.$parent.$parent.$emit(eventName);
+    }
+  }
 };
 </script>

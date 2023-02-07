@@ -1,40 +1,14 @@
 <template>
-  <div
-    class="carousels-row__wrapper rounded-t-lg"
-    :style="`height:${setWrapperHeight()}px;`"
-  >
   <transition
       name="fade"
       appear
   >
     <carousel
-        @clayIsLoaded="setClayHuman"
-        :page-name="pageName"
-        :component-name="componentName"
-        :height="`${setHeight}px`"
+      :page-name="pageName"
+      :component-name="componentName"
+      :height="`${setHeight}px`"
     />
   </transition>
-  <v-img
-    v-if="clayHumanFileName !== ''"
-    :src="`${API_URL}/${pageName}_page/carousel/${componentName}/clay/${clayHumanFileName}`"
-    class="carousel__img"
-    aspect-ratio="1.7"
-    contain
-  >
-    <template v-slot:placeholder>
-      <v-row
-          class="fill-height ma-0"
-          align="center"
-          justify="center"
-      >
-        <v-progress-circular
-            indeterminate
-            color="grey lighten-5"
-        ></v-progress-circular>
-      </v-row>
-    </template>
-  </v-img>
-  </div>
 </template>
 
 <script>
@@ -72,10 +46,6 @@ export default {
     );
   },
   methods: {
-    setClayHuman(fileName) {
-      this.clayHumanFileName = fileName;
-      console.log(this.clayHumanFileName);
-    },
     setWrapperHeight() {
       return screen.height - screen.height * (this.calcPadding()) - this.headerHeight;
     },
@@ -86,7 +56,7 @@ export default {
           return 0.02;
         case "md":
         case "lg":
-          return 0.12;
+          return 0.2;
         case "xl":
           return 0.14;
       }

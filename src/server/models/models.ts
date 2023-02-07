@@ -1,8 +1,8 @@
 import {DATE, FLOAT, INTEGER, Model, ModelStatic, STRING, BOOLEAN} from "sequelize";
-import sequelize from "../db";
+import {sequelizeClient} from "../db";
 import {v4} from "uuid";
 
-export const Album: ModelStatic<Model> = sequelize.define('albums', {
+export const Album: ModelStatic<Model> = sequelizeClient.define('albums', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     albumName: {type: STRING, unique: true, notNull: true!},
@@ -12,7 +12,7 @@ export const Album: ModelStatic<Model> = sequelize.define('albums', {
     timestamps: false
 });
 
-export const Author: ModelStatic<Model> = sequelize.define('authors', {
+export const Author: ModelStatic<Model> = sequelizeClient.define('authors', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     authorName: {type: STRING, unique: true, notNull: true},
@@ -24,7 +24,7 @@ export const Author: ModelStatic<Model> = sequelize.define('authors', {
     timestamps: false
 });
 
-export const Genre: ModelStatic<Model> = sequelize.define('genres', {
+export const Genre: ModelStatic<Model> = sequelizeClient.define('genres', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     genreName: {type: STRING, unique: true, notNull: true},
@@ -32,7 +32,7 @@ export const Genre: ModelStatic<Model> = sequelize.define('genres', {
     timestamps: false
 });
 
-export const RefreshToken: ModelStatic<Model> = sequelize.define('refresh_tokens', {
+export const RefreshToken: ModelStatic<Model> = sequelizeClient.define('refresh_tokens', {
     //@ts-ignore
     token: {type: STRING, notNull: true},
     //@ts-ignore
@@ -60,7 +60,7 @@ RefreshToken.createToken = async function (id: string, token) {
     return refreshToken.token;
 };
 
-export const Selection: ModelStatic<Model> = sequelize.define('selections', {
+export const Selection: ModelStatic<Model> = sequelizeClient.define('selections', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     selectionName: {type: STRING, unique: true, notNull: true},
@@ -70,7 +70,7 @@ export const Selection: ModelStatic<Model> = sequelize.define('selections', {
     timestamps: false
 });
 
-export const Song: ModelStatic<Model> = sequelize.define('songs', {
+export const Song: ModelStatic<Model> = sequelizeClient.define('songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     songName: {type: STRING, unique: true, notNull: true},
@@ -80,7 +80,7 @@ export const Song: ModelStatic<Model> = sequelize.define('songs', {
     timestamps: false,
 });
 
-export const User: ModelStatic<Model> = sequelize.define('users', {
+export const User: ModelStatic<Model> = sequelizeClient.define('users', {
     id: {type: STRING, primaryKey: true},
     //@ts-ignore
     userName: {type: STRING, unique: true, notNull: true},
@@ -106,7 +106,7 @@ User.checkIsActivated = async function(email: string) {
     return userData?.isActivated;
 }
 
-export const AlbumSong: ModelStatic<Model> = sequelize.define('album_songs', {
+export const AlbumSong: ModelStatic<Model> = sequelizeClient.define('album_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     albumId: {type: INTEGER, foreignKey: true, references: {table: "albums", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
@@ -116,7 +116,7 @@ export const AlbumSong: ModelStatic<Model> = sequelize.define('album_songs', {
     timestamps: false
 });
 
-export const AuthorAlbum: ModelStatic<Model> = sequelize.define('author_albums', {
+export const AuthorAlbum: ModelStatic<Model> = sequelizeClient.define('author_albums', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     authorId: {type: INTEGER, foreignKey: true, references: {table: "authors", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
@@ -126,7 +126,7 @@ export const AuthorAlbum: ModelStatic<Model> = sequelize.define('author_albums',
     timestamps: false
 });
 
-export const AuthorSong: ModelStatic<Model> = sequelize.define('author_songs', {
+export const AuthorSong: ModelStatic<Model> = sequelizeClient.define('author_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     authorId: {type: INTEGER, foreignKey: true, references: {table: "authors", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
@@ -136,7 +136,7 @@ export const AuthorSong: ModelStatic<Model> = sequelize.define('author_songs', {
     timestamps: false
 });
 
-export const GenreAlbum: ModelStatic<Model> = sequelize.define('genre_albums', {
+export const GenreAlbum: ModelStatic<Model> = sequelizeClient.define('genre_albums', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     genreId: {type: INTEGER, foreignKey: true, references: {table: "genres", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
@@ -146,7 +146,7 @@ export const GenreAlbum: ModelStatic<Model> = sequelize.define('genre_albums', {
     timestamps: false,
 });
 
-export const GenreSong: ModelStatic<Model> = sequelize.define('genre_songs', {
+export const GenreSong: ModelStatic<Model> = sequelizeClient.define('genre_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     genreId: {type: INTEGER, foreignKey: true, references: {table: "genres", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
@@ -156,7 +156,7 @@ export const GenreSong: ModelStatic<Model> = sequelize.define('genre_songs', {
     timestamps: false
 });
 
-export const SelectionSong: ModelStatic<Model> = sequelize.define('selection_songs', {
+export const SelectionSong: ModelStatic<Model> = sequelizeClient.define('selection_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     selectionId: {type: INTEGER, foreignKey: true, references: {table: "selections", field: "id", onDelete: "cascade", onUpdate: "cascade"}},
@@ -166,7 +166,7 @@ export const SelectionSong: ModelStatic<Model> = sequelize.define('selection_son
     timestamps: false
 });
 
-export const UserSong: ModelStatic<Model> = sequelize.define('user_songs', {
+export const UserSong: ModelStatic<Model> = sequelizeClient.define('user_songs', {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
     //@ts-ignore
     userId: {type: STRING, foreignKey: true, references: {table: "users", field: "id", onDelete: "cascade", onUpdate: "cascade"}},

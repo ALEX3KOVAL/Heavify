@@ -6,7 +6,7 @@ import {
     getAttributesConstantsBy,
     getIncludeConstantsBy
 } from "../databaseQueryUtils";
-import seq from "../../../db";
+import {sequelizeClient} from "../../../db";
 
 const getAllSongsInfoBy = async (queryValue: string = "", queryKey: string = ""): Promise<any> => {
     switch (queryKey) {
@@ -22,10 +22,10 @@ const getAllSongsInfoBy = async (queryValue: string = "", queryKey: string = "")
             });
             return allSongsInfo;
         case "selectionId":
-            let [result, _] = await seq.query(createSqlStringBy("song", queryValue, queryKey)!);
+            let [result, _] = await sequelizeClient.query(createSqlStringBy("song", queryValue, queryKey)!);
             return result;
         case "search":
-            [result, _] = await seq.query(createSqlStringBy("song", queryValue, queryKey)!);
+            [result, _] = await sequelizeClient.query(createSqlStringBy("song", queryValue, queryKey)!);
             return result;
         default:
             let allSongsInfoQueryKey =  await findAll(Song,
