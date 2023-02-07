@@ -7,7 +7,6 @@
   justify-content: end !important;
   background-size: 100% 100% !important;
   width: 120vw !important;
-  background-color: transparent !important;
   -webkit-animation-duration: 1s !important;
   animation-duration: 1s !important;
   -webkit-animation-fill-mode: both !important;
@@ -53,8 +52,6 @@
           -0.8px -3.2px 0 rgba(250,250,200,.9) !important;
 }
 
-
-
 .authorization-form__dynamic-field-wrapper {
   width: 100%;
   display: -webkit-box;
@@ -70,7 +67,6 @@
   display: -webkit-flex;
   display: flex;
   overflow-x: hidden;
-  background: transparent !important;
   justify-content: center;
   text-align: center;
   flex-direction: column;
@@ -82,21 +78,19 @@
   animation-fill-mode: both;
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
+  background-color: rgba(255,255,255,0.1) !important;
 }
 
 .authorization-form__field-wrapper {
+  ::-webkit-input-placeholder {
+    color: #babecc !important;
+  }
   position: relative;
   padding: 5% 0 !important;
   input {
     color: white !important;
   }
 }
-
-@keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
 
 .authorization-form__fields-row {
   position: relative;

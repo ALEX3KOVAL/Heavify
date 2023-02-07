@@ -63,7 +63,7 @@ const login = (email, password) => __awaiter(void 0, void 0, void 0, function* (
     //@ts-ignore
     const isPasswordsEquals = yield bcrypt.compare(password, user.password);
     if (!isPasswordsEquals) {
-        throw ErrorAPI.badRequest("Неверный пароль");
+        throw ErrorAPI.unauthorized("Неверный пароль");
     }
     //@ts-ignore
     const userDto = new UserDTO(user);

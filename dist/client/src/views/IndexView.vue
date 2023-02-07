@@ -3,7 +3,8 @@
       :dragging-distance="70" prevent-y-scroll
       3d
       v-if="pageName !== ''"
-      :style="`height:${setHeight(headerHeight)}px;width:100%;color:black;`"
+      class="slider"
+      :style="`height:${setHeight(headerHeight)}px;`"
     >
       <!-- здесь будет потом componentsNames -->
       <vueper-slide
@@ -27,7 +28,7 @@ import TheHeading from "@/components/heading/TheHeading.vue";
 import TheContent from "@/components/content/TheContent.vue";
 import CarouselCard from "@/components/carousels/CarouselCard.vue";
 import Consumer from "../context/Consumer.vue";
-import {VueperSlides, VueperSlide} from "vueperslides";
+import {VueperSlides, VueperSlide} from "vueperslides"
 
 export default {
   name: "IndexView",
@@ -42,7 +43,7 @@ export default {
   methods: {
     //@ts-ignore
     setHeight(headerHeight) {
-      this.height = screen.height - screen.height * (this.calcPadding()) - headerHeight;
+      this.height = screen.height - screen.height * (this.calcPadding()) - headerHeight + screen.height * 0.03;
       return this.height;
     },
     calcPadding() {
