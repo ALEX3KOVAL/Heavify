@@ -40,7 +40,6 @@
 <script>
 import VueRouter from "vue-router";
 const {isNavigationFailure, NavigationFailureType} = VueRouter;
-//import {getPicturesGroupByNames} from "@/http/api/picture";
 import TheHeadingButton from "@/components/heading/HeadingButton.vue";
 import TheAuthorizationForm from "@/components/authorizationForm/TheAuthorizationForm.vue";
 import TheSideBar from "@/components/sidebar/TheSideBar.vue";

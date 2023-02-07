@@ -16,12 +16,10 @@
 
 <script>
 import mojs from "@mojs/core";
+import Parallax from "parallax-js";
 
 export default {
   name: "loader",
-  data: () => ({
-    isLoaded: false
-  }),
   async mounted() {
     const COLORS = {
       white:   '#ffffff',
@@ -373,11 +371,17 @@ export default {
         let shiftP = mojs.easing.cubic.in( p );
         let scaleP = mojs.easing.quad.in( p );
         if (document.readyState === "complete") {
-          console.log("reaaaaaady");
           mojs.h.setPrefixedStyle(logo, "transform",
               `translate(2vw, ${ yShift*shiftP }px)
         scaleY(${ 1 + 25*scaleP })`
           );
+          var scene = document.getElementById("scrolling-techniques-2");
+          //@ts-ignore
+          scene.setAttribute("style", "overflow: hidden;");
+          //@ts-ignore
+          var parallaxInstance = new Parallax(scene);
+          parallaxInstance.friction(0.45, 0.2);
+          parallaxInstance.invert();
         }
       }).bind(this),
     });
@@ -385,17 +389,7 @@ export default {
     const timeline = new mojs.Timeline({
       onStart () {
         mojs.h.setPrefixedStyle( logo, 'transform', 'none' );
-      },
-      onComplete:
-        (() => {
-          let modules = underlines.childModules;
-          for (var i = 0; i < modules.length; i++) {
-            modules[i]._hide();
-          }
-          if (document.readyState === "complete") {
-            this.isLoaded = true;
-          }
-      }).bind(this)
+      }
     });
     timeline
         .add(

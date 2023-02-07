@@ -1,9 +1,9 @@
 import {Router} from "express";
-import * as AlbumController from "../../api/controllers/albumController";
+import {AlbumController} from "../../api/controllers/controllers";
 
 export const albumRouter = Router();
 
-albumRouter.post('/', AlbumController.add);
+albumRouter.post('/', AlbumController.addAlbum);
 albumRouter.get('/', AlbumController.getAll);
-albumRouter.get('/:id',AlbumController.getOne);
+albumRouter.get('/:id',AlbumController.getOneAlbum);
 

@@ -1,5 +1,5 @@
 import {Router} from "express";
-import PictureController from "../../api/controllers/pictureController";
+import {PictureController} from "../../api/controllers/controllers";
 
 export const pictureRouter = Router();
 

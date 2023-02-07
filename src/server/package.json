@@ -2,12 +2,11 @@
   "name": "heavify-server-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "../../../../Desktop/server/index.js",
+  "type": "commonjs",
   "scripts": {
-    "dev": "nodemon --experimental-specifier-resolution=node ../../dist/server/index.js",
+    "dev": "../../../../Desktop/server/node_modules/.bin/nodemon --experimental-specifier-resolution=node ../../dist/server/index.js",
     "up": "node --experimental-specifier-resolution=node ../../dist/server/index.js",
-    "build": "webpack",
     "ts2js": "tsc"
   },
   "author": "",
@@ -25,10 +24,12 @@
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
     "express-validator": "^6.14.2",
+    "gulp-uglify": "^3.0.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.8.0",
     "play-sound": "^1.1.5",
+    "readable-stream": "^4.3.0",
     "sequelize": "^6.21.6",
     "util": "^0.12.4",
     "uuid": "^8.3.2"
@@ -47,6 +48,10 @@
     "clean-webpack-plugin": "^4.0.0",
     "crypto-browserify": "^3.12.0",
     "dotenv-webpack": "^8.0.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-terser": "^2.1.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "https-browserify": "^1.0.0",
@@ -60,7 +65,7 @@
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "^4.8.3",
     "url": "^0.11.0",
-    "webpack": "^5.0.0",
-    "webpack-cli": "^5.0.0"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
