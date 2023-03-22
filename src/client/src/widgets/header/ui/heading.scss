@@ -1,0 +1,94 @@
+
+.header {
+  opacity: 1;
+  z-index: 2;
+  display: inline-flex;
+  position: sticky;
+  top: 0;
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+  .v-image__image {
+    background-size: 100% 100%;
+  }
+}
+
+.header--hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s, visibility 0s 0.5s;
+}
+
+.header--active {
+  background-color: #00000099 !important;
+}
+
+.header--transparent {
+  background-color: transparent !important;
+}
+
+.header__btn {
+  position: relative !important;
+  justify-content: center !important;
+  flex-grow: 0.01 !important;
+  margin: 0 calc((1vw + 1vh) * 0.1) !important;
+  overflow: hidden;
+  align-items: center !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex !important;
+  background-color: transparent !important;
+  height: calc((1vw + 1vh) * 1.6) !important;
+  width: calc((1vw + 1vh) * 1.6) !important;
+  color: rgba(255,255,255,0.6) !important;
+}
+
+.mdi {
+  font-size: calc((1vw + 1vh) * 1.5) !important;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .header__btn {
+    height: calc((1vw + 1vh) * 4) !important;
+    width: calc((1vw + 1vh) * 4) !important;
+  }
+  .mdi {
+    font-size: calc((1vw + 1vh) * 4) !important;
+  }
+  .header__title {
+    font-size: calc((1vw + 1vh) * 3.2) !important;
+  }
+}
+
+.header__btn svg {
+  position: absolute;
+  left: 10%;
+  top: 21%;
+  width: 120%;
+  height: 120%;
+}
+
+
+.header__btn::before, v-list-item::before {
+  display: none !important;
+}
+
+.header__btn:hover {
+  color: rgb(86,6,143) !important;
+}
+
+.header__title {
+  font-family: "Absolute Empire", sans-serif;
+  animation: fadeIn 4s;
+  font-size: calc((1vw + 1vh) * 1.1);
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  height: inherit;
+  align-items: center;
+  text-align: center;
+  position:relative;
+  line-height: inherit;
+  color: rgb(86,6,143);
+}

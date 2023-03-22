@@ -1,0 +1,19 @@
+.default__layout {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  z-index: auto;
+  flex-direction: column;
+  width: 100vw;
+  /*overflow: hidden hidden;*/
+  max-width: 100vw;
+  background-color: rgb(17,24,36);
+}
+
+.default__layout::-webkit-scrollbar {
+  display: none;
+}
+
+.default__layout::-webkit-scrollbar-thumb {
+  background-color: #000;
+}

@@ -1,0 +1,170 @@
+@import "animations";
+
+#content__wrapper {
+  position: relative;
+  z-index: auto;
+  display: block;
+  height: auto;
+  width: 100%;
+  font-size: calc((1vw + 1vh) * 1.1) !important;
+}
+
+.swiper-wrapper {
+  padding: 0 5% !important;
+}
+
+.genres__slider {
+  height: 100%;
+}
+
+:root {
+  --insideShadow: calc((1vw + 1vh) * 0.2);
+  --reverseInsideShadow: calc(-1*((1vw + 1vh) * 0.3));
+}
+
+.blur {
+  filter: blur(5px) !important;
+}
+
+@media (max-width: 580px) {
+  #content__wrapper {
+    padding: 0 !important;
+  }
+}
+
+#promo {
+  padding: 0 !important;
+  position: relative !important;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: repeat(15, 6%);
+  grid-auto-rows: 10%;
+  margin-top: calc((1vw + 1vh) * 1.1) !important;
+  grid-template-columns: repeat(16, 6%);
+  grid-auto-columns: 10%;
+  width: 100%;
+  height: calc((1vw + 1vh) * 30.5) !important;
+  overflow: hidden;
+}
+
+@media (pointer: coarse) and (hover: none) {
+  #promo {
+    height: calc((1vw + 1vh) * 56) !important;
+    grid-template-rows: repeat(16, calc((1vw + 1vh) * 3.3));
+    grid-template-columns: repeat(16, calc((1vw + 1vh) * 2));
+  }
+}
+
+.main-title {
+  grid-column: 2;
+  grid-row: 1 / 17;
+  row-gap: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  background-color: transparent;
+  z-index: 1;
+  font-size: calc((1vw + 1vh) * 3.4) !important;
+}
+
+.main-title-word {
+  display: flex;
+  flex-direction: row;
+  grid-column: 1;
+  line-height: 1.4 !important;
+  color: #61de2a;
+  transition: 2s cubic-bezier(.025, 0.5, 0, 1) !important;
+}
+
+.main-title-word:hover {
+  color: yellow;
+  transform: scale(1.1);
+  transition: 2s cubic-bezier(.025, 0.5, 0, 1) !important;
+}
+
+.main-title-letter {
+  padding: 0 !important;
+  margin: 0.5% !important;
+  font-family: "Migo", sans-serif;
+  grid-column: 1 / 2;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.19, 0.1, 0.7, 1) !important;
+}
+
+.promo__img {
+  grid-column: 3/15;
+  width: 100%;
+  border-radius: 3vw;
+  grid-row: 1/16;
+  height: 95%;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-name: fadeIn;
+  background-color: rgba(86,6,143, 0.65);
+  box-shadow: inset 3px 3px 10px rgba(118,6,143, 0.8), inset -3px 3px 10px rgba(118,6,143, 0.8), inset -3px -3px 10px rgba(118,6,143, 0.8), inset 3px -3px 10px rgba(118,6,143, 0.8);
+}
+
+.figure {
+  position: relative;
+  background-color: rgba(17,24,36);
+  border-radius: 2vw;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+  box-shadow: inset var(--insideShadow) var(--insideShadow) 8px rgba(80,80,80, .4), inset var(--reverseInsideShadow) var(--insideShadow) 8px rgba(80,80,80, .4), inset var(--reverseInsideShadow) var(--reverseInsideShadow) 8px rgba(80,80,80, .4), inset var(--insideShadow) var(--reverseInsideShadow) 8px rgba(80,80,80, .4);
+  z-index: -1;
+  height: calc((1vw + 1vh) * 3.5) !important;
+}
+
+.genres__title {
+  line-height: 1 !important;
+  font-family: "Migo", sans-serif;
+  font-size: calc((1vw + 1vh) * 8) !important;
+  transition: 2s cubic-bezier(.025, 0.5, 0, 1) !important;
+  background: linear-gradient(
+                  60deg,
+                  rgba(86,6,143, .2),
+                  hsla(224, 85%, 66%, .7),
+                  hsla(269, 85%, 66%, .9),
+                  hsl(179, 85%, 66%),
+                  hsl(314, 85%, 66%),
+                  hsla(359, 85%, 76%, .9),
+                  hsla(89, 85%, 56%),
+                  hsla(134, 85%, 50%, .9)
+
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: grayscale(80%);
+}
+
+.genres__title__animation {
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.7s;
+  -webkit-animation-fill-mode: both;
+  animation-name: fadeInUp;
+}
+
+.genres__title:hover {
+  transform-origin: left top;
+  filter: drop-shadow(2px 12px 1px black);
+  transform: scale(1.04) !important;
+  transition: 2s cubic-bezier(.025, 0.5, 0, 1) !important;
+}
+
+#genres {
+  display: flex;
+  margin-top: 2vh !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

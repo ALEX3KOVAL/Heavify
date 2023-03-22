@@ -103,7 +103,6 @@ const checkActivated = async (email: string) => {
     return isActivated;
 }
 
-
 export default {
     registration,
     activate,

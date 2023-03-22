@@ -13,7 +13,7 @@ dotenv.config({ path: path.resolve() + "/.env" });
 import express from "express";
 import { sequelizeClient } from "./db";
 import cors from "cors";
-import { router } from "./routes/index";
+import { router } from "./routes";
 import fileUpload from "express-fileupload";
 import { errorHandlingMiddleware } from "./middleware/middlewares";
 import Index from "cookie-parser";
