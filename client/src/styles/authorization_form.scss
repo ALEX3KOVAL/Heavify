@@ -1,0 +1,114 @@
+.authorization-form {
+  position: relative;
+  overflow: hidden !important;
+  height: 120vh !important;
+  left: -10vw !important;
+  top: -5vw !important;
+  justify-content: end !important;
+  background-size: 100% 100% !important;
+  width: 120vw !important;
+  -webkit-animation-duration: 1s !important;
+  animation-duration: 1s !important;
+  -webkit-animation-fill-mode: both !important;
+  animation-fill-mode: both !important;
+  -webkit-animation-name: fadeIn !important;
+  animation-name: fadeIn !important;
+}
+
+@media only screen and (max-width: 580px) {
+  .authorization-form__title {
+    font-size: 10vw !important;
+  }
+}
+
+@media only screen and (min-width: 581px) and (max-width: 768px) {
+  .authorization-form__title {
+    font-size: 11vw !important;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .authorization-form__title {
+    font-size: 3vw !important;
+  }
+}
+
+.authorization-form__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: inline-flex !important;
+  padding: 0.4% 0.8% !important;
+  padding-bottom: 0.7% !important;
+  justify-content: center;
+  margin: 5% auto !important;
+  font-weight: bold !important;
+  font-family: "Montserrat", sans-serif !important;
+  color: rgb(0 0 0 / 70%);
+  text-shadow:
+          -0.8px -0.8px 0 rgba(200,143,210,.7),
+          -0.8px -1.6px 0 #c88fdb,
+          -0.8px -2.4px 0 #c88fdb,
+          -0.8px -3.2px 0 rgba(250,250,200,.9) !important;
+}
+
+.authorization-form__dynamic-field-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+}
+
+.authorization-form__fields-row-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  overflow-x: hidden;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  box-shadow: inset -4px -2px 3px 7px #ffffff22,
+  inset 4px 2px 3px 7px rgba(94, 104, 121, 0.288) !important;
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  background-color: rgba(255,255,255,0.1) !important;
+}
+
+.authorization-form__field-wrapper {
+  ::-webkit-input-placeholder {
+    color: #babecc !important;
+  }
+  position: relative;
+  padding: 5% 0 !important;
+  input {
+    color: white !important;
+  }
+}
+
+.authorization-form__fields-row {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 8% !important;
+}
+
+.authorization-form__button {
+  position: relative;
+  margin: 5% !important;
+  padding: 0.5% !important;
+  box-shadow: inset 1px 1px 8px 1px #babecc,
+  -1px -1px 8px 1px #ffffff73;
+}

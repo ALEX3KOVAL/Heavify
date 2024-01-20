@@ -1,0 +1,55 @@
+.bounce-enter-active {
+  animation: bounce-in .7s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wobble {
+  0% { transform: translateX(0%) }
+  15% { transform: translateX(-15%) }
+  30% { transform: translateX(15%) }
+  45% { transform: translateX(-10%) }
+  60% { transform: translateX(10%) }
+  75% { transform: translateX(-5%) }
+  90% { transform: translateX(5%) }
+  100% { transform: translateX(0%) }
+}
+
+.slide-fade-enter-active {
+  animation: wobble 0.9s ease-in;
+}
+
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}

@@ -1,0 +1,54 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@fontsource/alkalami": "^4.5.0",
+    "@fontsource/montserrat": "^4.5.13",
+    "@mojs/core": "^1.2.0",
+    "@mojs/player": "^1.0.1",
+    "@types/vuelidate": "^0.7.15",
+    "@vue/composition-api": "^1.7.1",
+    "@vueuse/core": "^9.5.0",
+    "axios": "^0.27.2",
+    "core-js": "^3.8.3",
+    "jwt-decode": "^3.1.2",
+    "parallax-js": "^3.1.0",
+    "path-browserify": "^1.0.1",
+    "roboto-fontface": "*",
+    "url": "^0.11.0",
+    "velocity-animate": "^1.5.2",
+    "vue": "^2.6.14",
+    "vue-router": "^3.6.5",
+    "vue-waypoint": "^3.5.2",
+    "vuelidate": "^0.7.7",
+    "vueperslides": "^2.16.0",
+    "vuetify": "^2.6.11",
+    "webfontloader": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/parallax-js": "^3.1.0",
+    "@types/velocity-animate": "^2.0.1",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "typescript": "~4.5.5",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.7.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
