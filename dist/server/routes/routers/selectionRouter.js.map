@@ -1,1 +1,0 @@
-{"version":3,"file":"selectionRouter.js","sourceRoot":"","sources":["../../../../src/server/routes/routers/selectionRouter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,MAAM,EAAC,MAAM,SAAS,CAAC;AAC/B,OAAO,EAAC,mBAAmB,EAAC,MAAM,mCAAmC,CAAC;AAEtE,MAAM,CAAC,MAAM,eAAe,GAAG,MAAM,EAAE,CAAC;AAExC,qDAAqD;AACrD,eAAe,CAAC,GAAG,CAAC,GAAG,EAAE,mBAAmB,CAAC,gBAAgB,CAAC,CAAC;AAC/D,yDAAyD"}
