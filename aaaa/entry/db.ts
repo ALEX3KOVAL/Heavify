@@ -1,7 +1,7 @@
 import {Sequelize} from "sequelize";
 import {resolve} from "path";
 import {config} from "dotenv";
-config({ path: resolve() + "/.env" });
+config({ path: resolve() + "/db.env" });
 
 export const sequelizeClient = new Sequelize(
             process.env.DB_NAME!,

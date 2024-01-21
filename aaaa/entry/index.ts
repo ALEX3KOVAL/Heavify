@@ -1,6 +1,6 @@
 import path from "node:path";
 import dotenv from "dotenv";
-/*dotenv.config({path: path.resolve() + "/.env"});*/
+/*dotenv.config({path: path.resolve() + "/db.env"});*/
 import express from "express";
 import {sequelizeClient} from "./db";
 import cors from "cors";

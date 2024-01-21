@@ -60,7 +60,7 @@ module.exports = {
         historyApiFallback: true,
     },
     plugins: [
-        new DotenvPlugin({path: "./.env",}),
+        new DotenvPlugin({path: "./db.env",}),
         new HtmlWebpackPlugin()
     ]
 }
