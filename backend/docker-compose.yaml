@@ -1,0 +1,22 @@
+services:
+  heavify_db:
+    container_name: heavify_db
+    build:
+      context: .
+      dockerfile: ./docker/db/postgres/Dockerfile
+    volumes:
+      - ./docker/db/postgres/data:/var/lib/postgresql/data
+      - ./docker/db/postgres/pg.conf:/etc/postgresql.conf
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U heavify -d heavify" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 1s
+    restart: unless-stopped
