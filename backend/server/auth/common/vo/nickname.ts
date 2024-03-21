@@ -1,4 +1,4 @@
-import { Result } from '../../../../domain/extensions/result';
+import { Result } from '../../../../domain/extensions/result.extension';
 import { LoginID } from '../contract/login-id';
 
 export class Nickname implements LoginID {
