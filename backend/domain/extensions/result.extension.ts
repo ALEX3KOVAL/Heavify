@@ -1,4 +1,4 @@
-import { lazy } from "./lazy";
+import { lazy } from "./lazy.extension";
 
 export class Result<out T> {
   private readonly value: T | null
@@ -8,7 +8,7 @@ export class Result<out T> {
   }
 
   @lazy get isSuccess(): boolean {
-    return this.value !instanceof Result.Failure
+    return !(this.value instanceof Result.Failure)
   }
 
   @lazy get isFailure(): boolean {

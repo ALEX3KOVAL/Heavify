@@ -26,7 +26,7 @@ export class BearerTokenStrategy extends PassportStrategy(Strategy, "bearer") {
             if (!clientAccount) {
               return cbk(new AuthorizationException("Пользователь не найден"), null, { message: "Токен доступа не найден", scope: "*" })
             }
-            if (clientAccount.accessTokenExpiresIn.valueOf() > Date.now()) {
+            if (clientAccount!.accessTokenExpiresIn!.valueOf() > Date.now()) {
               return cbk(new AuthorizationException("Токен доступа просрочен"), null, { message: "Токен доступа более не актуален", scope: "*" })
             }
 

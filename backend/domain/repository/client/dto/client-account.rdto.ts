@@ -15,11 +15,11 @@ export class ClientAccountRDTO {
     readonly phone: Phone | null,
     readonly email: Email | null,
     readonly password: Password,
-    readonly activationLink: ActivationLink,
-    readonly accessToken: Token, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
-    readonly accessTokenExpiresIn: Date, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
-    readonly refreshToken: Token, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
-    readonly refreshTokenExpiresIn: Date, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
+    readonly activationLink: ActivationLink | null,
+    readonly accessToken: Token | null, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
+    readonly accessTokenExpiresIn: Date | null, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
+    readonly refreshToken: Token | null, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
+    readonly refreshTokenExpiresIn: Date | null, // TODO возможно это нужно вынести в отдельное RDTO, чтобы эта инфа не светилась в домене
     readonly isActive: boolean,
     readonly salt: string // TODO VO
   ) {}

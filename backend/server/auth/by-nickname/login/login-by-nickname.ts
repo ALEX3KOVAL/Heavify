@@ -1,6 +1,6 @@
 import { LoginStrategy } from '../../common/contract/login-strategy';
 import { LoginDto } from '../../common/dto/login.dto';
-import { Result } from '../../../../domain/extensions/result';
+import { Result } from '../../../../domain/extensions/result.extension';
 import { NotFoundException } from '../../common/exception/not-found.exception';
 import { Inject, Injectable } from '@nestjs/common';
 import {
@@ -21,7 +21,7 @@ export class LoginByNickname implements LoginStrategy {
   ) {}
 
   async login(loginDto: LoginDto<Nickname>): Promise<Result<{ access_token: Token, auth_method: string }>> {
-    const clientAccount: ClientAccountRDTO = await this.clientAccountRepository.getByPhone(loginDto.authId);
+    const clientAccount: ClientAccountRDTO | null = await this.clientAccountRepository.getByPhone(loginDto.authId);
 
     return Result.runCatching((): { access_token: Token, auth_method: string } => {
       if (!clientAccount) {

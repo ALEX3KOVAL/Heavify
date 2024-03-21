@@ -1,4 +1,4 @@
-import { Result } from 'domain/extensions/result';
+import { Result } from 'domain/extensions/result.extension';
 import { LoginStrategy } from '../../common/contract/login-strategy';
 import { LoginDto } from '../../common/dto/login.dto';
 import { Phone } from '../../common/vo/phone';

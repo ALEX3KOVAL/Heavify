@@ -10,7 +10,7 @@ import { DataSource, Repository } from 'typeorm';
 import { ClientAccount } from '../entity/client-account';
 import { ClientID } from '../../domain/vo/client-id';
 import { Token } from '../../server/auth/common/vo/token';
-import { Inject } from '@nestjs/common';
+import {Inject} from '@nestjs/common';
 
 export class ClientAccountRepositoryImpl extends Repository<ClientAccount> implements ClientAccountRepository {
   private readonly repository: Repository<ClientAccount>;
@@ -22,44 +22,47 @@ export class ClientAccountRepositoryImpl extends Repository<ClientAccount> imple
   }
 
   async get(id: ClientAccountID): Promise<ClientAccountRDTO | null> {
-    const clientAccount: ClientAccount = await this.repository.findOneBy({ id: id.value });
+    const clientAccount: ClientAccount | null = await this.repository.findOneBy({id: id.value});
+    console.log(clientAccount?.client)
     return this.toRdto(clientAccount)
   }
 
   async getByNickname(nickname: Nickname): Promise<ClientAccountRDTO | null> {
-    const clientAccount: ClientAccount = await this.repository.findOneBy({ nickname: nickname.value });
+    const clientAccount: ClientAccount | null = await this.repository.findOneBy({nickname: nickname.value});
     return this.toRdto(clientAccount)
   }
 
   async getByEmail(email: Email): Promise<ClientAccountRDTO | null> {
-    const clientAccount: ClientAccount = await this.repository.findOneBy({ email: email.value });
-    return this.toRdto(clientAccount)
+    const clientAccount: ClientAccount | null = await this.repository.findOneBy({email: email.value});
+    return this.toRdto(clientAccount);
   }
 
   async getByPhone(phone: Phone): Promise<ClientAccountRDTO | null> {
-    const clientAccount: ClientAccount = await this.repository.findOneBy({ phone: phone.value });
+    const clientAccount: ClientAccount | null = await this.repository.findOneBy({phone: phone.value});
     return this.toRdto(clientAccount)
   }
 
   async getByAccessToken(token: Token): Promise<ClientAccountRDTO | null> {
-    const clientAccount: ClientAccount = await this.repository.findOneBy({ accessToken: token.value })
+    const clientAccount: ClientAccount | null = await this.repository.findOneBy({accessToken: token.value})
     return this.toRdto(clientAccount)
   }
 
-  private toRdto = (entity: ClientAccount): ClientAccountRDTO =>
-    new ClientAccountRDTO(
-      ClientAccountID.from(entity.id).getOrThrow(),
-      ClientID.from(entity.client.id).getOrThrow(),
-      Nickname.from(entity.nickname).getOrThrow(),
-      Email.from(entity.email).getOrThrow(),
-      Phone.from(entity.phone).getOrThrow(),
-      Password.from(entity.password).getOrThrow(),
-      ActivationLink.from(entity.activationLink).getOrThrow(),
-      Token.from(entity.accessToken).getOrThrow(),
-      entity.accessTokenExpiresIn,
-      Token.from(entity.refreshToken).getOrThrow(),
-      entity.refreshTokenExpiresIn,
-      entity.isActive,
-      "" // TODO заменить заглушку
-    )
+  private toRdto = (entity: ClientAccount | null): ClientAccountRDTO | null =>
+      entity ?
+          new ClientAccountRDTO(
+              ClientAccountID.from(entity.id).getOrThrow(),
+              ClientID.from(entity.clientId).getOrThrow(),
+              Nickname.from(entity.nickname).getOrThrow(),
+              entity.email ? Email.from(entity.email).getOrThrow() : null,
+              entity.phone ? Phone.from(entity.phone).getOrThrow() : null,
+              Password.from(entity.password).getOrThrow(),
+              entity.activationLink ? ActivationLink.from(entity.activationLink).getOrThrow() : null,
+              entity.accessToken ? Token.from(entity.accessToken).getOrThrow() : null,
+              entity.accessTokenExpiresIn,
+              entity.refreshToken ? Token.from(entity.refreshToken).getOrThrow() : null,
+              entity.refreshTokenExpiresIn,
+              entity.isActive,
+              entity.salt
+          )
+          : null
 }

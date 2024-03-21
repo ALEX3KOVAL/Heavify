@@ -19,8 +19,8 @@ export class ClientRepositoryImpl extends Repository<Client> implements ClientRe
   }
 
   async get(id: ClientID): Promise<ClientRDTO | null> {
-    const client: Client = await this.repository.findOneBy({ id: id.value });
-    return this.toRdto(client)
+    const client: Client | null = await this.repository.findOneBy({ id: id.value });
+    return client ? this.toRdto(client) : null
   }
 
   private toRdto = (entity: Client): ClientRDTO =>

@@ -13,5 +13,5 @@ export let di: INestApplicationContext
   di = await NestFactory.createApplicationContext(AppModule)
   const app: INestApplication = await NestFactory.create(AppModule);
 
-  await app.listen(process.env.APP_PORT);
+  await app.listen(process.env.APP_PORT!);
 })()

@@ -1,4 +1,4 @@
-import { Result } from 'domain/extensions/result';
+import { Result } from 'domain/extensions/result.extension';
 import { LoginStrategy } from '../../common/contract/login-strategy';
 import { LoginDto } from '../../common/dto/login.dto';
 import { Email } from '../../common/vo/email';
@@ -21,7 +21,7 @@ export class LoginByEmail implements LoginStrategy<Email> {
   ) {}
 
   async login(loginDto: LoginDto<Email>): Promise<Result<{ access_token: Token, auth_method: string }>> {
-    const clientAccount: ClientAccountRDTO = await this.clientAccountRepository.getByPhone(loginDto.authId)
+    const clientAccount: ClientAccountRDTO | null = await this.clientAccountRepository.getByPhone(loginDto.authId)
     return Result.runCatching(() => {
       if (!clientAccount) throw new NotFoundException("Клиент с данной почтой не найден")
 
