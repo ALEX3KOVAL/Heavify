@@ -1,9 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {MigrationInterface, QueryRunner, Table, TableForeignKey} from 'typeorm';
 
-export class CreateClientAccountTable1710089486083 implements MigrationInterface {
+export class CreateClientAccountTable1710089783576 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        return queryRunner.createTable(
+        await queryRunner.createTable(
           new Table({
               name: "client_account",
               comment: "Аккаунт клиента",
@@ -12,7 +12,8 @@ export class CreateClientAccountTable1710089486083 implements MigrationInterface
                       name: "id",
                       type: "integer",
                       isPrimary: true,
-                      generationStrategy: "increment"
+                      generationStrategy: "increment",
+                      isGenerated: true
                   },
                   {
                       name: "email",
@@ -56,6 +57,11 @@ export class CreateClientAccountTable1710089486083 implements MigrationInterface
                       name: "is_active",
                       type: "boolean",
                       comment: "Активен ли аккаунт клиента"
+                  },
+                  {
+                      name: "client_id",
+                      type: "integer",
+                      comment: "ID клиента"
                   },
                   {
                       name: "salt",
@@ -103,6 +109,15 @@ export class CreateClientAccountTable1710089486083 implements MigrationInterface
               ]
           }),
           true
+        )
+
+        await queryRunner.createForeignKey(
+            "client_account",
+            new TableForeignKey({
+                columnNames: ["client_id"],
+                referencedColumnNames: ["id"],
+                referencedTableName: "client"
+            }),
         )
     }
 
