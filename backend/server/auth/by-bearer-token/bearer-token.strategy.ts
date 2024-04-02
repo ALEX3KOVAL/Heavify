@@ -8,6 +8,7 @@ import {
 import { Token } from '../common/vo/token';
 import { ClientAccountRDTO } from '../../../domain/repository/client/dto/client-account.rdto';
 import { AuthorizationException } from '../common/exception/authorization.exception';
+import {NotFoundException} from "../common/exception/not-found.exception";
 
 @Injectable()
 export class BearerTokenStrategy extends PassportStrategy(Strategy, "bearer") {
@@ -24,7 +25,7 @@ export class BearerTokenStrategy extends PassportStrategy(Strategy, "bearer") {
           .getByAccessToken(Token.from(token).getOrThrow())
           .then((clientAccount: ClientAccountRDTO | null) => {
             if (!clientAccount) {
-              return cbk(new AuthorizationException("Пользователь не найден"), null, { message: "Токен доступа не найден", scope: "*" })
+              return cbk(new NotFoundException("Пользователь не найден"), null, { message: "Токен доступа не найден", scope: "*" })
             }
             if (clientAccount!.accessTokenExpiresIn!.valueOf() > Date.now()) {
               return cbk(new AuthorizationException("Токен доступа просрочен"), null, { message: "Токен доступа более не актуален", scope: "*" })

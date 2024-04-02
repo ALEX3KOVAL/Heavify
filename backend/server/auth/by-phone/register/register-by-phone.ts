@@ -19,6 +19,7 @@ export class RegisterByPhone implements RegisterStrategy<Phone> {
 
   register = (registerDto: RegisterDTO<Phone>): Result<{ access_token: Token, auth_method: string }> =>
     Result.runCatching((): { access_token: Token, auth_method: string } => {
+        // todo отправка sms на номер телефона
       return {
         access_token: this.tokenService.generateAccessToken(registerDto).getOrThrow(),
         auth_method: "phone" // TODO enum VO

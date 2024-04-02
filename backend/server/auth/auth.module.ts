@@ -17,6 +17,10 @@ import {RegisterStrategyFactory} from "./common/factory/register.strategy.factor
 import {RegisterByEmail} from "./by-email/register/register-by-email";
 import {RegisterByPhone} from "./by-phone/register/register-by-phone";
 import {TokenService} from "./common/service/token.service";
+import {LoginStrategyFactory} from "./common/factory/login.strategy.factory";
+import {LoginByEmail} from "./by-email/login/login-by-email";
+import {LoginByPhone} from "./by-phone/login/login-by-phone";
+import {LoginByNickname} from "./by-nickname/login/login-by-nickname";
 
 @Module({
   providers: [
@@ -28,15 +32,23 @@ import {TokenService} from "./common/service/token.service";
       provide: ClientPersisterToken,
       useClass: ClientPersisterImpl
     },
+    {
+      provide: ClientAccountRepositoryToken,
+      useClass: ClientAccountRepositoryImpl
+    },
     AuthService,
     SecurityService,
     BearerTokenStrategy,
     RegisterStrategyFactory,
+    LoginStrategyFactory,
+    LoginByEmail,
+    LoginByPhone,
+    LoginByNickname,
     ClientService,
     ClientAccountService,
     RegisterByEmail,
     TokenService,
-    RegisterByPhone
+    RegisterByPhone,
   ],
   controllers: [AuthController],
   exports: [AuthService],

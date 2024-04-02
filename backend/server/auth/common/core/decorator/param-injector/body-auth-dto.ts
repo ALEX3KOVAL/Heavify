@@ -12,28 +12,32 @@ import {Name} from "../../../../../../domain/vo/name";
 import {Surname} from "../../../../../../domain/vo/surname";
 import {Patronymic} from "../../../../../../domain/vo/patronymic";
 import {RegisterID} from "../../../contract/register-id";
+import {LoginID} from "../../../contract/login-id";
 
 // TODO реализовать нормально
 export const BodyLoginDTO = createParamDecorator(
-  (_: string, ctx: ExecutionContext): LoginDto<Nickname> => {
+  (_: string, ctx: ExecutionContext): LoginDto => {
     const request = ctx.switchToHttp().getRequest();
     const loginParams = request.body;
-    const authIdParam: string = loginParams.authId;
-
-    const emailResult: Result<Email> = Email.from(authIdParam);
-    const phoneResult: Result<Phone> = Phone.from(authIdParam);
-    if (phoneResult.isFailure && emailResult.isFailure) {
-        throw new BadRequestException("Номер телефона или эл. почта указано неверно")
-    }
-
-    const authId: RegisterID = phoneResult.isSuccess ? phoneResult.getOrThrow() : emailResult.getOrThrow()
 
     return new LoginDto(
-      Nickname.from(loginParams.nickname).getOrThrow(),
-      Phone.from(loginParams.phone).getOrThrow()
+        extractLoginId(loginParams.id).getOrThrow(),
+        Password.from(loginParams.password).getOrThrow()
     );
   },
 )
+
+const extractLoginId = (authIdParam: string): Result<LoginID> => Result.runCatching((): LoginID => {
+    const emailResult: Result<Email> = Email.from(authIdParam);
+    const phoneResult: Result<Phone> = Phone.from(authIdParam);
+    const nicknameResult: Result<Nickname> = Nickname.from(authIdParam)
+    if (phoneResult.isFailure && emailResult.isFailure && nicknameResult.isFailure) {
+        throw new BadRequestException("Номер телефона, nickname или эл. почта указано неверно")
+    }
+    if (emailResult.isSuccess) return emailResult.getOrThrow()
+    if (phoneResult.isSuccess) return phoneResult.getOrThrow()
+    return nicknameResult.getOrThrow()
+})
 
 export const BodyRegisterDTO = createParamDecorator(
   (_: string, ctx: ExecutionContext): RegisterDTO => {

@@ -11,21 +11,32 @@ import { Nickname } from '../../common/vo/nickname';
 import { ClientAccountRDTO } from '../../../../domain/repository/client/dto/client-account.rdto';
 import { TokenService } from '../../common/service/token.service';
 import { Token } from '../../common/vo/token';
+import {SecurityService} from "../../../security/service/security.service";
+import {AuthorizationException} from "../../common/exception/authorization.exception";
 
 @Injectable()
 export class LoginByNickname implements LoginStrategy {
   constructor(
     @Inject(ClientAccountRepositoryToken)
     private readonly clientAccountRepository: ClientAccountRepository,
-    private readonly tokenService: TokenService
+    private readonly tokenService: TokenService,
+    private readonly securityService: SecurityService
   ) {}
 
-  async login(loginDto: LoginDto<Nickname>): Promise<Result<{ access_token: Token, auth_method: string }>> {
-    const clientAccount: ClientAccountRDTO | null = await this.clientAccountRepository.getByPhone(loginDto.authId);
+  login = (loginDto: LoginDto<Nickname>): Promise<Result<{ access_token: Token, auth_method: string }>> =>
+    Result.asyncRunCatching(async () => {
+      const clientAccount: ClientAccountRDTO | null = await this.clientAccountRepository.getByNickname(loginDto.id);
 
-    return Result.runCatching((): { access_token: Token, auth_method: string } => {
       if (!clientAccount) {
-        throw new NotFoundException(`Пользователь с номером телефона ${loginDto.authId} не зарегистрирован`);
+        throw new NotFoundException(`Пользователь с номером телефона ${loginDto.id} не зарегистрирован`);
+      }
+
+      const passwordsAreIdentical: boolean = this.securityService
+        .comparePasswords(loginDto.password, clientAccount.password, clientAccount.salt)
+        .getOrThrow()
+
+      if (!passwordsAreIdentical) {
+        throw new AuthorizationException("Неверный пароль")
       }
 
       return {
@@ -33,5 +44,4 @@ export class LoginByNickname implements LoginStrategy {
         auth_method: "nickname" // TODO enum VO
       };
     });
-  }
 }

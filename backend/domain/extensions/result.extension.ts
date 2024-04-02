@@ -1,22 +1,19 @@
 import { lazy } from "./lazy.extension";
 
 export class Result<out T> {
-  private readonly value: T | null
 
-  private constructor(value: T) {
-    this.value = value
-  }
+  private constructor(private readonly value: T) {}
 
   @lazy get isSuccess(): boolean {
-    return !(this.value instanceof Result.Failure)
+    return !(this.value instanceof Failure)
   }
 
   @lazy get isFailure(): boolean {
-    return this.value instanceof Result.Failure || !this.value
+    return this.value instanceof Failure || !this.value
   }
 
   private throwOnFailure(): void {
-    if (this.value instanceof Result.Failure) {
+    if (this.value instanceof Failure) {
       throw this.value.exception
     }
   }
@@ -26,20 +23,45 @@ export class Result<out T> {
     return this.value as T
   }
 
-  private static Failure = class Failure <E extends Error> {
-    readonly exception: E
+  exceptionOrNull(): Error | null {
+    if (this.value instanceof Failure) return this.value.exception
+    return null
+  }
 
-    constructor(exception: E) {
-      this.exception = exception
-    }
+  onSuccess(block: (value: T) => void): Result<T> {
+    if (this.isSuccess) block(this.value)
+    return this
+  }
+
+  onFailure(block: (exc: Error) => void): Result<T> {
+    const exc = this.exceptionOrNull()
+    if (exc) block(exc)
+    return this
   }
 
   static runCatching<R>(block: () => R): Result<R> {
     try { return this.success(block()) }
-    catch(exc: any) { return new Result(new Result.Failure<Error>(exc) as R) }
+    catch(exc: any) { return this.failure(exc) as Result<R> }
+  }
+
+  static async asyncRunCatching<R>(block: () => Promise<R>): Promise<Result<R>> {
+    try {
+      const value = await block();
+      return this.success(value);
+    } catch (exc) {
+      return this.failure(exc as Error) as Result<R>;
+    }
   }
 
   static success = <T>(value: T): Result<T> => new Result(value)
+
+  static failure = <T extends Error>(exc: T): Result<Failure<T>> => new Result(new Failure<T>(exc))
 }
 
-export {};
+class Failure <E extends Error> {
+  readonly exception: E
+
+  constructor(exception: E) {
+    this.exception = exception
+  }
+}

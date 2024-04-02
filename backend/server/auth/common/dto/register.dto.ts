@@ -14,7 +14,7 @@ export class RegisterDTO<T extends RegisterID = RegisterID> implements AuthDto {
     readonly patronymic: Patronymic | null,
     readonly gender: number,
     readonly birthDate: Date,
-    readonly authId: T,
+    readonly id: T,
     readonly password: Password
   ) {}
 }

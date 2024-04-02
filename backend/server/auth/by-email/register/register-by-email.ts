@@ -14,6 +14,7 @@ export class RegisterByEmail implements RegisterStrategy<Email> {
 
   register = (registerDto: RegisterDTO<Email>): Result<{ access_token: Token, auth_method: string }> =>
   Result.runCatching(() => {
+      // TODO отправка эл. письма
       return {
         access_token: this.tokenService.generateAccessToken(registerDto).getOrThrow(),
         auth_method: "email" // TODO enum VO

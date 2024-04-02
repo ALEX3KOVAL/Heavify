@@ -1,8 +1,7 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {LoginDto} from './common/dto/login.dto';
 import {Result} from '../../domain/extensions/result.extension';
 import {RegisterDTO} from './common/dto/register.dto';
-import {AuthorizationException} from './common/exception/authorization.exception';
 import {LoginStrategyFactory} from './common/factory/login.strategy.factory';
 import {ClientAccountRDTO} from '../../domain/repository/client/dto/client-account.rdto';
 import {
@@ -28,7 +27,7 @@ import {ClientID} from "../../domain/vo/client-id";
 /**
  * Сервис авторизации клиента
  *
- * @property securityService Сервис крипто-защиты конфиденциальных данных
+ * @property securityService Сервис крипто-защиты
  * @property clientService Сервис работы с сущностью "Клиент"
  * @property clientAccountService Сервис работы с сущностью "Аккаунт клиента"
  */
@@ -41,19 +40,19 @@ export class AuthService {
         private readonly clientAccountService: ClientAccountService,
     ) {}
 
-    register = (registerDto: RegisterDTO): Result<Promise<{ access_token: Token, auth_method: string }>> =>
-        Result.runCatching(async (): Promise<{ access_token: Token, auth_method: string }> => {
+    register = (registerDto: RegisterDTO): Promise<Result<{ access_token: Token, auth_method: string }>> =>
+        Result.asyncRunCatching(async () => {
             const clientAccount: ClientAccountRDTO | null = await this.di
                 .get<ClientAccountRepository>(ClientAccountRepositoryToken)
                 .getByNickname(registerDto.nickname)
 
             if (clientAccount) {
-                throw new AuthorizationException(`Пользователь с nickname "${registerDto.nickname}" уже зарегистрирован`)
+                throw new UnauthorizedException(`Пользователь с nickname "${registerDto.nickname}" уже зарегистрирован`)
             }
 
             const salt: string = randomBytes(25).toString("hex");
             const hashedPassword: Password = this.securityService
-                .generateHashedPasswordWithSalt(registerDto.password, salt)
+                .createHashedPasswordWithSalt(registerDto.password, salt)
                 .getOrThrow();
 
             const clientId: ClientID = await this.clientService
@@ -71,7 +70,7 @@ export class AuthService {
 
             return this.di
                 .get(RegisterStrategyFactory)
-                .create(registerDto.authId).getOrThrow()
+                .create(registerDto.id).getOrThrow()
                 .register(registerDto)
                 .getOrThrow();
         })
@@ -99,8 +98,8 @@ export class AuthService {
         const now: Date = new Date()
         return new CreateClientAccountDTO(
             registerDto.nickname,
-            registerDto.authId instanceof Phone ? registerDto.authId : null,
-            registerDto.authId instanceof Email ? registerDto.authId : null,
+            registerDto.id instanceof Phone ? registerDto.id : null,
+            registerDto.id instanceof Email ? registerDto.id : null,
             clientId,
             password,
             salt,
@@ -110,15 +109,11 @@ export class AuthService {
         )
     }
 
-    login = <T extends AuthID>(loginDto: LoginDto<T>): Result<Promise<{ access_token: Token, auth_method: string }>> =>
-        Result.runCatching(async (): Promise<{ access_token: Token, auth_method: string }> =>
-            (
-                await this.di
-                    .get(LoginStrategyFactory)
-                    .create(loginDto.authId).getOrThrow()
-                    .login(loginDto)
-            ).getOrThrow(),
-        );
+    login = <T extends AuthID>(loginDto: LoginDto<T>): Promise<Result<{ access_token: Token, auth_method: string }>> =>
+        this.di
+            .get(LoginStrategyFactory)
+            .create(loginDto.id).getOrThrow()
+            .login(loginDto)
 
     logout = <T>(logoutDto: LogoutDTO): Result<Promise<void>> =>
         Result.runCatching(async (): Promise<void> => undefined)

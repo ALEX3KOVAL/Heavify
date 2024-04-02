@@ -22,7 +22,7 @@ export class RegisterStrategyFactory {
       return this.di.get(RegisterByEmail)
     }
     throw new HttpException(
-      'ID авторизации имеет неподдерживаемый тип', // todo надо написать пришедший тип
+      `ID авторизации имеет неподдерживаемый тип: ${typeof registerId}`, // todo надо написать пришедший тип
       HttpStatus.INTERNAL_SERVER_ERROR,
     );
   })
