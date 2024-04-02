@@ -37,21 +37,21 @@ export class LoginByEmail implements LoginStrategy<Email> {
     */
     login = (loginDto: LoginDto<Email>): Promise<Result<{ access_token: Token, auth_method: string }>> =>
         Result.asyncRunCatching(async () => {
-      const clientAccount: ClientAccountRDTO | null = await this.clientAccountRepository.getByEmail(loginDto.id)
+          const clientAccount: ClientAccountRDTO | null = await this.clientAccountRepository.getByEmail(loginDto.id)
 
-      if (!clientAccount) throw new NotFoundException(`Клиент с почтой "${loginDto.id}" не зарегистрирован`)
+          if (!clientAccount) throw new NotFoundException(`Клиент с почтой "${loginDto.id}" не зарегистрирован`)
 
-      const passwordsAreIdentical: boolean = this.securityService
-        .comparePasswords(loginDto.password, clientAccount.password, clientAccount.salt)
-        .getOrThrow()
+          const passwordsAreIdentical: boolean = this.securityService
+            .comparePasswords(loginDto.password, clientAccount.password, clientAccount.salt)
+            .getOrThrow()
 
-      if (!passwordsAreIdentical) {
-        throw new AuthorizationException("Неверный пароль")
-      }
+          if (!passwordsAreIdentical) {
+            throw new AuthorizationException("Неверный пароль")
+          }
 
-      return {
-        access_token: this.tokenService.generateAccessToken(loginDto).getOrThrow(),
-        auth_method: "email" // TODO enum VO
-      };
+          return {
+            access_token: this.tokenService.generateAccessToken(loginDto).getOrThrow(),
+            auth_method: "email" // TODO enum VO
+          };
     })
 }
