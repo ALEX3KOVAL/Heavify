@@ -1,8 +1,5 @@
 import { Module, Provider } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { config } from "dotenv";
-
-config({ path: '.env' });
 
 const provider: Provider = {
     provide: "DATA_SOURCE",
