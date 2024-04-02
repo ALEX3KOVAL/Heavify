@@ -1,4 +1,4 @@
-import { Result } from '../../../../domain/extensions/result';
+import { Result } from '../../../../domain/extensions/result.extension';
 
 export class Password {
   private constructor(readonly value: string) {

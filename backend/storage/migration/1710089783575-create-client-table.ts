@@ -12,7 +12,8 @@ export class CreateClientTable1710089783575 implements MigrationInterface {
                       name: "id",
                       type: "integer",
                       isPrimary: true,
-                      generationStrategy: "increment"
+                      generationStrategy: "increment",
+                      isGenerated: true
                   },
                   {
                       name: "name",
@@ -32,6 +33,16 @@ export class CreateClientTable1710089783575 implements MigrationInterface {
                       length: "50",
                       isNullable: true,
                       comment: "Отчество клиента"
+                  },
+                  {
+                      name: "gender",
+                      type: "integer",
+                      comment: "Пол"
+                  },
+                  {
+                      name: "birth_date",
+                      type: "date",
+                      comment: "Дата рождения"
                   },
                   {
                       name: "created_at",

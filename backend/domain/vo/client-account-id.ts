@@ -1,4 +1,4 @@
-import { Result } from '../extensions/result';
+import { Result } from '../extensions/result.extension';
 
 // TODO это доменное vo или всё же server?
 export class ClientAccountID {

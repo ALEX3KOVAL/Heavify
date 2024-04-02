@@ -1,32 +1,32 @@
 import { ClientPersister } from '../../domain/persister/client/client.persister';
-import { CreateClientDto } from '../../domain/persister/client/dto/create-client.dto';
-import { Result } from '../../domain/extensions/result';
+import { CreateClientDTO } from '../../domain/persister/client/dto/create-client.dto';
+import { Result } from '../../domain/extensions/result.extension';
 import { ClientID } from '../../domain/vo/client-id';
 import { Client } from '../entity/client';
 import { DataSource, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 
 @Injectable()
 export class ClientPersisterImpl extends Repository<Client> implements ClientPersister {
-  constructor(private readonly dataSource: DataSource)
+  constructor(@Inject("DATA_SOURCE") dataSource: DataSource)
   {
     super(Client, dataSource.createEntityManager());
   }
 
-  add = (dto: CreateClientDto): Result<ClientID> =>
-    ClientID.from(
-      this.manager.create<Client, object>(
-        Client,
-        {
-          nickname: dto.nickname.value,
-          email: dto.email.value,
-          phone: dto.phone.value,
-          password: dto.password.value,
-          name: dto.name.value,
-          surname: dto.surname.value,
-          patronymic: dto.patronymic.value,
-          isActive: dto.isActive,
-          activationLink: dto.activationLink.value
-        }
-    ).id)
+  add = (dto: CreateClientDTO): Result<Promise<ClientID>> => Result.runCatching(async () => {
+      const client: Client = this.manager.create<Client, object>(
+          Client,
+          {
+              name: dto.name.value,
+              surname: dto.surname.value,
+              patronymic: dto.patronymic?.value,
+              gender: dto.gender,
+              birthDate: dto.birthDate,
+              createdAt: dto.createdAt,
+              updatedAt: dto.updatedAt
+          }
+      )
+      await this.manager.save(client)
+      return ClientID.from(client.id).getOrThrow()
+  })
 }
