@@ -1,17 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { resolve } from "node:path"
-import { config } from "dotenv";
-import * as process from 'process';
-import { INestApplication, INestApplicationContext, Injectable } from '@nestjs/common';
-import { AuthModule } from '../auth/auth.module';
-config({path: resolve() + "/.env"});
-
-export let di: INestApplicationContext
+import {INestApplication, INestApplicationContext} from '@nestjs/common';
+import {ConfigService} from "@nestjs/config";
 
 (async function (): Promise<void> {
-  di = await NestFactory.createApplicationContext(AppModule)
+  const appContext: INestApplicationContext = await NestFactory.createApplicationContext(AppModule)
+  const configService: ConfigService = appContext.get(ConfigService)
   const app: INestApplication = await NestFactory.create(AppModule);
 
-  await app.listen(process.env.APP_PORT!);
+  await app.listen(configService.get<number>("APP_PORT")!);
 })()
