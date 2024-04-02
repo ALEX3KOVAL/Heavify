@@ -1,6 +1,6 @@
 import { lazy } from "./lazy.extension";
 
-export class Result<out T> {
+export class Result<T> {
 
   private constructor(private readonly value: T) {}
 
@@ -55,7 +55,7 @@ export class Result<out T> {
 
   static success = <T>(value: T): Result<T> => new Result(value)
 
-  static failure = <T extends Error>(exc: T): Result<Failure<T>> => new Result(new Failure<T>(exc))
+  static failure = <T>(exc: Error): Result<T> => new Result(new Failure(exc) as any)
 }
 
 class Failure <E extends Error> {
