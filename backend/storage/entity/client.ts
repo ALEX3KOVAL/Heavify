@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Client {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   readonly id: number
 
   @Column({

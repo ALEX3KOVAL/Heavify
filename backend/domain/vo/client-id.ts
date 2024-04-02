@@ -1,4 +1,4 @@
-import { Result } from '../extensions/result';
+import { Result } from '../extensions/result.extension';
 
 export class ClientID {
   private constructor(readonly value: number) {

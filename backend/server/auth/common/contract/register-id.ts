@@ -1,1 +1,3 @@
-export interface RegisterID {}
+export interface RegisterID {
+    readonly value: string
+}

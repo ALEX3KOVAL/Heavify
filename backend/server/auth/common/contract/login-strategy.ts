@@ -1,4 +1,4 @@
-import { Result } from '../../../../domain/extensions/result';
+import { Result } from '../../../../domain/extensions/result.extension';
 import { LoginDto } from '../dto/login.dto';
 import { LoginID } from './login-id';
 import { Token } from '../vo/token';
