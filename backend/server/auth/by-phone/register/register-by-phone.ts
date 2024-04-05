@@ -17,8 +17,12 @@ export class RegisterByPhone implements RegisterStrategy<Phone> {
     private readonly tokenService: TokenService
   ) {}
 
-  register = (registerDto: RegisterDTO<Phone>): Result<{ access_token: Token, auth_method: string }> =>
-    Result.runCatching((): { access_token: Token, auth_method: string } => {
+  register = (registerDto: RegisterDTO<Phone>): Promise<Result<{ access_token: Token, auth_method: string }>> =>
+    Result.asyncRunCatching(async ()  => {
+        const otp: Token = this.tokenService
+            .generateOtp(6)
+            .getOrThrow()
+
         // todo отправка sms на номер телефона
       return {
         access_token: this.tokenService.generateAccessToken(registerDto).getOrThrow(),

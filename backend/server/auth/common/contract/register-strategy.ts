@@ -4,5 +4,5 @@ import { RegisterID } from './register-id';
 import { Token } from '../vo/token';
 
 export interface RegisterStrategy<T extends RegisterID = RegisterID> {
-  register(registerDto: RegisterDTO<T>): Result<{ access_token: Token, auth_method: string }> // TODO vo токена вместо object
+  register(registerDto: RegisterDTO<T>): Promise<Result<{ access_token: Token, auth_method: string }>> // TODO vo токена вместо object
 }

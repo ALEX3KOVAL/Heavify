@@ -8,5 +8,8 @@ import {ConfigService} from "@nestjs/config";
   const configService: ConfigService = appContext.get(ConfigService)
   const app: INestApplication = await NestFactory.create(AppModule);
 
-  await app.listen(configService.get<number>("APP_PORT")!);
+  await app.listen(
+      configService.get<number>("APP_PORT")!,
+      configService.get<string>("APP_HOST")!,
+  );
 })()
